@@ -43,17 +43,19 @@ public class CreateUser : MonoBehaviour
         {
             textDisplay.GetComponent<Text>().text = "Welcome " + mail + " to the Game";
             //Guardar usuari a la BBDD i passar-lo a la pàgina principal
-            BBDD baseDades = gameObject.AddComponent(typeof(BBDD)) as BBDD;
+            BBDD baseDades = new BBDD();
 
             //Insert tindra un return per saber el tipus d'error
             //Sobretot per que no es repeteixi el correu
-            baseDades.insertUser(mail, password, height, weight);
-            //int error = baseDades.insertUser(mail, password, height, weight);
-            /*if(error == 1) {
-                 mailErrorDisplay.GetComponent<Text>().text = "Aquest correu ja esta fet servir per un altre usuari";
-            }*/
+            
+            int insertErrorId = baseDades.insertUser(mail, password, height, weight);
+            //Posible modificacio: Canviar a switch si hi ha més d'un id d'error
+            Debug.Log(insertErrorId);
+            if(insertErrorId == 1) {
+                mailErrorDisplay.GetComponent<Text>().text = "Aquest correu ja esta fet servir per un altre usuari";
+            }
 
-            baseDades.SelectTest();
+            //baseDades.SelectTest();
         }
         else
         {

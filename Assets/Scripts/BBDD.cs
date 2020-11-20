@@ -5,7 +5,7 @@ using Mono.Data.Sqlite;
 using System.Data;
  
 
-public class BBDD : MonoBehaviour
+public class BBDD
 {
     //La connexio pot ser statica ja que sempre sera la mateixa per totes les connexions
     public string conn = "URI=file:" + Application.dataPath + "/baseDadesSQLitle.db"; //Path to database.
@@ -39,7 +39,7 @@ public class BBDD : MonoBehaviour
     }
 
 
-    public void insertUser(String mail, String password, int height, int weight) {
+    public int insertUser(String mail, String password, int height, int weight) {
         IDbConnection dbconn;
         dbconn = (IDbConnection)new SqliteConnection(conn);
         dbconn.Open(); //Open connection to the database.
@@ -50,6 +50,7 @@ public class BBDD : MonoBehaviour
         dbcmd = dbconn.CreateCommand();
         dbcmd.CommandText = insertUserQuery;
 
+        int error = 0;
         try
         {
             IDataReader reader = dbcmd.ExecuteReader();
@@ -58,9 +59,11 @@ public class BBDD : MonoBehaviour
             reader = null;
         }
         catch (Exception ex) {
-            if (ex.Message.Contains("UniqueConstraint"))
+            if (ex.Message.Contains("UNIQUE constraint failed: user.mail"))
             {
                 Debug.Log("Email repetit " + ex.Message);
+                error = 1; //ID_Error == 1 (Email ja existeix en la base de dades)
+                //No podem fer un return aqui ja que hem de tancar la base de dades
             }
             else {
                 Debug.Log("ERROR desconegut " + ex.Message);
@@ -71,5 +74,7 @@ public class BBDD : MonoBehaviour
         dbcmd = null;
         dbconn.Close();
         dbconn = null;
+
+        return error;
     }
 }
