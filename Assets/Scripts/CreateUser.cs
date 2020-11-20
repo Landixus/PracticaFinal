@@ -8,8 +8,8 @@ public class CreateUser : MonoBehaviour
     private string mail;
     private string password;
     private string confirmPassword;
-    private int altura;
-    private int pes;
+    private int height;
+    private int weight;
 
     public GameObject textDisplay;
 
@@ -43,7 +43,16 @@ public class CreateUser : MonoBehaviour
         {
             textDisplay.GetComponent<Text>().text = "Welcome " + mail + " to the Game";
             //Guardar usuari a la BBDD i passar-lo a la pàgina principal
-            BBDD baseDades = new BBDD();
+            BBDD baseDades = gameObject.AddComponent(typeof(BBDD)) as BBDD;
+
+            //Insert tindra un return per saber el tipus d'error
+            //Sobretot per que no es repeteixi el correu
+            baseDades.insertUser(mail, password, height, weight);
+            //int error = baseDades.insertUser(mail, password, height, weight);
+            /*if(error == 1) {
+                 mailErrorDisplay.GetComponent<Text>().text = "Aquest correu ja esta fet servir per un altre usuari";
+            }*/
+
             baseDades.SelectTest();
         }
         else
@@ -125,9 +134,9 @@ public class CreateUser : MonoBehaviour
     public bool comprovarAltura() {
         if (Int32.TryParse(alturaInput.GetComponent<InputField>().text, out int j))
         {
-            altura = j;
+            height = j;
 
-            if (altura <= 0 || altura > 240)
+            if (height <= 0 || height > 240)
             {
                 return false;
             }
@@ -159,9 +168,9 @@ public class CreateUser : MonoBehaviour
 
         if (Int32.TryParse(pesInput.GetComponent<InputField>().text, out int j))
         {
-            pes = j;
+            weight = j;
 
-            if (pes < 30 || pes > 150)
+            if (weight < 30 || weight > 150)
             {
                 return false;
             }

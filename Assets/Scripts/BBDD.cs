@@ -39,30 +39,37 @@ public class BBDD : MonoBehaviour
     }
 
 
-    public void addUser() {
+    public void insertUser(String mail, String password, int height, int weight) {
         IDbConnection dbconn;
         dbconn = (IDbConnection)new SqliteConnection(conn);
         dbconn.Open(); //Open connection to the database.
 
         IDbCommand dbcmd = dbconn.CreateCommand();
-        string sqlQuery = "INSERT INTO cars(ID_User,mail, password, height, weight, maxFC, maxW) VALUES(, @price)";
-        dbcmd.CommandText = sqlQuery;
-        IDataReader reader = dbcmd.ExecuteReader();
+        string insertUserQuery = "INSERT INTO User(ID_User,mail, password, height, weight, maxFC, maxW) VALUES(null, '"+ mail +"','"+ password+"'," + height+","+weight+","+100+","+250+");";
 
-        cmd.CommandText = "INSERT INTO cars(name, price) VALUES(@name, @price)";
+        dbcmd = dbconn.CreateCommand();
+        dbcmd.CommandText = insertUserQuery;
 
-        cmd.Parameters.AddWithValue("@name", "BMW");
-        cmd.Parameters.AddWithValue("@price", 36600);
-        cmd.Prepare();
-
-        cmd.ExecuteNonQuery();
-
-        Console.WriteLine("row inserted");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        try
+        {
+            IDataReader reader = dbcmd.ExecuteReader();
+            Console.WriteLine("row inserted");
+            reader.Close();
+            reader = null;
+        }
+        catch (Exception ex) {
+            if (ex.Message.Contains("UniqueConstraint"))
+            {
+                Debug.Log("Email repetit " + ex.Message);
+            }
+            else {
+                Debug.Log("ERROR desconegut " + ex.Message);
+            }
+        }
+        
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
     }
 }
