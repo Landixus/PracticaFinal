@@ -1,44 +1,44 @@
 ﻿
 using UnityEngine;
 using System;
-using MySql.Data.MySqlClient;
+using Mono.Data.Sqlite;
+using System.Data;
+ 
 
 public class BBDD : MonoBehaviour
 {
-    
-
-    // Start is called before the first frame update
-    public void test()
+    public void SelectTest() 
     {
-        string connStr = "server=localhost;user=root;database=practicafinaltest;port=3306;password=root";
-        MySqlConnection conn = new MySqlConnection(connStr);
-        try
+        Debug.Log(Application.dataPath);
+
+        string conn = "URI=file:" + Application.dataPath + "/baseDadesSQLitle.db"; //Path to database.
+        IDbConnection dbconn;
+        dbconn = (IDbConnection)new SqliteConnection(conn);
+        dbconn.Open(); //Open connection to the database.
+        IDbCommand dbcmd = dbconn.CreateCommand();
+        string sqlQuery = "SELECT value,name, randomSequence " + "FROM PlaceSequence";
+        dbcmd.CommandText = sqlQuery;
+        IDataReader reader = dbcmd.ExecuteReader();
+        while (reader.Read())
         {
-            Debug.Log("Connecting to MySQL...");
-            conn.Open();
+            int value = reader.GetInt32(0);
+            string name = reader.GetString(1);
+            int rand = reader.GetInt32(2);
 
-            string sql = "SELECT * FROM users";
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            object result = cmd.ExecuteScalar();
-            if (result != null)
-            {
-                int r = Convert.ToInt32(result);
-                Console.WriteLine("Number of countries in the world database is: " + r);
-            }
-
+            Debug.Log("value= " + value + "  name =" + name + "  random =" + rand);
         }
-        catch (Exception ex)
-        {
-            Debug.Log(ex.ToString());
-        }
-
-        conn.Close();
-        Debug.Log("Done.");
+        reader.Close();
+        reader = null;
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
     }
 
-// Update is called once per frame
-void Update()
+
+    // Update is called once per frame
+    void Update()
     {
-        
+
     }
 }

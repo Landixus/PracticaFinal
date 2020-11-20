@@ -44,7 +44,7 @@ public class CreateUser : MonoBehaviour
             textDisplay.GetComponent<Text>().text = "Welcome " + mail + " to the Game";
             //Guardar usuari a la BBDD i passar-lo a la pàgina principal
             BBDD baseDades = new BBDD();
-            baseDades.test();
+            baseDades.SelectTest();
         }
         else
         {
