@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CreateUser : MonoBehaviour
@@ -51,8 +52,17 @@ public class CreateUser : MonoBehaviour
             int insertErrorId = baseDades.insertUser(mail, password, height, weight);
             //Posible modificacio: Canviar a switch si hi ha més d'un id d'error
             Debug.Log(insertErrorId);
-            if(insertErrorId == 1) {
+
+            if (insertErrorId == 0) {
+
+                //Create User Object
+                //goToMainPage();
+            } else if (insertErrorId == 1) {
                 mailErrorDisplay.GetComponent<Text>().text = "Aquest correu ja esta fet servir per un altre usuari";
+            } else
+            {
+                //Temporal
+                mailErrorDisplay.GetComponent<Text>().text = "Error desconegut. Mirar Log";
             }
 
             //baseDades.SelectTest();
@@ -198,6 +208,16 @@ public class CreateUser : MonoBehaviour
         {
             pesError.GetComponent<Text>().text = "Error en el pes\n(pes entre 30 i 150kg)";
         }
+    }
+
+    public void goToLogIn()
+    {
+        SceneManager.LoadScene(sceneName: "LogIn");
+    }
+
+    public void goToMainPage()
+    {
+        SceneManager.LoadScene(sceneName: "MainPage");
     }
 
     void Start()

@@ -1662,7 +1662,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -77.9, y: -230.6}
+  m_AnchoredPosition: {x: -83.8, y: -230.6}
   m_SizeDelta: {x: 140, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &781020958
@@ -1709,7 +1709,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1493662151}
-        m_MethodName: StoreName
+        m_MethodName: goToLogIn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2364,11 +2364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af438d39c81bc0b488048cab6a3a3deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mail: 
-  password: 
-  confirmPassword: 
-  altura: 0
-  pes: 0
   textDisplay: {fileID: 703429223}
   mailInput: {fileID: 382046978}
   mailErrorDisplay: {fileID: 1448308434}

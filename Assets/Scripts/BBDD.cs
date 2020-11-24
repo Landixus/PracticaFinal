@@ -77,4 +77,51 @@ public class BBDD
 
         return error;
     }
+
+
+    public int comprovarCredencials(String mail, String password)
+    {
+        IDbConnection dbconn;
+        dbconn = (IDbConnection)new SqliteConnection(conn);
+        dbconn.Open(); //Open connection to the database.
+
+        IDbCommand dbcmd = dbconn.CreateCommand();
+        string insertUserQuery = "SELECT mail, password FROM  user WHERE mail='" + mail + "' AND password='" + password + "');";
+
+        dbcmd = dbconn.CreateCommand();
+        dbcmd.CommandText = insertUserQuery;
+
+        int error = 0;
+       
+        IDataReader reader = dbcmd.ExecuteReader();
+        Console.WriteLine("row inserted");
+        reader.Close();
+        reader = null;
+
+        int count = 0;
+        while (reader.Read())
+        {
+            count++;
+        }
+
+        if (count == 1)
+        {
+            error = 1; //ID return 1 == s'ha trobat una coincidencia
+        }
+        else if (count == 0)
+        {
+            error = 0; //ID return 0 == NO s'ha trobat una coincidencia
+        }
+        else {
+            error = 2; //ID return 2 == S'ha trobat més d'una coincidencia, No hauria de passar ja que el correu es unic
+                      //Per si acas ho deixo aqui
+        }
+
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
+
+        return error;
+    }
 }

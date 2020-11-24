@@ -23,6 +23,4 @@ public class User
         this.maxFC = maxFC;
         this.maxW = maxW;
     }
-
-    public int MyProperty 
 }
