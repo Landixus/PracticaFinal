@@ -10,7 +10,7 @@ public class ControladorPaginaPrincipal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log(user.toString());
     }
 
     // Update is called once per frame

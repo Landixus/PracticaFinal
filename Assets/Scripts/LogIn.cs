@@ -43,7 +43,7 @@ public class LogIn : MonoBehaviour
 
             if (user != null)
             {
-                passwordErrorDisplay.GetComponent<Text>().text = "Valid ";
+                //passwordErrorDisplay.GetComponent<Text>().text = "Valid ";
 
                 //Passem l'usuari al controlador principal
                 ControladorPaginaPrincipal.user = user;

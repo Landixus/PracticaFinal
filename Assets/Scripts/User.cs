@@ -23,4 +23,9 @@ public class User
         this.maxFC = maxFC;
         this.maxW = maxW;
     }
+    
+    public string toString() 
+    {
+        return string.Format("id: {0}, email: {1}, pass: {2}, height: {3}, weight: {4}, maxFC: {5}, maxW: {6} ", id, mail, password, height, weight, maxFC, maxW);
+    }
 }
