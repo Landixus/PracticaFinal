@@ -15,7 +15,6 @@ public class LogIn : MonoBehaviour
     public GameObject passwordInput;
     public GameObject passwordErrorDisplay;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -45,11 +44,15 @@ public class LogIn : MonoBehaviour
             if (user != null)
             {
                 passwordErrorDisplay.GetComponent<Text>().text = "Valid ";
+
+                //Passem l'usuari al controlador principal
+                ControladorPaginaPrincipal.user = user;
                 //go to main page
+                goToMainPage();
             }
             else
             {
-                //ERROR
+                passwordErrorDisplay.GetComponent<Text>().text = "Correu o contrasenya no vàlidas.";
             }
         }
         else {
@@ -60,5 +63,10 @@ public class LogIn : MonoBehaviour
     public void goToCreateUserScene() 
     {
         SceneManager.LoadScene(sceneName: "CreateUser");
+    }
+
+    public void goToMainPage()
+    {
+        SceneManager.LoadScene(sceneName: "MainPage");
     }
 }

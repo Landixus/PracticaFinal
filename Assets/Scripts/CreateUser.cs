@@ -55,7 +55,23 @@ public class CreateUser : MonoBehaviour
 
             if (insertErrorId == 0) {
 
-                //Create User Object
+                //Fem servir la pròpia base de dades per asegurar-nos que s'ha creat bé
+                User user = baseDades.selectUser(mail);
+
+                if (user != null)
+                {
+                    passwordErrorDisplay.GetComponent<Text>().text = "Valid ";
+
+                    //Passem l'usuari al controlador principal
+                    ControladorPaginaPrincipal.user = user;
+                    //go to main page
+                    goToMainPage();
+                }
+                else {
+                    Debug.LogError("Hi ha hagut un error a l'hora de seleccionar l'usuari");
+                }
+
+                ControladorPaginaPrincipal.user = user;
                 //goToMainPage();
             } else if (insertErrorId == 1) {
                 mailErrorDisplay.GetComponent<Text>().text = "Aquest correu ja esta fet servir per un altre usuari";

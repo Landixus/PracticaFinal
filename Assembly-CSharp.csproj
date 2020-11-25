@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BBDD.cs" />
+    <Compile Include="Assets\Scripts\ControladorPaginaPrincipal.cs" />
     <Compile Include="Assets\Scripts\CreateUser.cs" />
     <Compile Include="Assets\Scripts\LogIn.cs" />
     <Compile Include="Assets\Scripts\User.cs" />
