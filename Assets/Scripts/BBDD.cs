@@ -86,17 +86,11 @@ public class BBDD
         dbconn.Open(); //Open connection to the database.
 
         IDbCommand dbcmd = dbconn.CreateCommand();
-        string insertUserQuery = "SELECT mail, password FROM  user WHERE mail='" + mail + "' AND password='" + password + "');";
+        string insertUserQuery = "SELECT mail, password FROM  user WHERE mail='" + mail + "' AND password='" + password + "';";
 
         dbcmd = dbconn.CreateCommand();
         dbcmd.CommandText = insertUserQuery;
-
-        int error = 0;
-       
         IDataReader reader = dbcmd.ExecuteReader();
-        Console.WriteLine("row inserted");
-        reader.Close();
-        reader = null;
 
         int count = 0;
         while (reader.Read())
@@ -104,6 +98,7 @@ public class BBDD
             count++;
         }
 
+        int error;
         if (count == 1)
         {
             error = 1; //ID return 1 == s'ha trobat una coincidencia
@@ -112,9 +107,10 @@ public class BBDD
         {
             error = 0; //ID return 0 == NO s'ha trobat una coincidencia
         }
-        else {
+        else
+        {
             error = 2; //ID return 2 == S'ha trobat més d'una coincidencia, No hauria de passar ja que el correu es unic
-                      //Per si acas ho deixo aqui
+                       //Per si acas ho deixo aqui
         }
 
         dbcmd.Dispose();
@@ -146,7 +142,7 @@ public class BBDD
 
         //Només noecessitem el correu ja que al ser unic no hi hauran més d'un usuari amb el mateix correu
         //A part el selectUser només s'ha de fer un cop sabem que les credencials son correctes
-        string sqlQuery = "SELECT * FROM  user WHERE mail='" + mail + "');";
+        string sqlQuery = "SELECT * FROM  user WHERE mail='" + mail + "';";
         dbcmd.CommandText = sqlQuery;
         IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())
