@@ -38,8 +38,8 @@ public class LogIn : MonoBehaviour
 
        int returnId = baseDades.comprovarCredencials(mail, password);
 
-        if (returnId == 1) { 
-            //User user = baseDades.selectUser(mail)
+        if (returnId == 1) {
+            User user = baseDades.selectUser(mail);            
             //go to main page
         }
 

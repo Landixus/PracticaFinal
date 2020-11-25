@@ -124,4 +124,52 @@ public class BBDD
 
         return error;
     }
+
+    public User selectUser(String mail)
+    {
+        //Variables per crear l'usuari
+        int id;
+        string email;
+        string password;
+        int height;
+        int weight;
+        int maxFC;
+        int maxW;
+
+        User user = null;
+
+
+        IDbConnection dbconn;
+        dbconn = (IDbConnection)new SqliteConnection(conn);
+        dbconn.Open(); //Open connection to the database.
+        IDbCommand dbcmd = dbconn.CreateCommand();
+
+        //Només noecessitem el correu ja que al ser unic no hi hauran més d'un usuari amb el mateix correu
+        //A part el selectUser només s'ha de fer un cop sabem que les credencials son correctes
+        string sqlQuery = "SELECT * FROM  user WHERE mail='" + mail + "');";
+        dbcmd.CommandText = sqlQuery;
+        IDataReader reader = dbcmd.ExecuteReader();
+        while (reader.Read())
+        {
+            id = reader.GetInt32(0);
+            email = reader.GetString(1);
+            password = reader.GetString(2);
+            height = reader.GetInt32(3);
+            weight = reader.GetInt32(4);
+            maxFC = reader.GetInt32(5);
+            maxW = reader.GetInt32(6);
+
+            Debug.Log("id= " + id + "  email=" + email + "  password=" + password + "  height=" + height + "  weight=" + weight + "  maxFC=" + maxFC + "  maxW=" + maxW);
+        
+            user = new User(id, email, password, height, weight, maxFC, maxW);
+        }
+        reader.Close();
+        reader = null;
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
+
+        return user;
+    }
 }
