@@ -27,7 +27,6 @@ public class LogIn : MonoBehaviour
         
     }
 
-
     public void logIn()
     {
         mail = mailInput.GetComponent<InputField>().text;

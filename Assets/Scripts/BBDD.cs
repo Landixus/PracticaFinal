@@ -155,7 +155,7 @@ public class BBDD
             maxFC = reader.GetInt32(5);
             maxW = reader.GetInt32(6);
 
-            Debug.Log("id= " + id + "  email=" + email + "  password=" + password + "  height=" + height + "  weight=" + weight + "  maxFC=" + maxFC + "  maxW=" + maxW);
+            //Debug.Log("id= " + id + "  email=" + email + "  password=" + password + "  height=" + height + "  weight=" + weight + "  maxFC=" + maxFC + "  maxW=" + maxW);
         
             user = new User(id, email, password, height, weight, maxFC, maxW);
         }
