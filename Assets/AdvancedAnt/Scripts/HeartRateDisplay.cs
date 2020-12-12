@@ -18,7 +18,7 @@ service channel at a time.
 
 public class HeartRateDisplay : MonoBehaviour {
 
-    public bool autoStartScan = true; //start scan on play
+    public bool autoStartScan = false; //start scan on play
     public bool connected = false; //will be set to true once connected
 
     //windows and mac settings
@@ -177,7 +177,9 @@ public class HeartRateDisplay : MonoBehaviour {
 
     }
 
-    void ConnectToDevice(AntDevice device) {
+   
+
+   public void ConnectToDevice(AntDevice device) {
         AntManager.Instance.CloseBackgroundScanChannel();
         byte channelID = AntManager.Instance.GetFreeChannelID();
         deviceChannel = AntManager.Instance.OpenChannel(ANT_ReferenceLibrary.ChannelType.BASE_Slave_Receive_0x00, channelID, (ushort)device.deviceNumber, device.deviceType, device.transType, (byte)device.radiofreq, (ushort)device.period, false);
@@ -186,6 +188,8 @@ public class HeartRateDisplay : MonoBehaviour {
         deviceChannel.onChannelResponse += ChannelResponse;
         
         deviceChannel.hideRXFAIL = true;
+
+        Debug.Log("Connect to device connected to: " + device.ToString());
     }
 
 
@@ -194,9 +198,7 @@ public class HeartRateDisplay : MonoBehaviour {
 
         //HR
         heartRate = (data[7]);
-        
-
-
+       
     }
 
 

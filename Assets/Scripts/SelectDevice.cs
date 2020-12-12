@@ -10,7 +10,8 @@ public class SelectDevice : MonoBehaviour
     public Dropdown dropdownHeartSensor;
     public Text TextBoxHeartSensor;
     private int sizeHeartSensor;
-    
+    public GameObject heartSensorDisplayObject;
+    private HeartRateDisplay heartRateDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,15 @@ public class SelectDevice : MonoBehaviour
 
         //Carguem la scena on hi han els prefabs de manera aditiva
         SceneManager.LoadScene(3, LoadSceneMode.Additive);
+
+
+        if (GameObject.Find("HeartRateDisplay"))
+        {
+            heartSensorDisplayObject = GameObject.Find("HeartRateDisplay");
+            heartRateDisplay = (HeartRateDisplay)heartSensorDisplayObject.GetComponent(typeof(HeartRateDisplay));
+            heartRateDisplay.autoConnectToFirstSensorFound = false;
+            heartRateDisplay.StartScan();
+        }
 
         sizeHeartSensor = 0;
        
@@ -37,10 +47,15 @@ public class SelectDevice : MonoBehaviour
         TextBoxHeartSensor.text = dropdown.options[index].text;
         Debug.Log("Selected" + index);
 
-       
 
-        //Agafar sensor amb HeartRateDisplay.scanResult[index] i guarde-lo en un script amb una variable static per poder-la instanciar en qualsevol lloc
-    }
+        //Agafem l'objecte HeartDisplay i utilitzem la funció ConnectToDevice per connectar el sensor de FC seleccionat per l'usuari
+        if (heartSensorDisplayObject != null)
+        {
+            heartRateDisplay.ConnectToDevice(HeartRateDisplay.scanResult[index]);
+        } else {
+            Debug.LogError("ERROR: No s'ha trobat heartRateDisplay Objecte Prefab (SelectDevice) ");
+        }
+     }
 
 
     // Update is called once per frame
