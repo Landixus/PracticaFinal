@@ -17,6 +17,8 @@ public class SelectDevice : MonoBehaviour
     {
 
         TextBoxHeartSensor.text = "";
+
+        //Carguem la scena on hi han els prefabs de manera aditiva
         SceneManager.LoadScene(3, LoadSceneMode.Additive);
 
         sizeHeartSensor = 0;
@@ -35,12 +37,7 @@ public class SelectDevice : MonoBehaviour
         TextBoxHeartSensor.text = dropdown.options[index].text;
         Debug.Log("Selected" + index);
 
-        if (HeartRateDisplay.scanResult.Count == 1)
-        {
-            index = 0;
-            TextBoxHeartSensor.text = dropdown.options[index].text;
-            Debug.Log("Selected" + index);
-        }
+       
 
         //Agafar sensor amb HeartRateDisplay.scanResult[index] i guarde-lo en un script amb una variable static per poder-la instanciar en qualsevol lloc
     }
@@ -70,6 +67,12 @@ public class SelectDevice : MonoBehaviour
                 dropdownHeartSensor.options.Add(new Dropdown.OptionData() { text = heartMonitor.ToString() });
                 sizeHeartSensor++;
             }
+        }
+
+        if (HeartRateDisplay.scanResult.Count == 1)
+        {
+            dropdownHeartSensor.value = 1;
+            DropdownItemSelected(dropdownHeartSensor);
         }
     }
 
