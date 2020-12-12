@@ -10,4 +10,10 @@ public class AntDevice  {
     public int period;
     public int deviceNumber;
     public int radiofreq;
+
+    override
+    public string ToString()
+    {
+        return name + " " + deviceType + " " + transType + " " + period + " " + deviceNumber + " " + radiofreq;
+    }
 }

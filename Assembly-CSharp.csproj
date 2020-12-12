@@ -261,6 +261,8 @@
     <Compile Include="Assets\Scripts\CreateUser.cs" />
     <Compile Include="Assets\Scripts\LogIn.cs" />
     <Compile Include="Assets\Scripts\PasswordInfo.cs" />
+    <Compile Include="Assets\Scripts\SelectDevice.cs" />
+    <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\User.cs" />
     <Compile Include="Assets\Scripts\eyeManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />

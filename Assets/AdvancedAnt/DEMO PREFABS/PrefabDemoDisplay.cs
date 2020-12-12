@@ -32,6 +32,7 @@ public class PrefabDemoDisplay : MonoBehaviour {
             uiText.text += "Heart rate sensor - is connected ? " + GameObject.Find("HeartRateDisplay").GetComponent<HeartRateDisplay>().connected + "\n";
             uiText.text += "HR = " + GameObject.Find("HeartRateDisplay").GetComponent<HeartRateDisplay>().heartRate + "\n";
             uiText.text += "----------------------------------------------\n";
+            DontDestroyOnLoad(GameObject.Find("HeartRateDisplay"));
         }
         if (GameObject.Find("SpeedDisplay")) {
             uiText.text += "Speed sensor - is connected ? " + GameObject.Find("SpeedDisplay").GetComponent<SpeedDisplay>().connected + "\n";

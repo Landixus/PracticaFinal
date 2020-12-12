@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainPage.unity
     guid: 258d912485236b541a2b15fa420f5d0f
+  - enabled: 1
+    path: Assets/AdvancedAnt/DEMO PREFABS/demowithPrefabs.unity
+    guid: c86722469b2c9074dacfd799cc064c0c
+  - enabled: 1
+    path: Assets/Scenes/SelectDevice.unity
+    guid: d6b8131076a859b4d83d19cd3254b70b
+  - enabled: 1
+    path: Assets/Scenes/Test.unity
+    guid: 8d60124de5288a348a35180225acc380
   m_configObjects: {}

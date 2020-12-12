@@ -22,8 +22,8 @@ public class HeartRateDisplay : MonoBehaviour {
     public bool connected = false; //will be set to true once connected
 
     //windows and mac settings
-    public bool autoConnectToFirstSensorFound = true; //for windows and mac, either connect to the first sensor found or let you pick a sensor manually in the scanResult list with your own UI and call ConnectToDevice(AntDevice device)
-    public List<AntDevice> scanResult;
+    public bool autoConnectToFirstSensorFound = false; //for windows and mac, either connect to the first sensor found or let you pick a sensor manually in the scanResult list with your own UI and call ConnectToDevice(AntDevice device)
+    public static List<AntDevice> scanResult;
 
     //android settings
     public bool useAndroidUI = true; //will open the unified ant+ UI on the android app if set to true, otherwise will connect to the first found device
