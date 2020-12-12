@@ -22,6 +22,11 @@ public class SelectDevice : MonoBehaviour
         //Carguem la scena on hi han els prefabs de manera aditiva
         SceneManager.LoadScene(3, LoadSceneMode.Additive);
 
+        /*IDEA: Fer que al entarr en el menu principal començi a scanejar amb l'StartScan
+         es pot posar directament scrip HeartRateDisplay en un GameObject. No faria falta afegir l'escena DemoPrefab si
+        fem servir DontDestroyOnLoad()
+         */
+
 
         if (GameObject.Find("HeartRateDisplay"))
         {
