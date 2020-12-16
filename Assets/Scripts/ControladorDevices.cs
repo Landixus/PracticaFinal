@@ -5,8 +5,11 @@ using UnityEngine;
 public class ControladorDevices : MonoBehaviour
 {
 
-    public GameObject heartSensorDisplayObject;
+    private GameObject heartSensorDisplayObject;
     private HeartRateDisplay heartRateDisplay;
+
+    private GameObject speedCadenceDisplayObject;
+    private SpeedCadenceDisplay speedCadenceDisplay;
 
 
     // Start is called before the first frame update
@@ -21,6 +24,10 @@ public class ControladorDevices : MonoBehaviour
             }
             if (GameObject.Find("SpeedCadenceDisplay"))
             {
+                speedCadenceDisplayObject = GameObject.Find("SpeedCadenceDisplay");
+                speedCadenceDisplay = (SpeedCadenceDisplay)speedCadenceDisplayObject.GetComponent(typeof(SpeedCadenceDisplay));
+                speedCadenceDisplay.autoConnectToFirstSensorFound = false;
+                speedCadenceDisplay.StartScan();
                 DontDestroyOnLoad(GameObject.Find("SpeedCadenceDisplay"));
             }
             if (GameObject.Find("HeartRateDisplay"))

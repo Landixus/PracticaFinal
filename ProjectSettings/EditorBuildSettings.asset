@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/AdvancedAnt/DEMO PREFABS/demowithPrefabs.unity
     guid: c86722469b2c9074dacfd799cc064c0c
   - enabled: 1
-    path: Assets/Scenes/SelectDevices.unity
+    path: Assets/Scenes/PairDevices.unity
     guid: d6b8131076a859b4d83d19cd3254b70b
   - enabled: 1
     path: Assets/Scenes/Test.unity
