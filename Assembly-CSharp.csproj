@@ -257,11 +257,12 @@
     <Compile Include="Assets\AdvancedAnt\Scripts\SpeedCadenceDisplay.cs" />
     <Compile Include="Assets\AdvancedAnt\Scripts\SpeedDisplay.cs" />
     <Compile Include="Assets\Scripts\BBDD.cs" />
-    <Compile Include="Assets\Scripts\ControladorPaginaPrincipal.cs" />
+    <Compile Include="Assets\Scripts\ControladorDevices.cs" />
     <Compile Include="Assets\Scripts\CreateUser.cs" />
     <Compile Include="Assets\Scripts\LogIn.cs" />
+    <Compile Include="Assets\Scripts\PaginaPrincipal.cs" />
     <Compile Include="Assets\Scripts\PasswordInfo.cs" />
-    <Compile Include="Assets\Scripts\SelectDevice.cs" />
+    <Compile Include="Assets\Scripts\SelectDevices.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\User.cs" />
     <Compile Include="Assets\Scripts\eyeManager.cs" />

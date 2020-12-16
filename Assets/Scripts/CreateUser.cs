@@ -63,7 +63,7 @@ public class CreateUser : MonoBehaviour
                     //passwordErrorDisplay.GetComponent<Text>().text = "Valid ";
 
                     //Passem l'usuari al controlador principal
-                    ControladorPaginaPrincipal.user = user;
+                    PaginaPrincipal.user = user;
                     //go to main page
                     goToMainPage();
                 }
@@ -71,8 +71,6 @@ public class CreateUser : MonoBehaviour
                     Debug.LogError("Hi ha hagut un error a l'hora de seleccionar l'usuari");
                 }
 
-                ControladorPaginaPrincipal.user = user;
-                //goToMainPage();
             } else if (insertErrorId == 1) {
                 mailErrorDisplay.GetComponent<Text>().text = "Aquest correu ja esta fet servir per un altre usuari";
             } else
