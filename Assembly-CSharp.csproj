@@ -261,8 +261,8 @@
     <Compile Include="Assets\Scripts\CreateUser.cs" />
     <Compile Include="Assets\Scripts\LogIn.cs" />
     <Compile Include="Assets\Scripts\PaginaPrincipal.cs" />
+    <Compile Include="Assets\Scripts\PairDevices.cs" />
     <Compile Include="Assets\Scripts\PasswordInfo.cs" />
-    <Compile Include="Assets\Scripts\SelectDevices.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\User.cs" />
     <Compile Include="Assets\Scripts\eyeManager.cs" />

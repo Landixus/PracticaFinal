@@ -23,6 +23,6 @@ public class PaginaPrincipal : MonoBehaviour
 
     public void goToSelectDevices()
     {
-        SceneManager.LoadScene(sceneName: "SelectDevices");
+        SceneManager.LoadScene(sceneName: "PairDevices");
     }
 }
