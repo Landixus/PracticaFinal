@@ -67,6 +67,8 @@ public class PairDevices : MonoBehaviour
 
         sizeHeartSensor = 0;
         sizeSpeedCadence = 0;
+        sizeCadence = 0;
+        sizetrainerList = 0;
        
         dropdownHeartSensor.options.Clear();
         dropdownHeartSensor.onValueChanged.AddListener(delegate { HeartDisplaySelected(dropdownHeartSensor); });
@@ -76,8 +78,15 @@ public class PairDevices : MonoBehaviour
         dropdownSpeedCadence.options.Clear();
         dropdownSpeedCadence.onValueChanged.AddListener(delegate { SpeedCadenceSelected(dropdownSpeedCadence); });
 
+        dropdownCadence.options.Clear();
+        dropdownCadence.onValueChanged.AddListener(delegate { CadenceSelected(dropdownCadence); });
+
+        dropdownTrainer.options.Clear();
+        dropdownTrainer.onValueChanged.AddListener(delegate { TrainerSelected(dropdownTrainer); });
+
         updateListHr();
         updateListSpeedCadenceDisplay();
+        updateListCadence();
     }
 
     void HeartDisplaySelected(Dropdown dropdown)
@@ -101,9 +110,6 @@ public class PairDevices : MonoBehaviour
         int index = dropdown.value;
         TextBoxSpeedCadence.text = dropdown.options[index].text;
         Debug.Log("Selected SpeedCadence: " + index);
-
-
-        
 
         //Agafem l'objecte HeartDisplay i utilitzem la funció ConnectToDevice per connectar el sensor de FC seleccionat per l'usuari
         if (speedCadenceDisplayObject != null)
@@ -133,6 +139,22 @@ public class PairDevices : MonoBehaviour
         }
     }
 
+    void TrainerSelected(Dropdown dropdown)
+    {
+
+        int index = dropdown.value;
+        TextBoxTrainer.text = dropdown.options[index].text;
+        Debug.Log("Selected Trainer: " + index);
+
+        if (trainerDisplayObject != null)
+        {
+            trainerDisplay.ConnectToDevice(FitnessEquipmentDisplay.scanResult[index]);
+        }
+        else
+        {
+            Debug.LogError("ERROR: No s'ha trobat FitnesEquipment Objecte Prefab (SelectDevice) ");
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -158,6 +180,14 @@ public class PairDevices : MonoBehaviour
             if (sizeCadence != CadenceDisplay.scanResult.Count)
             {
                 updateListCadence();
+            }
+        }
+
+        if (FitnessEquipmentDisplay.scanResult != null)
+        {
+            if (sizetrainerList != FitnessEquipmentDisplay.scanResult.Count)
+            {
+                updateListTrainer();
             }
         }
         
@@ -206,21 +236,40 @@ public class PairDevices : MonoBehaviour
 
     public void updateListCadence()
     {
+        sizeCadence = 0;
         if (CadenceDisplay.scanResult != null)
         {
             foreach (var cadence in CadenceDisplay.scanResult)
             {
                 dropdownSpeedCadence.options.Add(new Dropdown.OptionData() { text = cadence.ToString() });
-                sizeSpeedCadence++;
+                sizeCadence++;
             }
         }
 
         if (CadenceDisplay.scanResult.Count == 1 && speedCadenceDisplay.connected == false && cadenceDisplay.connected == false)
         {
-            dropdownSpeedCadence.value = 1;
-            CadenceSelected(dropdownSpeedCadence);
+            dropdownCadence.value = 1;
+            CadenceSelected(dropdownCadence);
+        }
+    }
+
+    public void updateListTrainer()
+    {
+        sizetrainerList = 0;
+        if (FitnessEquipmentDisplay.scanResult != null)
+        {
+            foreach (var trainer in FitnessEquipmentDisplay.scanResult)
+            {
+                dropdownTrainer.options.Add(new Dropdown.OptionData() { text = trainer.ToString() });
+                sizetrainerList++;
+            }
         }
 
+        if (FitnessEquipmentDisplay.scanResult.Count == 1 && trainerDisplay.connected == false)
+        {
+            dropdownTrainer.value = 1;
+            CadenceSelected(dropdownTrainer);
+        }
     }
 
 

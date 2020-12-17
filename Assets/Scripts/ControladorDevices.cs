@@ -11,6 +11,12 @@ public class ControladorDevices : MonoBehaviour
     private GameObject speedCadenceDisplayObject;
     private SpeedCadenceDisplay speedCadenceDisplay;
 
+    private GameObject cadenceDisplayObject;
+    private CadenceDisplay cadenceDisplay;
+
+    private GameObject trainerDisplayObject;
+    private FitnessEquipmentDisplay trainerDisplay;
+
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +26,10 @@ public class ControladorDevices : MonoBehaviour
             //Fem que començin a buscar 
             if (GameObject.Find("CadenceDisplay"))
             {
+                cadenceDisplayObject = GameObject.Find("CadenceDisplay");
+                cadenceDisplay = (CadenceDisplay)cadenceDisplayObject.GetComponent(typeof(CadenceDisplay));
+                cadenceDisplay.autoConnectToFirstSensorFound = false;
+                cadenceDisplay.StartScan();
                 DontDestroyOnLoad(GameObject.Find("CadenceDisplay"));
             }
             if (GameObject.Find("SpeedCadenceDisplay"))
@@ -48,6 +58,10 @@ public class ControladorDevices : MonoBehaviour
             }
             if (GameObject.Find("FitnessEquipmentDisplay"))
             {
+                trainerDisplayObject = GameObject.Find("FitnessEquipmentDisplay");
+                trainerDisplay = (FitnessEquipmentDisplay)trainerDisplayObject.GetComponent(typeof(FitnessEquipmentDisplay));
+                trainerDisplay.autoConnectToFirstSensorFound = false;
+                trainerDisplay.StartScan();
                 DontDestroyOnLoad(GameObject.Find("FitnessEquipmentDisplay"));
             }
         }

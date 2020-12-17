@@ -4845,8 +4845,8 @@ MonoBehaviour:
   TextBoxSpeedCadence: {fileID: 1493312992}
   dropdownCadence: {fileID: 358035957}
   TextBoxCadence: {fileID: 1606623560}
-  dropdownTrainer: {fileID: 0}
-  TextBoxTrainer: {fileID: 0}
+  dropdownTrainer: {fileID: 526335488}
+  TextBoxTrainer: {fileID: 942469564}
 --- !u!4 &1937354176
 Transform:
   m_ObjectHideFlags: 0

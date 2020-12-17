@@ -293,6 +293,7 @@ public class FitnessEquipmentDisplay : MonoBehaviour
                     foundDevice.radiofreq = 57;
                     foundDevice.name = "FitnessEquipment(" + foundDevice.deviceNumber + ")";
                     scanResult.Add(foundDevice);
+                    Debug.Log("FitnessEquipment found" + foundDevice.ToString());
                     if (autoConnectToFirstSensorFound)
                     {
                         ConnectToDevice(foundDevice);
