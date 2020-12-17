@@ -38,14 +38,14 @@ public class UserConfiguration
 public class FitnessEquipmentDisplay : MonoBehaviour
 {
 
-    public bool autoStartScan = true; //start scan on play
+    public bool autoStartScan = false; //start scan on play
     public bool connected = false; //will be set to true once connected
 
 
 
     //windows and mac settings
-    public bool autoConnectToFirstSensorFound = true; //for windows and mac, either connect to the first sensor found 
-    public List<AntDevice> scanResult; //or let you pick a sensor manually in the scanResult list with your own UI and call ConnectToDevice(AntDevice device)
+    public bool autoConnectToFirstSensorFound = false; //for windows and mac, either connect to the first sensor found 
+    static public List<AntDevice> scanResult; //or let you pick a sensor manually in the scanResult list with your own UI and call ConnectToDevice(AntDevice device)
 
     //android settings
     public bool useAndroidUI = true; //will open the unified ant+ UI on the android app if set to true, otherwise will connect to the first found device
@@ -309,7 +309,7 @@ public class FitnessEquipmentDisplay : MonoBehaviour
 
     }
 
-    void ConnectToDevice(AntDevice device)
+    public void ConnectToDevice(AntDevice device)
     {
         AntManager.Instance.CloseBackgroundScanChannel();
         byte channelID = AntManager.Instance.GetFreeChannelID();

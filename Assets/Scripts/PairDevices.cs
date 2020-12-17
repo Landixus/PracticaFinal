@@ -19,11 +19,26 @@ public class PairDevices : MonoBehaviour
     private GameObject speedCadenceDisplayObject;
     private SpeedCadenceDisplay speedCadenceDisplay;
 
+    public Dropdown dropdownCadence;
+    public Text TextBoxCadence;
+    private int sizeCadence;
+    private GameObject cadenceDisplayObject;
+    private CadenceDisplay cadenceDisplay;
+
+    public Dropdown dropdownTrainer;
+    public Text TextBoxTrainer;
+    private int sizetrainerList;
+    private GameObject trainerDisplayObject;
+    private FitnessEquipmentDisplay trainerDisplay;
+
     // Start is called before the first frame update
     void Start()
     {
 
         TextBoxHeartSensor.text = "";
+        TextBoxCadence.text = "";
+        TextBoxSpeedCadence.text = "";
+        TextBoxTrainer.text = "";
 
         //Agafem el sensor de HR
         if (GameObject.Find("HeartRateDisplay"))
@@ -32,13 +47,23 @@ public class PairDevices : MonoBehaviour
             heartRateDisplay = (HeartRateDisplay)heartSensorDisplayObject.GetComponent(typeof(HeartRateDisplay));
         }
 
-        if (GameObject.Find("CadenceDisplay"))
+        if (GameObject.Find("SpeedCadenceDisplay"))
         {
             speedCadenceDisplayObject = GameObject.Find("SpeedCadenceDisplay");
             speedCadenceDisplay = (SpeedCadenceDisplay)speedCadenceDisplayObject.GetComponent(typeof(SpeedCadenceDisplay));
         }
 
+        if (GameObject.Find("CadenceDisplay"))
+        {
+            cadenceDisplayObject = GameObject.Find("CadenceDisplay");
+            cadenceDisplay = (CadenceDisplay)cadenceDisplayObject.GetComponent(typeof(CadenceDisplay));
+        }
 
+        if (GameObject.Find("FitnessEquipmentDisplay"))
+        {
+            trainerDisplayObject = GameObject.Find("FitnessEquipmentDisplay");
+            trainerDisplay = (FitnessEquipmentDisplay)trainerDisplayObject.GetComponent(typeof(FitnessEquipmentDisplay));
+        }
 
         sizeHeartSensor = 0;
         sizeSpeedCadence = 0;
@@ -78,6 +103,8 @@ public class PairDevices : MonoBehaviour
         Debug.Log("Selected SpeedCadence: " + index);
 
 
+        
+
         //Agafem l'objecte HeartDisplay i utilitzem la funció ConnectToDevice per connectar el sensor de FC seleccionat per l'usuari
         if (speedCadenceDisplayObject != null)
         {
@@ -86,6 +113,23 @@ public class PairDevices : MonoBehaviour
         else
         {
             Debug.LogError("ERROR: No s'ha trobat speedCadence Objecte Prefab (SelectDevice) ");
+        }
+    }
+
+    void CadenceSelected(Dropdown dropdown)
+    {
+
+        int index = dropdown.value;
+        TextBoxCadence.text = dropdown.options[index].text;
+        Debug.Log("Selected Cadence: " + index);
+
+        if (cadenceDisplayObject != null)
+        {
+            cadenceDisplay.ConnectToDevice(CadenceDisplay.scanResult[index]);
+        }
+        else
+        {
+            Debug.LogError("ERROR: No s'ha trobat Cadence Objecte Prefab (SelectDevice) ");
         }
     }
 
@@ -103,11 +147,20 @@ public class PairDevices : MonoBehaviour
 
         if (SpeedCadenceDisplay.scanResult != null)
         {
-            if (sizeHeartSensor != SpeedCadenceDisplay.scanResult.Count)
+            if (sizeSpeedCadence != SpeedCadenceDisplay.scanResult.Count )
             {
                 updateListSpeedCadenceDisplay();
             }
         }
+
+        if (CadenceDisplay.scanResult != null)
+        {
+            if (sizeCadence != CadenceDisplay.scanResult.Count)
+            {
+                updateListCadence();
+            }
+        }
+        
     }
 
     void updateListHr() {
@@ -123,7 +176,7 @@ public class PairDevices : MonoBehaviour
             }
         }
 
-        if (HeartRateDisplay.scanResult.Count == 1)
+        if (HeartRateDisplay.scanResult.Count == 1 && heartRateDisplay.connected == false)
         {
             dropdownHeartSensor.value = 1;
             HeartDisplaySelected(dropdownHeartSensor);
@@ -144,11 +197,30 @@ public class PairDevices : MonoBehaviour
             }
         }
 
-        if (SpeedCadenceDisplay.scanResult.Count == 1)
+        if (SpeedCadenceDisplay.scanResult.Count == 1 && speedCadenceDisplay.connected == false && cadenceDisplay.connected == false)
         {
             dropdownSpeedCadence.value = 1;
             SpeedCadenceSelected(dropdownSpeedCadence);
         }
+    }
+
+    public void updateListCadence()
+    {
+        if (CadenceDisplay.scanResult != null)
+        {
+            foreach (var cadence in CadenceDisplay.scanResult)
+            {
+                dropdownSpeedCadence.options.Add(new Dropdown.OptionData() { text = cadence.ToString() });
+                sizeSpeedCadence++;
+            }
+        }
+
+        if (CadenceDisplay.scanResult.Count == 1 && speedCadenceDisplay.connected == false && cadenceDisplay.connected == false)
+        {
+            dropdownSpeedCadence.value = 1;
+            CadenceSelected(dropdownSpeedCadence);
+        }
+
     }
 
 
