@@ -24,7 +24,7 @@ public class LogIn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public void logIn()
@@ -67,5 +67,13 @@ public class LogIn : MonoBehaviour
     public void goToMainPage()
     {
         SceneManager.LoadScene(sceneName: "MainPage");
+    }
+
+    void OnGUI()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            logIn();
+        }
     }
 }
