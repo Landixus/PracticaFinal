@@ -16,12 +16,12 @@ service channel at a time.
     */
 public class PowerMeterDisplay : MonoBehaviour {
 
-    public bool autoStartScan = true; //start scan on play
+    public bool autoStartScan = false; //start scan on play
     public bool connected = false; //will be set to true once connected
  
     //windows and mac settings
-    public bool autoConnectToFirstSensorFound = true; //for windows and mac, either connect to the first sensor found or let you pick a sensor manually in the scanResult list with your own UI and call ConnectToDevice(AntDevice device)
-    public List<AntDevice> scanResult;
+    public bool autoConnectToFirstSensorFound = false; //for windows and mac, either connect to the first sensor found or let you pick a sensor manually in the scanResult list with your own UI and call ConnectToDevice(AntDevice device)
+    static public List<AntDevice> scanResult;
 
     //android settings
     public bool useAndroidUI = true; //will open the unified ant+ UI on the android app if set to true, otherwise will connect to the first found device
@@ -187,7 +187,7 @@ public class PowerMeterDisplay : MonoBehaviour {
 
     }
 
-    void ConnectToDevice(AntDevice device) {
+    public void ConnectToDevice(AntDevice device) {
         AntManager.Instance.CloseBackgroundScanChannel();
         byte channelID = AntManager.Instance.GetFreeChannelID();
         deviceChannel = AntManager.Instance.OpenChannel(ANT_ReferenceLibrary.ChannelType.BASE_Slave_Receive_0x00, channelID, (ushort)device.deviceNumber, device.deviceType, device.transType, (byte)device.radiofreq, (ushort)device.period, false);

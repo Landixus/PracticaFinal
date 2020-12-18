@@ -17,6 +17,9 @@ public class ControladorDevices : MonoBehaviour
     private GameObject trainerDisplayObject;
     private FitnessEquipmentDisplay trainerDisplay;
 
+    private GameObject powerDisplayObject;
+    private PowerMeterDisplay powerDisplay;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,9 @@ public class ControladorDevices : MonoBehaviour
             {
                 cadenceDisplayObject = GameObject.Find("CadenceDisplay");
                 cadenceDisplay = (CadenceDisplay)cadenceDisplayObject.GetComponent(typeof(CadenceDisplay));
+
+                //Posem autoCOnnectToFirstSensor a false ja que no volem que es connecti al primer aparell que trobi
+                //En principi ja està a fals en l'script pero ens assagurem que sigui aixi
                 cadenceDisplay.autoConnectToFirstSensorFound = false;
                 cadenceDisplay.StartScan();
                 DontDestroyOnLoad(GameObject.Find("CadenceDisplay"));
@@ -54,6 +60,10 @@ public class ControladorDevices : MonoBehaviour
             }
             if (GameObject.Find("PowerMeterDisplay"))
             {
+                powerDisplayObject = GameObject.Find("PowerMeterDisplay");
+                powerDisplay = (PowerMeterDisplay)powerDisplayObject.GetComponent(typeof(PowerMeterDisplay));
+                powerDisplay.autoConnectToFirstSensorFound = false;
+                powerDisplay.StartScan();
                 DontDestroyOnLoad(GameObject.Find("PowerMeterDisplay"));
             }
             if (GameObject.Find("FitnessEquipmentDisplay"))

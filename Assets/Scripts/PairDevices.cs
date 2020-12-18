@@ -31,6 +31,12 @@ public class PairDevices : MonoBehaviour
     private GameObject trainerDisplayObject;
     private FitnessEquipmentDisplay trainerDisplay;
 
+    public Dropdown dropdownPower;
+    public Text TextBoxPower;
+    private int sizePowerList;
+    private GameObject powerDisplayObject;
+    private PowerMeterDisplay powerDisplay;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +45,7 @@ public class PairDevices : MonoBehaviour
         TextBoxCadence.text = "";
         TextBoxSpeedCadence.text = "";
         TextBoxTrainer.text = "";
+        TextBoxPower.text = "";
 
         //Agafem el sensor de HR
         if (GameObject.Find("HeartRateDisplay"))
@@ -74,7 +81,6 @@ public class PairDevices : MonoBehaviour
         dropdownHeartSensor.onValueChanged.AddListener(delegate { HeartDisplaySelected(dropdownHeartSensor); });
         //dropdownHeartSensor.options.Add(new Dropdown.OptionData() { text = "Hola" });
 
-
         dropdownSpeedCadence.options.Clear();
         dropdownSpeedCadence.onValueChanged.AddListener(delegate { SpeedCadenceSelected(dropdownSpeedCadence); });
 
@@ -84,9 +90,14 @@ public class PairDevices : MonoBehaviour
         dropdownTrainer.options.Clear();
         dropdownTrainer.onValueChanged.AddListener(delegate { TrainerSelected(dropdownTrainer); });
 
+        dropdownPower.options.Clear();
+        dropdownPower.onValueChanged.AddListener(delegate { PowerSelected(dropdownPower); });
+
         updateListHr();
         updateListSpeedCadenceDisplay();
         updateListCadence();
+        updateListTrainer();
+        updateListPower();
     }
 
     void HeartDisplaySelected(Dropdown dropdown)
@@ -155,6 +166,24 @@ public class PairDevices : MonoBehaviour
             Debug.LogError("ERROR: No s'ha trobat FitnesEquipment Objecte Prefab (SelectDevice) ");
         }
     }
+
+    void PowerSelected(Dropdown dropdown)
+    {
+        int index = dropdown.value;
+        TextBoxPower.text = dropdown.options[index].text;
+        Debug.Log("Selected Power Device: " + index);
+
+        if (powerDisplayObject != null)
+        {
+            powerDisplay.ConnectToDevice(PowerMeterDisplay.scanResult[index]);
+        }
+        else
+        {
+            Debug.LogError("ERROR: No s'ha trobat PowerDevice Objecte Prefab (SelectDevice) ");
+        }
+    }
+
+
 
     // Update is called once per frame
     void Update()
@@ -272,7 +301,24 @@ public class PairDevices : MonoBehaviour
         }
     }
 
+    private void updateListPower()
+    {
+        sizePowerList = 0;
+        if (PowerMeterDisplay.scanResult != null)
+        {
+            foreach (var powerDevice in PowerMeterDisplay.scanResult)
+            {
+                dropdownPower.options.Add(new Dropdown.OptionData() { text = powerDevice.ToString() });
+                sizePowerList++;
+            }
+        }
 
+        if (PowerMeterDisplay.scanResult.Count == 1 && powerDisplay.connected == false)
+        {
+            dropdownPower.value = 1;
+            PowerSelected(dropdownTrainer);
+        }
+    }
     public void changeTest()
     {
         SceneManager.LoadScene(5);

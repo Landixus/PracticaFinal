@@ -155,8 +155,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.5, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 2.2399979, y: 0.35000038}
+  m_SizeDelta: {x: -24.44635, y: -10.477005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &282202646
 MonoBehaviour:
@@ -181,7 +181,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 4
@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 665035445}
   - component: {fileID: 665035444}
   m_Layer: 5
-  m_Name: BtLogIn
+  m_Name: PairDevice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -384,8 +384,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 124.3, y: -59.7}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 145.7, y: -76}
+  m_SizeDelta: {x: 202.87558, y: 62.6671}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &665035444
 MonoBehaviour:
@@ -611,8 +611,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.34999847, y: 0}
+  m_SizeDelta: {x: -7.6831665, y: -9.778515}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &785470214
 MonoBehaviour:
@@ -637,7 +637,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 4
@@ -646,7 +646,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Crea Usuari
+  m_Text: Create Workout
 --- !u!222 &785470215
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -691,8 +691,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -122.9, y: -59.3}
-  m_SizeDelta: {x: 160.2, y: 30}
+  m_AnchoredPosition: {x: -126.4, y: -75.666}
+  m_SizeDelta: {x: 202, y: 62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &981018486
 MonoBehaviour:
@@ -1119,8 +1119,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -121, y: 47}
-  m_SizeDelta: {x: 160.2, y: 30}
+  m_AnchoredPosition: {x: -126.400024, y: 48.899986}
+  m_SizeDelta: {x: 202, y: 62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1914843928
 MonoBehaviour:
@@ -1247,8 +1247,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1.39, y: -0}
+  m_SizeDelta: {x: -11.175415, y: -8.381596}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2003598061
 MonoBehaviour:
@@ -1273,7 +1273,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 4
@@ -1327,8 +1327,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 119, y: 51}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 145.26, y: 48.9}
+  m_SizeDelta: {x: 202, y: 62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2064194373
 MonoBehaviour:
@@ -1444,8 +1444,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.5, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.8499985, y: -0.70000076}
+  m_SizeDelta: {x: -10.47702, y: -12.572395}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2107057570
 MonoBehaviour:
@@ -1470,7 +1470,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 4
@@ -1479,7 +1479,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LogIn
+  m_Text: Follow Workout
 --- !u!222 &2107057571
 CanvasRenderer:
   m_ObjectHideFlags: 0
