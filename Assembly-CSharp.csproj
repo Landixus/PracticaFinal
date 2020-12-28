@@ -256,6 +256,7 @@
     <Compile Include="Assets\AdvancedAnt\Scripts\PowerMeterDisplay.cs" />
     <Compile Include="Assets\AdvancedAnt\Scripts\SpeedCadenceDisplay.cs" />
     <Compile Include="Assets\AdvancedAnt\Scripts\SpeedDisplay.cs" />
+    <Compile Include="Assets\File Hopper\Example\Scripts\DragFilesOntoMe.cs" />
     <Compile Include="Assets\Scripts\BBDD.cs" />
     <Compile Include="Assets\Scripts\ControladorDevices.cs" />
     <Compile Include="Assets\Scripts\CreateUser.cs" />
@@ -315,6 +316,7 @@
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\File Hopper\README.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
@@ -324,6 +326,7 @@
     <None Include="Assets\AdvancedAnt\Plugins\Ant\Fit\FIT license.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\File Hopper\Third-Party Notices.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
@@ -514,6 +517,9 @@
     </Reference>
     <Reference Include="Mono.Data.Sqlite">
       <HintPath>D:/Classe/Projecte Final/PracticaFinal/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="File Hopper">
+      <HintPath>D:/Classe/Projecte Final/PracticaFinal/Assets/File Hopper/Plugins/File Hopper.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>E:/Unity/2019.4.15f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

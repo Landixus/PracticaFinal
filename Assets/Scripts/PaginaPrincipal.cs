@@ -25,4 +25,9 @@ public class PaginaPrincipal : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName: "PairDevices");
     }
+
+    public void goToGPXUploader()
+    {
+        SceneManager.LoadScene(sceneBuildIndex: 6);
+    }
 }
