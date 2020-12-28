@@ -23,6 +23,11 @@ public class DragFilesOntoMe : MonoBehaviour {
 		{
 			m_text.text = "Dropped on me: " + name + ", file count: " + files.Count.ToString()
 				+ "\n First File: " + files[0];
+			StopListener();
 		}
+	}
+
+	public void StopListener() {
+		m_fileHopper.OnFilesDropped.RemoveListener(DroppedFilesOnMe);
 	}
 }

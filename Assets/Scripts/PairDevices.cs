@@ -72,6 +72,12 @@ public class PairDevices : MonoBehaviour
             trainerDisplay = (FitnessEquipmentDisplay)trainerDisplayObject.GetComponent(typeof(FitnessEquipmentDisplay));
         }
 
+        if (GameObject.Find("PowerMeterDisplay"))
+        {
+            powerDisplayObject = GameObject.Find("PowerMeterDisplay");
+            powerDisplay = (PowerMeterDisplay)powerDisplayObject.GetComponent(typeof(PowerMeterDisplay));
+        }
+
         sizeHeartSensor = 0;
         sizeSpeedCadence = 0;
         sizeCadence = 0;
