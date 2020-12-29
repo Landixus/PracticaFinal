@@ -128,6 +128,7 @@ public class SeleccionRuta : MonoBehaviour
         return distance;
     }
 
+    //Funcio per calcular la distància entre dos punts donats en angle de coordenades
     private static double DistanceTo(double baseLat, double baseLon, double targetLat, double targetLon)
     {
 
@@ -177,6 +178,7 @@ public class SeleccionRuta : MonoBehaviour
         return dist;
     }
 
+    //Funció per calcular el pendent entre dos punts, es calcula la pendent entre amb 5 punts de diferencia per ajustar els càlculs i que sigui més uniforme
     private double[] CalcSlope(List<TrackPoint> trackPoints, double[] distancePoints)
     {
         double actualElev = trackPoints[0].ele;
@@ -194,8 +196,6 @@ public class SeleccionRuta : MonoBehaviour
             actualElev = trackPoints[i].ele;
             distanceBetweenPoints = Calc5pointsDistance(distancePoints, i-5);
 
-           
-
             double elevDiff = Math.Round(actualElev - priorElev);
 
             if (distanceBetweenPoints == 0)
@@ -204,7 +204,7 @@ public class SeleccionRuta : MonoBehaviour
             }
             else 
             {
-                slopePoints[i - 1] = Math.Round(elevDiff / distanceBetweenPoints * 100, 2);
+                slopePoints[i - 1] = Math.Round(elevDiff / distanceBetweenPoints * 100, 1);
             }
           
 
@@ -212,10 +212,11 @@ public class SeleccionRuta : MonoBehaviour
             //Debug.Log(slopePoints[i-1]);
             priorElev = actualElev;
         }
-        //Multipliquem per -1 per fer el número positiu
+        
         return slopePoints;
     }
 
+    //funció que serveix per calcular la distancia entre 5 punts
     private double Calc5pointsDistance(double[] distancePoints, int index)
     {
         ArraySegment<double> splitarray = new ArraySegment<double>(distancePoints, index, 5);
@@ -228,33 +229,33 @@ public class SeleccionRuta : MonoBehaviour
 
         return dist;
     }
-
+    
+    //Funció que serveix per calcular la pendent que ens falta. Agafem els dos punts on tenim informació i calculem la diferencia entre ells 
+    // i calculem step per arriabar a l'altura seguent
     private void AddSlopeInformation(double[] slope)
     {
-        double actualElev = 0;
         double priorElev = slope[0];
 
         for (int i = 4; i < slope.Length; i += 5)
         {
-           
-            actualElev = slope[i];
+
+            double actualElev = slope[i];
             double elevDiff = Math.Round(actualElev - priorElev, 2);
             double step = Math.Round(elevDiff / 4, 2);
 
-            Debug.Log("actual elev:" + actualElev + " prior elev:" + priorElev);
+            //Debug.Log("actual elev:" + actualElev + " prior elev:" + priorElev);
 
+            //Per estalviar càlculs si no hi ha canvis d'altura vol dir que el desnivell és 0
             if (step != 0)
             {
                 for (int j = i - 4; j < i; j++)
                 {
                     slope[j] = Math.Round(slope[i] + step * (j - i), 1);
-                    Debug.Log("i:" + j + " value:" + slope[j]);
+                    //Debug.Log("i:" + j + " value:" + slope[j]);
                 }
                 priorElev = actualElev;
             }
-            Debug.Log("i:" + i + " value:" + slope[i]);
-
-
+            //Debug.Log("i:" + i + " value:" + slope[i]);
 
         }
     }
