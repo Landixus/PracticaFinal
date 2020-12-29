@@ -267,9 +267,11 @@
     <Compile Include="Assets\Scripts\PasswordInfo.cs" />
     <Compile Include="Assets\Scripts\Ruta.cs" />
     <Compile Include="Assets\Scripts\SeleccionRuta.cs" />
+    <Compile Include="Assets\Scripts\SelectedRoute.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\TrackPoint.cs" />
     <Compile Include="Assets\Scripts\User.cs" />
+    <Compile Include="Assets\Scripts\Window_Graph.cs" />
     <Compile Include="Assets\Scripts\eyeManager.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />

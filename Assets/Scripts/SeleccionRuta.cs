@@ -1,8 +1,8 @@
 ﻿using LinqXMLTester;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SeleccionRuta : MonoBehaviour
 {
@@ -26,22 +26,27 @@ public class SeleccionRuta : MonoBehaviour
     {
         List<TrackPoint> trackPoints = gpx.LoadGPXTracks(routePath);
         string name = gpx.GetName(routePath);
-        Debug.Log(name);
+        //Debug.Log(name);
 
         //calc Elevation
-        Debug.Log(CalcPositiveElevation(trackPoints));
-        Debug.Log(CalcNegativeElevation(trackPoints));
+        double positiveElev = CalcPositiveElevation(trackPoints);
+        double negativeElev = CalcNegativeElevation(trackPoints);
 
         //Dividiem entre 1000 ja que el resultat ens el dona en metres
-        double[] ditancePoints = CalcDistance(trackPoints);
+        double[] distancePoints = CalcDistance(trackPoints);
 
-        Debug.Log(CalcTotalDistance(ditancePoints)/1000 + " KM");
+        //Calc distance
+        double totalDistance = CalcTotalDistance(distancePoints)/1000;
 
         //Calc pendent
-        double[] slope = CalcSlope(trackPoints, ditancePoints);
+        double[] slope = CalcSlope(trackPoints, distancePoints);
 
         AddSlopeInformation(slope);
 
+
+        Ruta ruta = new Ruta(name, trackPoints, positiveElev, negativeElev, totalDistance, distancePoints,slope);
+
+        SelectedRoute.ruta = ruta;
     }
 
     private double CalcPositiveElevation(List<TrackPoint> trackPoints)
@@ -190,7 +195,7 @@ public class SeleccionRuta : MonoBehaviour
 
         //* 100 ja que volem el percentatge per després poder adequar la dificultat del rodillo
         slopePoints[0] = (priorElev - actualElev) / distanceBetweenPoints * 100;
-        Debug.Log(slopePoints[0]);
+ 
         for (int i = 10; i < trackPoints.Count; i += 5)
         {
             actualElev = trackPoints[i].ele;
@@ -260,4 +265,8 @@ public class SeleccionRuta : MonoBehaviour
         }
     }
 
+    public void goToDrawGraph()
+    {
+        SceneManager.LoadScene(7);
+    }
 }
