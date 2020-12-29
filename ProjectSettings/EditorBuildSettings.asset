@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UploadGPX.unity
     guid: a355c98060c204b4f89f6265359396a1
+  - enabled: 1
+    path: Assets/Scenes/RouteGraph.unity
+    guid: 8588730cb84099f4b83d736de34dd634
   m_configObjects: {}

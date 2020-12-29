@@ -17,6 +17,7 @@ public class SelectedRoute : MonoBehaviour
             graph_windowObj = GameObject.Find("Window_Graph");
             graph_window = (Window_Graph)graph_windowObj.GetComponent(typeof(Window_Graph));
 
+            //No s'ha de passar la pendent sino la altura
             graph_window.ShowGraph(ruta.pendentPunts);
         }
 
