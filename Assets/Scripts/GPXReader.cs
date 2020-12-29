@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
+using System.Globalization;
 
 namespace LinqXMLTester
 {
@@ -108,11 +109,15 @@ namespace LinqXMLTester
                 foreach (var trkSeg in trk.Segs)
                 {
 
-                    double lat = Convert.ToDouble(trkSeg.Latitude);
-                    double lon = Convert.ToDouble(trkSeg.Longitude);
+                    //Necessitem passar els punts a , dels valors dek GPX ja que sino no es fa la conversio correctament
+                    //Com no sabem si l'ususari utilitza , o . per separar els decimals utilitzem una cultutra invariant
+                    //per normalitzar tots els valors, així tots es convertiran de manera correcta ja tinguin , o .
+                   
 
-                    string correctElev = trkSeg.Elevation.Replace(".", ",");
-                    double ele = Convert.ToDouble(correctElev);
+                    double lat = Convert.ToDouble(trkSeg.Latitude, CultureInfo.InvariantCulture);
+                    double lon = Convert.ToDouble(trkSeg.Longitude, CultureInfo.InvariantCulture);
+
+                    double ele = Convert.ToDouble(trkSeg.Elevation, CultureInfo.InvariantCulture);
 
                     trackPoints.Add(new TrackPoint(lat, lon, ele));
                 }

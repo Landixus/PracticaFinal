@@ -12,9 +12,6 @@ using System.IO;
 public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler {
     public Text output;
 
-    private GameObject dropOnMe;
-    private DragFilesOntoMe dragScript;
-
 
 #if UNITY_WEBGL && !UNITY_EDITOR
     //
@@ -40,7 +37,6 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler {
     void Start() {
         var button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);
-        
     }
 
     private void OnClick() {
@@ -75,8 +71,7 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler {
                     GameObject select = GameObject.Find("SeleccionRuta");
                     SeleccionRuta ruta = select.GetComponent<SeleccionRuta>();
                     ruta.routePath = paths[0];
-                    ruta.getTrack();
-                  
+                    ruta.GetTrack();
                     //Set path de fitxer al script d'obrir fitxer i dibuixar perfil
                 }
             }

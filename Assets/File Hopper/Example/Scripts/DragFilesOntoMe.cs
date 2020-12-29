@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Toorah.Files;
-
+using System.IO;
 
 [RequireComponent(typeof(RectTransform))]
 public class DragFilesOntoMe : MonoBehaviour {
@@ -23,7 +23,36 @@ public class DragFilesOntoMe : MonoBehaviour {
 		{
 			m_text.text = "Dropped on me: " + name + ", file count: " + files.Count.ToString()
 				+ "\n First File: " + files[0];
-			StopListener();
+
+            if (files.Count > 0)
+            {
+                Debug.Log(files[0]);
+                m_text.text = files[0];
+
+                //Comprovar que no es un directori (Encara qeu no es possible seleccionar un)
+                if (!Directory.Exists(files[0]))
+                {
+                    //Comprovar que fitxer es .gpx  
+                    string[] words = files[0].Split('.');
+                    Debug.Log("Fitxer seleccionat No es un directori");
+                    Debug.Log(words[words.Length - 1]);
+                    string fileType = words[words.Length - 1];
+
+                    if (fileType != "gpx")
+                    {
+                        //ERROR
+                    }
+                    else
+                    {
+                        GameObject select = GameObject.Find("SeleccionRuta");
+                        SeleccionRuta ruta = select.GetComponent<SeleccionRuta>();
+                        ruta.routePath = files[0];
+                        ruta.GetTrack();
+                        //Set path de fitxer al script d'obrir fitxer i dibuixar perfil
+                    }
+                }
+            }
+            StopListener();
 		}
 	}
 
