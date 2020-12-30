@@ -18,7 +18,7 @@ public class SelectedRoute : MonoBehaviour
             graph_window = (Window_Graph)graph_windowObj.GetComponent(typeof(Window_Graph));
 
             //No s'ha de passar la pendent sino la altura
-            graph_window.ShowGraph(ruta.pendentPunts);
+            graph_window.ShowGraph(ruta.trackPoints, ruta.pendentPunts);
         }
 
         

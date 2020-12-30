@@ -5,16 +5,16 @@ using UnityEngine;
 public class Ruta
 {
     string name { get; set; }
-    List<TrackPoint> trackPoints { get; set; }
-    double positiveElevation { get; set; }
-    double negativeElevation { get; set; }
-    double totalDistance { get; set; }
+    public List<TrackPoint> trackPoints { get; set; }
+    float positiveElevation { get; set; }
+    float negativeElevation { get; set; }
+    float totalDistance { get; set; }
     string description { get; set; }
 
-    double[] distanciaPunts { get; set; }
-    public double[] pendentPunts { get; set; }
+    float[] distanciaPunts { get; set; }
+    public float[] pendentPunts { get; set; }
 
-    public Ruta(string name, List<TrackPoint> trackPoints, double positiveElevation, double negativeElevation, double totalDistance, double[] distanciaPunts, double[] pendentPunts)
+    public Ruta(string name, List<TrackPoint> trackPoints, float positiveElevation, float negativeElevation, float totalDistance, float[] distanciaPunts, float[] pendentPunts)
     {
         this.name = name;
         this.trackPoints = trackPoints;

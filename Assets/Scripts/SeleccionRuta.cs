@@ -29,17 +29,17 @@ public class SeleccionRuta : MonoBehaviour
         //Debug.Log(name);
 
         //calc Elevation
-        double positiveElev = CalcPositiveElevation(trackPoints);
-        double negativeElev = CalcNegativeElevation(trackPoints);
+        float positiveElev = CalcPositiveElevation(trackPoints);
+        float negativeElev = CalcNegativeElevation(trackPoints);
 
         //Dividiem entre 1000 ja que el resultat ens el dona en metres
-        double[] distancePoints = CalcDistance(trackPoints);
+        float[] distancePoints = CalcDistance(trackPoints);
 
         //Calc distance
-        double totalDistance = CalcTotalDistance(distancePoints)/1000;
+        float totalDistance = CalcTotalDistance(distancePoints)/1000;
 
         //Calc pendent
-        double[] slope = CalcSlope(trackPoints, distancePoints);
+        float[] slope = CalcSlope(trackPoints, distancePoints);
 
         AddSlopeInformation(slope);
 
@@ -49,13 +49,13 @@ public class SeleccionRuta : MonoBehaviour
         SelectedRoute.ruta = ruta;
     }
 
-    private double CalcPositiveElevation(List<TrackPoint> trackPoints)
+    private float CalcPositiveElevation(List<TrackPoint> trackPoints)
     {
-        double actualElev = trackPoints[0].ele;
-        double priorElev = trackPoints[1].ele;
-        
+        float actualElev = trackPoints[0].ele;
+        float priorElev = trackPoints[1].ele;
+
         //Al principi ho fem al reves ja que després podem fer una assignació directe al nou punt i ja tenim l'1 ben guardat
-        double positiveElev = 0;
+        float positiveElev = 0;
 
         //Com només volem la elevacio positiva només sumem si l'altura del següent punt és major que la de l'anterior punt
         if (priorElev > actualElev)
@@ -78,13 +78,13 @@ public class SeleccionRuta : MonoBehaviour
         return positiveElev;
     }
 
-    private double CalcNegativeElevation(List<TrackPoint> trackPoints)
+    private float CalcNegativeElevation(List<TrackPoint> trackPoints)
     {
-        double actualElev = trackPoints[0].ele;
-        double priorElev = trackPoints[1].ele;
+        float actualElev = trackPoints[0].ele;
+        float priorElev = trackPoints[1].ele;
 
         //Al principi ho fem al reves ja que després podem fer una assignació directe al nou punt i ja tenim l'1 ben guardat
-        double negativeElev = 0;
+        float negativeElev = 0;
 
         //Com només volem la elevacio negativa només sumem si l'altura del següent punt és menor que la de l'anterior punt
         if (priorElev < actualElev)
@@ -106,15 +106,15 @@ public class SeleccionRuta : MonoBehaviour
         return negativeElev * -1;
     }
 
-    private double[] CalcDistance(List<TrackPoint> trackPoints)
+    private float[] CalcDistance(List<TrackPoint> trackPoints)
     {
-        double baseLat = trackPoints[1].lat;
-        double baseLon = trackPoints[1].lon;
-        double targetLat = trackPoints[0].lat;
-        double targetLon = trackPoints[0].lon;
+        float baseLat = trackPoints[1].lat;
+        float baseLon = trackPoints[1].lon;
+        float targetLat = trackPoints[0].lat;
+        float targetLon = trackPoints[0].lon;
 
         //hem de restar 1 ja que volem la distancia entre dos punts i per tant hem de restar 1
-        double[] distance = new double[trackPoints.Count-1];
+        float[] distance = new float[trackPoints.Count-1];
 
         //La primera crida la fem posant el target primer ja que aixi podem simplificar després l'assignació als nous punts
         distance[0] = DistanceTo(targetLat, targetLon, baseLat, baseLon);
@@ -134,7 +134,7 @@ public class SeleccionRuta : MonoBehaviour
     }
 
     //Funcio per calcular la distància entre dos punts donats en angle de coordenades
-    private static double DistanceTo(double baseLat, double baseLon, double targetLat, double targetLon)
+    private static float DistanceTo(float baseLat, float baseLon, float targetLat, float targetLon)
     {
 
         //Fórmula treta de https://www.movable-type.co.uk/scripts/latlong.html
@@ -169,12 +169,12 @@ public class SeleccionRuta : MonoBehaviour
 
         var d = Math.Round(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3))), 2);
         //Debug.Log(d);
-        return d;
+        return (float)d;
     }
 
-    private double CalcTotalDistance(double[] points)
+    private float CalcTotalDistance(float[] points)
     {
-        double dist = 0;
+        float dist = 0;
         foreach (var point in points)
         {
             dist += point;
@@ -184,14 +184,14 @@ public class SeleccionRuta : MonoBehaviour
     }
 
     //Funció per calcular el pendent entre dos punts, es calcula la pendent entre amb 5 punts de diferencia per ajustar els càlculs i que sigui més uniforme
-    private double[] CalcSlope(List<TrackPoint> trackPoints, double[] distancePoints)
+    private float[] CalcSlope(List<TrackPoint> trackPoints, float[] distancePoints)
     {
-        double actualElev = trackPoints[0].ele;
-        double priorElev = trackPoints[5].ele;
+        float actualElev = trackPoints[0].ele;
+        float priorElev = trackPoints[5].ele;
 
-        double distanceBetweenPoints = Calc5pointsDistance(distancePoints, 0);
+        float distanceBetweenPoints = Calc5pointsDistance(distancePoints, 0);
 
-        double[] slopePoints = new double[distancePoints.Length];
+        float[] slopePoints = new float[distancePoints.Length];
 
         //* 100 ja que volem el percentatge per després poder adequar la dificultat del rodillo
         slopePoints[0] = (priorElev - actualElev) / distanceBetweenPoints * 100;
@@ -201,7 +201,7 @@ public class SeleccionRuta : MonoBehaviour
             actualElev = trackPoints[i].ele;
             distanceBetweenPoints = Calc5pointsDistance(distancePoints, i-5);
 
-            double elevDiff = Math.Round(actualElev - priorElev);
+            float elevDiff = (float)Math.Round(actualElev - priorElev);
 
             if (distanceBetweenPoints == 0)
             {
@@ -209,7 +209,7 @@ public class SeleccionRuta : MonoBehaviour
             }
             else 
             {
-                slopePoints[i - 1] = Math.Round(elevDiff / distanceBetweenPoints * 100, 1);
+                slopePoints[i - 1] = (float)Math.Round(elevDiff / distanceBetweenPoints * 100, 1);
             }
           
 
@@ -222,11 +222,11 @@ public class SeleccionRuta : MonoBehaviour
     }
 
     //funció que serveix per calcular la distancia entre 5 punts
-    private double Calc5pointsDistance(double[] distancePoints, int index)
+    private float Calc5pointsDistance(float[] distancePoints, int index)
     {
-        ArraySegment<double> splitarray = new ArraySegment<double>(distancePoints, index, 5);
+        ArraySegment<float> splitarray = new ArraySegment<float>(distancePoints, index, 5);
 
-        double dist = 0;
+        float dist = 0;
         foreach (var item in splitarray)
         {
             dist += item;
@@ -237,16 +237,16 @@ public class SeleccionRuta : MonoBehaviour
     
     //Funció que serveix per calcular la pendent que ens falta. Agafem els dos punts on tenim informació i calculem la diferencia entre ells 
     // i calculem step per arriabar a l'altura seguent
-    private void AddSlopeInformation(double[] slope)
+    private void AddSlopeInformation(float[] slope)
     {
-        double priorElev = slope[0];
+        float priorElev = slope[0];
 
         for (int i = 4; i < slope.Length; i += 5)
         {
 
-            double actualElev = slope[i];
-            double elevDiff = Math.Round(actualElev - priorElev, 2);
-            double step = Math.Round(elevDiff / 4, 2);
+            float actualElev = slope[i];
+            float elevDiff = (float)Math.Round(actualElev - priorElev, 2);
+            float step = (float)Math.Round(elevDiff / 4, 2);
 
             //Debug.Log("actual elev:" + actualElev + " prior elev:" + priorElev);
 
@@ -255,13 +255,12 @@ public class SeleccionRuta : MonoBehaviour
             {
                 for (int j = i - 4; j < i; j++)
                 {
-                    slope[j] = Math.Round(slope[i] + step * (j - i), 1);
+                    slope[j] = (float)Math.Round(slope[i] + step * (j - i), 1);
                     //Debug.Log("i:" + j + " value:" + slope[j]);
                 }
                 priorElev = actualElev;
             }
             //Debug.Log("i:" + i + " value:" + slope[i]);
-
         }
     }
 

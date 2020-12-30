@@ -112,12 +112,12 @@ namespace LinqXMLTester
                     //Necessitem passar els punts a , dels valors dek GPX ja que sino no es fa la conversio correctament
                     //Com no sabem si l'ususari utilitza , o . per separar els decimals utilitzem una cultutra invariant
                     //per normalitzar tots els valors, així tots es convertiran de manera correcta ja tinguin , o .
-                   
 
-                    double lat = Convert.ToDouble(trkSeg.Latitude, CultureInfo.InvariantCulture);
-                    double lon = Convert.ToDouble(trkSeg.Longitude, CultureInfo.InvariantCulture);
 
-                    double ele = Convert.ToDouble(trkSeg.Elevation, CultureInfo.InvariantCulture);
+                    float lat = Convert.ToSingle(trkSeg.Latitude, CultureInfo.InvariantCulture);
+                    float lon = Convert.ToSingle(trkSeg.Longitude, CultureInfo.InvariantCulture);
+
+                    float ele = Convert.ToSingle(trkSeg.Elevation, CultureInfo.InvariantCulture);
 
                     trackPoints.Add(new TrackPoint(lat, lon, ele));
                 }

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TrackPoint 
 {
-    public double lat { get; set; }
-    public double lon { get; set; }
-    public double ele { get; set; }
+    public float lat { get; set; }
+    public float lon { get; set; }
+    public float ele { get; set; }
 
-    public TrackPoint(double lat, double lon, double ele)
+    public TrackPoint(float lat, float lon, float ele)
     {
         this.lat = lat;
         this.lon = lon;
