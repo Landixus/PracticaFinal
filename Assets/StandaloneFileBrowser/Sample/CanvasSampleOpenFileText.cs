@@ -70,8 +70,8 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler {
                 {
                     GameObject select = GameObject.Find("SeleccionRuta");
                     SeleccionRuta ruta = select.GetComponent<SeleccionRuta>();
-                    ruta.routePath = paths[0];
-                    ruta.GetTrack();
+                    //ruta.routePath = paths[0];
+                    ruta.GetTrack(paths[0]);
                     //Set path de fitxer al script d'obrir fitxer i dibuixar perfil
                 }
             }

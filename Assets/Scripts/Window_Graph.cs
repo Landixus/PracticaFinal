@@ -13,6 +13,7 @@ public class Window_Graph : MonoBehaviour
 
     [SerializeField] private Text maxEleText;
     [SerializeField] private Text minEleText;
+    [SerializeField] private Text distanceText;
 
     private int numPoints;
     private int totalPoints;
@@ -43,12 +44,14 @@ public class Window_Graph : MonoBehaviour
     }
 
     //Funció modificada de https://www.youtube.com/watch?v=CmU5-v-v1Qo
-    public void ShowGraph(List<TrackPoint> valueList, float[] slopes)
+    public void ShowGraph(List<TrackPoint> valueList, float[] slopes, float distance)
     {
         List<TrackPoint> simpleList = SimplifyList(valueList);
         List<float> simpleSlopes = SimplifySlope(slopes);
 
-        Debug.Log(simpleList.Count);
+        //Debug.Log(simpleList.Count);
+
+        distanceText.text = distance + " Km";
 
         float graphHight = graphContainer.sizeDelta.y;
         //float xSize = 1f;
@@ -101,7 +104,7 @@ public class Window_Graph : MonoBehaviour
 
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
-        rectTransform.sizeDelta = new Vector2(distance, 1.5f);
+        rectTransform.sizeDelta = new Vector2(distance, 2f);
         rectTransform.anchoredPosition = dotPositionA + dir * distance * .5f;
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;

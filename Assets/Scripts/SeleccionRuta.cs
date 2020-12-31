@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class SeleccionRuta : MonoBehaviour
 {
-    public string routePath;
     public GPXLoader gpx;
 
 
@@ -22,7 +21,7 @@ public class SeleccionRuta : MonoBehaviour
         
     }
 
-    public void GetTrack()
+    public void GetTrack(string routePath)
     {
         List<TrackPoint> trackPoints = gpx.LoadGPXTracks(routePath);
         string name = gpx.GetName(routePath);
@@ -32,21 +31,24 @@ public class SeleccionRuta : MonoBehaviour
         float positiveElev = CalcPositiveElevation(trackPoints);
         float negativeElev = CalcNegativeElevation(trackPoints);
 
-        //Dividiem entre 1000 ja que el resultat ens el dona en metres
+        //Calcul distancia entre cada punt, ens servirà després per poder calcular la pendent de forma més senzilla
         float[] distancePoints = CalcDistance(trackPoints);
 
         //Calc distance
-        float totalDistance = CalcTotalDistance(distancePoints)/1000;
+        //Dividiem entre 1000 ja que el resultat ens el dona en metres
+        float totalDistance = (float)Math.Round(CalcTotalDistance(distancePoints)/1000, 1);
 
         //Calc pendent
         float[] slope = CalcSlope(trackPoints, distancePoints);
 
+        //Afegim la informació que ens em saltat al calcular la pendent
         AddSlopeInformation(slope);
 
 
         Ruta ruta = new Ruta(name, trackPoints, positiveElev, negativeElev, totalDistance, distancePoints,slope);
 
         SelectedRoute.ruta = ruta;
+        SelectedRoute.originalPath = routePath;
     }
 
     private float CalcPositiveElevation(List<TrackPoint> trackPoints)

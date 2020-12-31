@@ -265,6 +265,7 @@
     <Compile Include="Assets\Scripts\PaginaPrincipal.cs" />
     <Compile Include="Assets\Scripts\PairDevices.cs" />
     <Compile Include="Assets\Scripts\PasswordInfo.cs" />
+    <Compile Include="Assets\Scripts\RoutesManager.cs" />
     <Compile Include="Assets\Scripts\Ruta.cs" />
     <Compile Include="Assets\Scripts\SeleccionRuta.cs" />
     <Compile Include="Assets\Scripts\SelectedRoute.cs" />

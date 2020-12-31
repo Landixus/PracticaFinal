@@ -13,6 +13,8 @@ public class PaginaPrincipal : MonoBehaviour
     {
         //Carguem la scena on hi han els prefabs de manera aditiva
         SceneManager.LoadScene(3, LoadSceneMode.Additive);
+
+        DontDestroyOnLoad(GameObject.Find("RouteManager"));
     }
 
     // Update is called once per frame
