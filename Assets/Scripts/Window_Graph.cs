@@ -78,14 +78,25 @@ public class Window_Graph : MonoBehaviour
         float xSize = CalcXDiff(simpleList);
 
         GameObject lastCircleGameObject = null;
-        for (int i = 0; i < simpleList.Count; i++)
+
+        //Valor differencia per si tenim més punts en una llista que en una altre;
+        //Pot passar ja que al fer el módul i tenir llistes originals de diferents mides
+        //podem acabar amb subllistes de diferents mides
+        int diff = simpleList.Count - simpleSlopes.Count;
+        if (diff < 0)
+        {
+            diff = 0;
+        }
+        Debug.Log("Diff:" + diff);
+        for (int i = 0; i < simpleList.Count - diff; i++)
         {
             float xPosition = xSize+ i * xSize;
             float yPosition = ((simpleList[i].ele-minCorrection) / yMaximum) * graphHight;
             GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition));
             if (lastCircleGameObject != null) 
             {
-                //No es masEle sino maxAngle  minAngle;
+                Debug.Log("simpleList Count:" + simpleList.Count);
+                Debug.Log("simpleSlopes Count:" + simpleSlopes.Count);
                 CreateDotConnection(lastCircleGameObject.GetComponent<RectTransform>().anchoredPosition, circleGameObject.GetComponent<RectTransform>().anchoredPosition, simpleSlopes[i]);
             }
             lastCircleGameObject = circleGameObject;
@@ -187,6 +198,11 @@ public class Window_Graph : MonoBehaviour
 
         List<float> simplifiedSlope = new List<float>();
 
+        if (numPoints == 0)
+        {
+            return slopes.ToList<float>();
+        }
+
         for (int i = 0; i < slopes.Length; i++)
         {
             if (i % numPoints == 0)
@@ -224,7 +240,7 @@ public class Window_Graph : MonoBehaviour
         int int_value = (int)(1023 * (value - red_value) /
             (blue_value - red_value));
 
-        Debug.Log("%:" + value + " valor:" + int_value);
+        //Debug.Log("%:" + value + " valor:" + int_value);
 
         // Map different color bands.
         if (int_value < 256)

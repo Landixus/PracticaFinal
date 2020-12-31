@@ -6,8 +6,8 @@ public class Ruta
 {
     string name { get; set; }
     public List<TrackPoint> trackPoints { get; set; }
-    float positiveElevation { get; set; }
-    float negativeElevation { get; set; }
+    public float positiveElevation { get; set; }
+    public float negativeElevation { get; set; }
     public float totalDistance { get; set; }
     string description { get; set; }
 

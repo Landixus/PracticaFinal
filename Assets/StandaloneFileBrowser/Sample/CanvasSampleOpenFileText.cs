@@ -65,13 +65,17 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler {
 
                 if (fileType != "gpx")
                 {
+                    Debug.LogError("El fitxer seleccionat no es un GPX");
                     //ERROR
                 } else
                 {
                     GameObject select = GameObject.Find("SeleccionRuta");
                     SeleccionRuta ruta = select.GetComponent<SeleccionRuta>();
-                    //ruta.routePath = paths[0];
-                    ruta.GetTrack(paths[0]);
+                   
+                    Ruta objecteRuta = ruta.GetTrack(paths[0]);
+
+                    SelectedRoute.ruta = objecteRuta;
+                    SelectedRoute.originalPath = paths[0];
                     //Set path de fitxer al script d'obrir fitxer i dibuixar perfil
                 }
             }

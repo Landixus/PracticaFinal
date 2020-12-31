@@ -47,7 +47,10 @@ public class DragFilesOntoMe : MonoBehaviour {
                         GameObject select = GameObject.Find("SeleccionRuta");
                         SeleccionRuta ruta = select.GetComponent<SeleccionRuta>();
                         //ruta.routePath = files[0];
-                        ruta.GetTrack(files[0]);
+                        Ruta objecteRuta = ruta.GetTrack(files[0]);
+
+                        SelectedRoute.ruta = objecteRuta;
+                        SelectedRoute.originalPath = files[0];
                         //Set path de fitxer al script d'obrir fitxer i dibuixar perfil
                     }
                 }

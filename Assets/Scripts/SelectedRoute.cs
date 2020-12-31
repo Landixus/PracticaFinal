@@ -40,6 +40,9 @@ public class SelectedRoute : MonoBehaviour
         errorNameText.text = "";
 
         oldName = GetNameFromPath();
+        totalDistanceText.text = ruta.totalDistance.ToString() + " Km";
+        positiveElevationText.text = ruta.positiveElevation.ToString() + "m";
+        negativeElevationText.text = "-" + ruta.negativeElevation.ToString() + "m";
     }
 
     private string GetNameFromPath()
@@ -66,30 +69,39 @@ public class SelectedRoute : MonoBehaviour
 
     public void ConfirmRoute()
     {
-        string validName = "";
         //Agafar Nom
         string newName = fileNameInput.text;
+        string validName;
         //Comprovar si el nou nom es el mateix que l'antic ja que aixi no hem de comprovar res 
         if (oldName == newName)
         {
             validName = newName;
         }
-        else {
+        else
+        {
             // Comprovar si el nou nom es valid
             validName = UseRegex(newName);
             fileNameInput.text = validName;
         }
-        
+
         //Creem nova ruta
         string newPath = Path.Combine(Application.dataPath , "GPX", validName + ".gpx");
 
         Debug.Log(newPath);
 
-        File.Copy(originalPath, newPath);
-        Debug.Log("Fitxer copiat");
-
         //Copiar fitxer amb nou nom a la carpeta gpx
+        try
+        {
+            File.Copy(originalPath, newPath);
 
+            Debug.Log("Fitxer copiat");
+            RoutesManager.rutas.Add(ruta);
+        }
+        catch (Exception)
+        {
+            errorNameText.text = "Ja existeix un fitxer amb auqest nom";
+            //throw;
+        }
     }
 
     public string UseRegex(string strIn)

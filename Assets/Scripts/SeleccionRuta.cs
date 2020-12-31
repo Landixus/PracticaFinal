@@ -21,7 +21,7 @@ public class SeleccionRuta : MonoBehaviour
         
     }
 
-    public void GetTrack(string routePath)
+    public Ruta GetTrack(string routePath)
     {
         List<TrackPoint> trackPoints = gpx.LoadGPXTracks(routePath);
         string name = gpx.GetName(routePath);
@@ -47,8 +47,7 @@ public class SeleccionRuta : MonoBehaviour
 
         Ruta ruta = new Ruta(name, trackPoints, positiveElev, negativeElev, totalDistance, distancePoints,slope);
 
-        SelectedRoute.ruta = ruta;
-        SelectedRoute.originalPath = routePath;
+        return ruta;
     }
 
     private float CalcPositiveElevation(List<TrackPoint> trackPoints)
