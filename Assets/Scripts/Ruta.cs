@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Ruta
 {
-    string name { get; set; }
+    public string name { get; set; }
     public List<TrackPoint> trackPoints { get; set; }
     public float positiveElevation { get; set; }
     public float negativeElevation { get; set; }
     public float totalDistance { get; set; }
-    string description { get; set; }
+    public string description { get; set; }
 
     float[] distanciaPunts { get; set; }
     public float[] pendentPunts { get; set; }

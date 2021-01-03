@@ -70,7 +70,7 @@ public class RouteGenerator : MonoBehaviour
             priorElev = actualElev;
         }
 
-        return positiveElev;
+        return (float)Math.Round(positiveElev,1);
     }
 
     private float CalcNegativeElevation(List<TrackPoint> trackPoints)
@@ -98,7 +98,7 @@ public class RouteGenerator : MonoBehaviour
             priorElev = actualElev;
         }
         //Multipliquem per -1 per fer el número positiu
-        return negativeElev * -1;
+        return (float)Math.Round(negativeElev,1) * -1;
     }
 
     private float[] CalcDistance(List<TrackPoint> trackPoints)
