@@ -43,11 +43,7 @@ public class ListGenerator : MonoBehaviour
             g.transform.GetChild(7).GetComponent<Text>().text = ruta.negativeElevation.ToString() + "m";
 
             g.GetComponent<Button>().AddEventListener(i, ItemClicked);
-
-            if (i == selectedIndex)
-            {
-
-            }
+            
         }
 
         Destroy(buttonTemplate);
@@ -55,8 +51,16 @@ public class ListGenerator : MonoBehaviour
 
     private void ItemClicked(int i)
     {
+        GameObject buttonTemplate ;
+        Button button;
+
+        buttonTemplate = transform.GetChild(i).gameObject;
+        button = buttonTemplate.GetComponent<Button>();
+        button.Select();
+       
         Debug.Log("item " +i+ " clicked");
         selectedIndex = i;
+
     }
 
     // Update is called once per frame
