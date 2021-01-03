@@ -69,8 +69,8 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler {
                     //ERROR
                 } else
                 {
-                    GameObject select = GameObject.Find("SeleccionRuta");
-                    SeleccionRuta ruta = select.GetComponent<SeleccionRuta>();
+                    GameObject select = GameObject.Find("RouteGenerator");
+                    RouteGenerator ruta = select.GetComponent<RouteGenerator>();
                    
                     Ruta objecteRuta = ruta.GetTrack(paths[0]);
 

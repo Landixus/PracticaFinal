@@ -4,21 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SeleccionRuta : MonoBehaviour
+public class RouteGenerator : MonoBehaviour
 {
     public GPXLoader gpx;
 
 
-    // Start is called before the first frame update
-    void Start()
+    // Awake is called before start methods
+    void Awake()
     {
         gpx = new GPXLoader();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public Ruta GetTrack(string routePath)

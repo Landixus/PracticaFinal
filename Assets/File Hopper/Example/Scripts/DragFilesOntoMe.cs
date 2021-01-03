@@ -40,12 +40,14 @@ public class DragFilesOntoMe : MonoBehaviour {
 
                     if (fileType != "gpx")
                     {
+                        //TODO: Ensenyar error a l'usuari
+                        Debug.LogWarning("No s'ha introduiït un fitxer GPX");
                         //ERROR
                     }
                     else
                     {
-                        GameObject select = GameObject.Find("SeleccionRuta");
-                        SeleccionRuta ruta = select.GetComponent<SeleccionRuta>();
+                        GameObject select = GameObject.Find("RouteGenerator");
+                        RouteGenerator ruta = select.GetComponent<RouteGenerator>();
                         //ruta.routePath = files[0];
                         Ruta objecteRuta = ruta.GetTrack(files[0]);
 

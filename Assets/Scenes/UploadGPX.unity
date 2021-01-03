@@ -1203,7 +1203,7 @@ GameObject:
   - component: {fileID: 2054034514}
   - component: {fileID: 2054034513}
   m_Layer: 0
-  m_Name: SeleccionRuta
+  m_Name: RouteGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1221,7 +1221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c277cfb440223748a26bf680b811041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  routePath: 
 --- !u!4 &2054034514
 Transform:
   m_ObjectHideFlags: 0
