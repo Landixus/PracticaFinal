@@ -123,6 +123,7 @@ public class Window_Graph : MonoBehaviour
 
         gameObject.GetComponent<Image>().color = MapRainbowColor(slope);
         rectTransform.localEulerAngles = new Vector3(0, 0, angle);
+
     }
 
     public float FindMaxElevation(List<TrackPoint> list)
@@ -272,6 +273,14 @@ public class Window_Graph : MonoBehaviour
             // Aqua to white. (0, 255, 255) to (0, 0, 255).
             int_value -= 768;
             return new Color(0, 255, 255);
+        }
+    }
+    //Funció per borrar tots els punts creats pel ShowGraph menys el primer element ja que es el background
+    public void DestroyGraph()
+    {
+        for (int i = 1; i < graphContainer.childCount; i++)
+        {
+            GameObject.Destroy(graphContainer.GetChild(i).gameObject);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SelectedRoute : MonoBehaviour
@@ -20,6 +21,8 @@ public class SelectedRoute : MonoBehaviour
     private Window_Graph graph_window;
 
     private string oldName;
+
+    
         
 
     // Start is called before the first frame update
@@ -59,12 +62,6 @@ public class SelectedRoute : MonoBehaviour
         return null;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void ConfirmRoute()
     {
         //Agafar Nom
@@ -94,10 +91,12 @@ public class SelectedRoute : MonoBehaviour
 
             Debug.Log("Fitxer copiat");
             RoutesManager.rutas.Add(ruta);
+
+            SceneManager.LoadScene(6);
         }
         catch (Exception)
         {
-            errorNameText.text = "Ja existeix un fitxer amb auqest nom";
+            errorNameText.text = "Ja existeix un fitxer amb aquest nom";
             //throw;
         }
     }
@@ -106,5 +105,10 @@ public class SelectedRoute : MonoBehaviour
     {
         // Replace invalid characters with empty strings.
         return Regex.Replace(strIn, @"[^\w-_ñÑ]", "");
+    }
+
+    public void Cancel()
+    {
+        SceneManager.LoadScene(6);
     }
 }

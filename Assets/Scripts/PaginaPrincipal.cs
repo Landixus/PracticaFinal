@@ -32,4 +32,9 @@ public class PaginaPrincipal : MonoBehaviour
     {
         SceneManager.LoadScene(sceneBuildIndex: 6);
     }
+
+    public void goToFollowRoute()
+    {
+        SceneManager.LoadScene(sceneBuildIndex: 8);
+    }
 }

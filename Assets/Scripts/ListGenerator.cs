@@ -15,8 +15,13 @@ public static class ButtonExtension {
 }
 public class ListGenerator : MonoBehaviour
 {
-    public int selectedIndex;
+    static public bool afegit;
+    public Text afegitText;
     public GameObject contentPanel;
+
+
+    private GameObject graph_windowObj;
+    private Window_Graph graph_window;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,13 +42,18 @@ public class ListGenerator : MonoBehaviour
         {
             Ruta ruta = RoutesManager.rutas[i];
             g = Instantiate(buttonTemplate, transform);
-            g.transform.GetChild(1).GetComponent<Text>().text = ruta.name + " km";
-            g.transform.GetChild(3).GetComponent<Text>().text = ruta.totalDistance.ToString();
+            g.transform.GetChild(1).GetComponent<Text>().text = ruta.name;
+            g.transform.GetChild(3).GetComponent<Text>().text = ruta.totalDistance.ToString() + " km";
             g.transform.GetChild(5).GetComponent<Text>().text = ruta.positiveElevation.ToString() + "m";
             g.transform.GetChild(7).GetComponent<Text>().text = ruta.negativeElevation.ToString() + "m";
 
-            g.GetComponent<Button>().AddEventListener(i, ItemClicked);
+            g.GetComponent<Button>().AddEventListener(i, ItemClickedSelectRoute);
             
+        }
+
+        if (afegit)
+        {
+            afegitText.text = "S'ha afegit la ruta a la llista";
         }
 
         Destroy(buttonTemplate);
@@ -59,13 +69,30 @@ public class ListGenerator : MonoBehaviour
         button.Select();
        
         Debug.Log("item " +i+ " clicked");
-        selectedIndex = i;
-
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ItemClickedSelectRoute(int i)
     {
-        
+        GameObject buttonTemplate;
+        Button button;
+
+        buttonTemplate = transform.GetChild(i).gameObject;
+        button = buttonTemplate.GetComponent<Button>();
+        button.Select();
+
+        //agafar ruta (l'id del boto es la posicio de la ruta en la llista)
+        Ruta ruta = RoutesManager.rutas[i];
+
+        if (GameObject.Find("Window_Graph"))
+        {
+            graph_windowObj = GameObject.Find("Window_Graph");
+            graph_window = (Window_Graph)graph_windowObj.GetComponent(typeof(Window_Graph));
+            graph_window.DestroyGraph();
+            graph_window.ShowGraph(ruta.trackPoints, ruta.pendentPunts, ruta.totalDistance);     
+        }
+
+        Debug.Log("item " + i + " clicked");
     }
+
+
 }

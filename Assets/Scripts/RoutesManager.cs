@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class RoutesManager : MonoBehaviour
 {
     static public List<Ruta> rutas = new List<Ruta>();
+    static bool updateList = true;
+
     GameObject select;
     RouteGenerator routeGenerator;
 
@@ -28,24 +30,27 @@ public class RoutesManager : MonoBehaviour
     {
         populated = false;
 
-        
+
         //Llegir carpeta  Path.Combine(Application.dataPath , "GPX")
         //Per cada fitxer GPX cridar SeleccionRuta GetTrack(ruta fixter)
         //Anar omplint la llista de rutes amb la informacio de GetTrack
-
-        try
+        if (updateList)
         {
-            string[] files = Directory.GetFiles(Path.Combine(Application.dataPath, "GPX"));
+            try
+            {
+                string[] files = Directory.GetFiles(Path.Combine(Application.dataPath, "GPX"));
 
-            foreach (string fileName in files)
-                ProcessFile(fileName);
+                foreach (string fileName in files)
+                    ProcessFile(fileName);
 
-            printList();
-        }
-        catch (System.Exception)
-        {
-            Debug.LogWarning("Alguna cosa no ha anat bé al intentar llegir el directori (RoutesManager)");
-            throw;
+                //printList();
+                updateList = false;
+            }
+            catch (System.Exception)
+            {
+                Debug.LogWarning("Alguna cosa no ha anat bé al intentar llegir el directori (RoutesManager)");
+                throw;
+            }
         }
     }
 

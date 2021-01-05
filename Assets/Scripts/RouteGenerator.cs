@@ -263,4 +263,8 @@ public class RouteGenerator : MonoBehaviour
     {
         SceneManager.LoadScene(7);
     }
+    public void goToMainMenu()
+    {
+        SceneManager.LoadScene(2);
+    }
 }
