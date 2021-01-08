@@ -260,6 +260,7 @@
     <Compile Include="Assets\Scripts\BBDD.cs" />
     <Compile Include="Assets\Scripts\ControladorDevices.cs" />
     <Compile Include="Assets\Scripts\CreateUser.cs" />
+    <Compile Include="Assets\Scripts\FollowRoute.cs" />
     <Compile Include="Assets\Scripts\GPXReader.cs" />
     <Compile Include="Assets\Scripts\ListGenerator.cs" />
     <Compile Include="Assets\Scripts\LoadingCircle.cs" />

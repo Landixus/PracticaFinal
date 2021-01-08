@@ -10,4 +10,9 @@ public class SceneManagerScript : MonoBehaviour
     {
         SceneManager.LoadScene(sceneBuildIndex: 2);
     }
+
+    public void goToFollowRoute()
+    {
+        SceneManager.LoadScene(sceneBuildIndex: 9);
+    }
 }

@@ -91,6 +91,8 @@ public class ListGenerator : MonoBehaviour
             graph_window.ShowGraph(ruta.trackPoints, ruta.pendentPunts, ruta.totalDistance);     
         }
 
+        FollowRoute.ruta = ruta;
+
         Debug.Log("item " + i + " clicked");
     }
 
