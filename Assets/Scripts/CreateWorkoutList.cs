@@ -6,18 +6,14 @@ using UnityEngine.UI;
 public class CreateWorkoutList : MonoBehaviour
 {
     static public bool afegit;
-    public Text afegitText;
     public GameObject contentPanel;
 
-
-    private GameObject graph_windowObj;
-    private Window_Graph graph_window;
     // Start is called before the first frame update
     void Start()
     {
         float myWidth = 0;
         //int listSize = RoutesManager.rutas.Count;
-        int listSize = 20;
+        int listSize = 2;
         if (listSize <= 4)
         {
             myWidth = Screen.width;
