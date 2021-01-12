@@ -260,6 +260,8 @@
     <Compile Include="Assets\Scripts\BBDD.cs" />
     <Compile Include="Assets\Scripts\ControladorDevices.cs" />
     <Compile Include="Assets\Scripts\CreateUser.cs" />
+    <Compile Include="Assets\Scripts\CreateWokout.cs" />
+    <Compile Include="Assets\Scripts\CreateWorkoutList.cs" />
     <Compile Include="Assets\Scripts\FollowRoute.cs" />
     <Compile Include="Assets\Scripts\GPXReader.cs" />
     <Compile Include="Assets\Scripts\ListGenerator.cs" />

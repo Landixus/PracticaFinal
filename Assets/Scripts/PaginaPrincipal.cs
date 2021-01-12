@@ -37,4 +37,9 @@ public class PaginaPrincipal : MonoBehaviour
     {
         SceneManager.LoadScene(sceneBuildIndex: 8);
     }
+
+    public void goToCreateWorkout()
+    {
+        SceneManager.LoadScene(sceneBuildIndex: 10);
+    }
 }

@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FollowRoute.unity
     guid: dd8ca679ccc64704fb873de17355dd94
+  - enabled: 1
+    path: Assets/Scenes/CreateWorkout.unity
+    guid: 6b8e61e8fe884ff4891322db7243c68c
   m_configObjects: {}
