@@ -20,10 +20,26 @@ public class CreateWokout : MonoBehaviour
     void Update()
     {
         //Tornar a actualitzar la vista de la llista quan s'ha afegit un bloc
+        if (workout.blocs.Count != numBlocs)
+        {
+            GameObject contentObj;
+            CreateWorkoutList contentPanel;
+            contentObj = GameObject.Find("Content");
+            contentPanel = (CreateWorkoutList)contentObj.GetComponent(typeof(CreateWorkoutList));
+            
+            //Primer destruim la llista per després ensenyar-la de nou aj que sinó s'acomulen tots els blocs
+            contentPanel.DestroyList();
+            contentPanel.EnsenyarLListaBlocs(workout.blocs);
+            numBlocs = workout.blocs.Count;
+        }
     }
 
     public void AddBlock()
     {
+        Debug.Log("S'ha apretat afegir bloc");
         //Crear bloc i afegir-lo a la llista de blocs del workout
+        Bloc bloc = new Bloc(workout.blocs.Count + 1);
+
+        workout.AddBloc(bloc);
     }
 }

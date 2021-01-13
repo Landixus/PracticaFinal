@@ -8,29 +8,32 @@ public class CreateWorkoutList : MonoBehaviour
     static public bool afegit;
     public GameObject contentPanel;
 
+    public GameObject buttPrefab;
+
     // Start is called before the first frame update
-    void Start()
+    public void EnsenyarLListaBlocs(List<Bloc> blocs)
     {
-        float myWidth = 0;
+        float myWidth;
         //int listSize = RoutesManager.rutas.Count;
-        int listSize = 2;
-        if (listSize <= 4)
+        int listSize = blocs.Count;
+        if (listSize <= 10)
         {
-            myWidth = Screen.width;
+            myWidth = 1365;
+            Debug.Log(myWidth);
         }
         else
         {
-            myWidth = listSize * transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y + 10 * listSize;
+            myWidth = listSize * buttPrefab.GetComponent<RectTransform>().sizeDelta.x + 10 * listSize;
         }
         contentPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, myWidth);
         contentPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 108);
-        GameObject buttonTemplate = transform.GetChild(0).gameObject;
+        //GameObject buttonTemplate = transform.GetChild(0).gameObject;
         GameObject g;
 
         for (int i = 0; i < listSize; i++)
         {
             //Ruta ruta = RoutesManager.rutas[i];
-            g = Instantiate(buttonTemplate, transform);
+            g = Instantiate(buttPrefab, transform);
             /*g.transform.GetChild(1).GetComponent<Text>().text = ruta.name;
             g.transform.GetChild(3).GetComponent<Text>().text = ruta.totalDistance.ToString() + " km";
             g.transform.GetChild(5).GetComponent<Text>().text = ruta.positiveElevation.ToString() + "m";
@@ -40,6 +43,14 @@ public class CreateWorkoutList : MonoBehaviour
 
         }
 
-        Destroy(buttonTemplate);
-    }    
+        //Destroy(buttonTemplate);
+    }
+
+    public void DestroyList()
+    {
+        for (int i = 1; i < contentPanel.transform.childCount; i++)
+        {
+            GameObject.Destroy(contentPanel.transform.GetChild(i).gameObject);
+        }
+    }
 }

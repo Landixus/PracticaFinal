@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class Workout 
 {
-    private int id { get; }
-    private float tempsTotal { get; set; }
+    public int id { get; set; }
+    public float tempsTotal { get; set; }
 
-    private List<Bloc> blocs { get; set; }
+    public List<Bloc> blocs { get; set; }
   
-    private string description { get; set; }
+    public string description { get; set; }
 
     public Workout(int id)
     {
         this.id = id;
+        blocs = new List<Bloc>();
+    }
+
+    public void AddBloc(Bloc bloc)
+    {
+        blocs.Add(bloc);
+    }
+
+    public void RemoveLastBloc()
+    {
+        blocs.RemoveAt(blocs.Count - 1);
     }
 }
 
