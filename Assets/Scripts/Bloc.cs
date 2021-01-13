@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Bloc 
 {
-    private int numBloc { get; }
-    private int pot { get; set; }
-    private float temps { get; set; }
+    public int numBloc { get; }
+    public int pot { get; set; }
+    public float temps { get; set; }
 
     public Bloc(int numBloc)
     {

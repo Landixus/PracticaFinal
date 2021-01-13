@@ -24,7 +24,10 @@ public class Workout
 
     public void RemoveLastBloc()
     {
-        blocs.RemoveAt(blocs.Count - 1);
+        if (blocs.Count > 0)
+        {
+            blocs.RemoveAt(blocs.Count - 1);
+        }
     }
 }
 

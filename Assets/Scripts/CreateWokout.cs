@@ -36,10 +36,17 @@ public class CreateWokout : MonoBehaviour
 
     public void AddBlock()
     {
-        Debug.Log("S'ha apretat afegir bloc");
         //Crear bloc i afegir-lo a la llista de blocs del workout
         Bloc bloc = new Bloc(workout.blocs.Count + 1);
 
+        bloc.temps = Random.Range(0.0f, 100.0f);
+        bloc.pot = (int)Random.value * 100;
+
         workout.AddBloc(bloc);
+    }
+
+    public void RemoveLastBlock()
+    {
+        workout.RemoveLastBloc();
     }
 }

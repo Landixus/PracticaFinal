@@ -19,7 +19,6 @@ public class CreateWorkoutList : MonoBehaviour
         if (listSize <= 10)
         {
             myWidth = 1365;
-            Debug.Log(myWidth);
         }
         else
         {
@@ -32,12 +31,12 @@ public class CreateWorkoutList : MonoBehaviour
 
         for (int i = 0; i < listSize; i++)
         {
-            //Ruta ruta = RoutesManager.rutas[i];
+            Bloc bloc = blocs[i];
             g = Instantiate(buttPrefab, transform);
-            /*g.transform.GetChild(1).GetComponent<Text>().text = ruta.name;
-            g.transform.GetChild(3).GetComponent<Text>().text = ruta.totalDistance.ToString() + " km";
-            g.transform.GetChild(5).GetComponent<Text>().text = ruta.positiveElevation.ToString() + "m";
-            g.transform.GetChild(7).GetComponent<Text>().text = ruta.negativeElevation.ToString() + "m";*/
+            g.transform.GetChild(1).GetComponent<Text>().text = bloc.numBloc.ToString();
+            g.transform.GetChild(4).GetComponent<Text>().text = bloc.pot.ToString() + " W";
+            g.transform.GetChild(5).GetComponent<Text>().text = bloc.temps.ToString() + " M";
+            
 
             //g.GetComponent<Button>().AddEventListener(i, ItemClickedSelectRoute);
 
