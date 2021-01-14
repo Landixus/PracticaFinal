@@ -27,6 +27,7 @@ public class CreateWokout : MonoBehaviour
         numBlocs = 0;
 
         duracioErrorText.text = "";
+        potenciaErrorText.text = "";
     }
 
     // Update is called once per frame
@@ -78,17 +79,30 @@ public class CreateWokout : MonoBehaviour
                 format = false;
             }
         }
-
+        duracioErrorText.text = "";
         if (format)
         {
-            //multipliquem minuts per 60 per convertir-lo en segons
-            minutes = minutes * 60;
+            if (seconds >= 60 || seconds < 0)
+            {
+                duracioErrorText.text = "Segons incorrectes ";
+                format = false;
+            }
+            if (minutes < 0 || minutes > 900)
+            {
+                duracioErrorText.text += "Minuts incorrectes";
+                format = false;
+            }
 
-            workout.blocs[numBloc].temps = minutes + seconds;
+            if (format)
+            {
+                //multipliquem minuts per 60 per convertir-lo en segons
+                minutes = minutes * 60;
 
-            //Quan tenim els canvis fets fem que imprimeixi la llista de nou perque es vegi el canvi en el bloc
-            imprimirLLista();
+                workout.blocs[numBloc].temps = minutes + seconds;
 
+                //Quan tenim els canvis fets fem que imprimeixi la llista de nou perque es vegi el canvi en el bloc
+                imprimirLLista();
+            }
         } else
         {
             //Text d'error
@@ -127,11 +141,15 @@ public class CreateWokout : MonoBehaviour
                 //Quan tenim els canvis fets fem que imprimeixi la llista de nou perque es vegi el canvi en el bloc
                 imprimirLLista();
             }
+            else {
+                //Text d'error
+                potenciaErrorText.text = "La poténcia ha de ser un número entre 1 i 2000";
+            }
         }
         else
         {
             //Text d'error
-            duracioErrorText.text = "Format incorrecte";
+            potenciaErrorText.text = "La poténcia ha de ser un número entre 1 i 2000";
         }
 
         //workout.blocs[numBloc].temps = duracioInput.text;

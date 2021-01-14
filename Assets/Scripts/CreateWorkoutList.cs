@@ -47,7 +47,7 @@ public class CreateWorkoutList : MonoBehaviour
             g = Instantiate(buttPrefab, transform);
             g.transform.GetChild(1).GetComponent<Text>().text = bloc.numBloc.ToString();
             g.transform.GetChild(4).GetComponent<Text>().text = bloc.pot.ToString() + " W";
-            g.transform.GetChild(5).GetComponent<Text>().text = bloc.temps.ToString() + " M";
+            g.transform.GetChild(5).GetComponent<Text>().text = bloc.temps.ToString() + " seg";
 
 
             g.GetComponent<Button>().AddEventListener(i, ItemClicked);
