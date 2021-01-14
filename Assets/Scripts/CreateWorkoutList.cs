@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class CreateWorkoutList : MonoBehaviour
 {
     static public bool afegit;
@@ -10,9 +12,19 @@ public class CreateWorkoutList : MonoBehaviour
 
     public GameObject buttPrefab;
 
+
+    [SerializeField] Text numBlocText;
+    [SerializeField] InputField duracioInput;
+    [SerializeField] InputField potenciaInput;
+
+    private List<Bloc> blocsPrivat;
+    private int blocSelected;
+
     // Start is called before the first frame update
     public void EnsenyarLListaBlocs(List<Bloc> blocs)
     {
+        blocsPrivat = blocs;
+
         float myWidth;
         //int listSize = RoutesManager.rutas.Count;
         int listSize = blocs.Count;
@@ -36,9 +48,9 @@ public class CreateWorkoutList : MonoBehaviour
             g.transform.GetChild(1).GetComponent<Text>().text = bloc.numBloc.ToString();
             g.transform.GetChild(4).GetComponent<Text>().text = bloc.pot.ToString() + " W";
             g.transform.GetChild(5).GetComponent<Text>().text = bloc.temps.ToString() + " M";
-            
 
-            //g.GetComponent<Button>().AddEventListener(i, ItemClickedSelectRoute);
+
+            g.GetComponent<Button>().AddEventListener(i, ItemClicked);
 
         }
 
@@ -52,4 +64,18 @@ public class CreateWorkoutList : MonoBehaviour
             GameObject.Destroy(contentPanel.transform.GetChild(i).gameObject);
         }
     }
+
+    private void ItemClicked(int i)
+    {
+        Bloc bloc = blocsPrivat[i];
+        blocSelected = i;
+
+        numBlocText.text = bloc.numBloc.ToString();
+        duracioInput.text = bloc.temps.ToString();
+        potenciaInput.text = bloc.pot.ToString();
+
+        CreateWokout.numBloc = i;
+    }
+
+    
 }
