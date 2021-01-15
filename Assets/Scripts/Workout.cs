@@ -9,7 +9,7 @@ public class Workout
 
     public List<Bloc> blocs { get; set; }
   
-    public string description { get; set; }
+    public string nom { get; set; }
 
     public Workout(int id)
     {

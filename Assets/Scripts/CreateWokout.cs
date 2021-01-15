@@ -14,6 +14,7 @@ public class CreateWokout : MonoBehaviour
 
     static public int numBloc;
 
+    [SerializeField] Text numBlocText;
     [SerializeField] InputField duracioInput;
     [SerializeField] Text duracioErrorText;
     [SerializeField] InputField potenciaInput;
@@ -23,14 +24,17 @@ public class CreateWokout : MonoBehaviour
     [SerializeField] Text nameErrorText;
     [SerializeField] InputField nameInput;
 
+    [SerializeField] Scrollbar scrollbar;
+
     [SerializeField] Text errorGeneralText;
 
-    private bool nomCorrecte = false;
+    private bool nomCorrecte;
     private string nomWorkout;
 
     // Start is called before the first frame update
     void Start()
     {
+        numBlocText.text = "";
         errorGeneralText.text= "";
         nomWorkout = "";
         //Li hem de passar l'id que l'agafarem de la bbdd
@@ -47,11 +51,13 @@ public class CreateWokout : MonoBehaviour
         nameInput.characterLimit = 100;
 
         nameErrorText.text = "";
+        nomCorrecte = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Num blocs" + workout.blocs.Count);
         //Tornar a actualitzar la vista de la llista quan s'ha afegit un bloc
         if (workout.blocs.Count != numBlocs)
         {
@@ -68,6 +74,8 @@ public class CreateWokout : MonoBehaviour
         bloc.pot = 0;
 
         workout.AddBloc(bloc);
+
+        scrollbar.value = 1;
     }
 
     public void RemoveLastBlock()
@@ -263,23 +271,49 @@ public class CreateWokout : MonoBehaviour
     {
         if (nomCorrecte && workout.blocs.Count > 0)
         {
+            bool correcte = true;
 
             //Comprovar que no hi ha cap paràmetre d'un bloc que sigui == 0
             foreach (var bloc in workout.blocs)
             {
                 if (bloc.temps == 0)
                 {
-                    
+                    errorGeneralText.text += "Error en el temps del bloc " + bloc.numBloc + " ";
+                    correcte = false;
+                }
+
+                if (bloc.pot == 0)
+                {
+                    errorGeneralText.text += "Error en la poténcia del bloc" + bloc.numBloc + " ";
+                    correcte = false;
                 }
             }
 
-            //Guardar workout en l'usuari
-            //Ensneyar POP UP amb entrenament creat i crear nou Entrenament
+            if (correcte)
+            {
+                //Guardar workout en l'usuari
+                //Ensneyar POP UP amb entrenament creat i crear nou Entrenament
+                //(Es podria fer fent enable d'un panel que est'a desactivat per defecte)
+
+                workout.nom = nomWorkout;
+                //Aquesta funció ja ens assigna en temps total a la variable tempsTotal del workout
+                UpdateTempsTotal();
+
+                //PaginaPrincipal.user.AfegirWorkout(workout)
+                
+            }
         }
         else
-        { 
-             //Ensneyar missatge error
+        {
+            if (!nomCorrecte)
+            {
+                errorGeneralText.text = "El nom de l'entrenament no es correcte. ";
+            }
 
+            if (workout.blocs.Count == 0)
+            {
+                errorGeneralText.text += "No s'han creat blocs";
+            }
 
         }
     }
