@@ -233,13 +233,13 @@ public class CreateWokout : MonoBehaviour
 
     public void ComporvarNom() 
     {
-        Regex regexNom = new Regex(@"[\w ]");
+        Regex regexNom = new Regex(@"^[A-Za-z0-9 _-]+$");
 
         Match match = regexNom.Match(nameInput.text);
         if (!match.Success)
         {
             nomCorrecte = false;
-            nameErrorText.text = "Error en el nom";
+            nameErrorText.text = "Error en el nom (Només s'accepta números, lletres, espais, _ i -)";
             Debug.Log("Nom incorrecte " + nameInput.text);
         }
         else {
