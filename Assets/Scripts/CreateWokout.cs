@@ -23,12 +23,15 @@ public class CreateWokout : MonoBehaviour
     [SerializeField] Text nameErrorText;
     [SerializeField] InputField nameInput;
 
+    [SerializeField] Text errorGeneralText;
+
     private bool nomCorrecte = false;
     private string nomWorkout;
 
     // Start is called before the first frame update
     void Start()
     {
+        errorGeneralText.text= "";
         nomWorkout = "";
         //Li hem de passar l'id que l'agafarem de la bbdd
         workout = new Workout(1);
@@ -115,10 +118,16 @@ public class CreateWokout : MonoBehaviour
                 //multipliquem minuts per 60 per convertir-lo en segons
                 minutes = minutes * 60;
 
-                workout.blocs[numBloc].temps = minutes + seconds;
+                if (minutes == 0 && seconds == 0)
+                {
+                    duracioErrorText.text = "El temps no pot ser 0";
+                }
+                else {
+                    workout.blocs[numBloc].temps = minutes + seconds;
 
-                //Quan tenim els canvis fets fem que imprimeixi la llista de nou perque es vegi el canvi en el bloc
-                imprimirLLista();
+                    //Quan tenim els canvis fets fem que imprimeixi la llista de nou perque es vegi el canvi en el bloc
+                    imprimirLLista();
+                }
             }
         } else
         {
@@ -247,6 +256,31 @@ public class CreateWokout : MonoBehaviour
             nameErrorText.text = "";
             nomWorkout = nameInput.text;
             Debug.Log("Nom correcte " + nameInput.text);
+        }
+    }
+
+    public void Confirm()
+    {
+        if (nomCorrecte && workout.blocs.Count > 0)
+        {
+
+            //Comprovar que no hi ha cap paràmetre d'un bloc que sigui == 0
+            foreach (var bloc in workout.blocs)
+            {
+                if (bloc.temps == 0)
+                {
+                    
+                }
+            }
+
+            //Guardar workout en l'usuari
+            //Ensneyar POP UP amb entrenament creat i crear nou Entrenament
+        }
+        else
+        { 
+             //Ensneyar missatge error
+
+
         }
     }
 }
