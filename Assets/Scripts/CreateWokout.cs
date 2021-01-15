@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,16 +19,31 @@ public class CreateWokout : MonoBehaviour
     [SerializeField] InputField potenciaInput;
     [SerializeField] Text potenciaErrorText;
 
+    [SerializeField] Text tempsTotalText;
+    [SerializeField] Text nameErrorText;
+    [SerializeField] InputField nameInput;
+
+    private bool nomCorrecte = false;
+    private string nomWorkout;
 
     // Start is called before the first frame update
     void Start()
     {
+        nomWorkout = "";
         //Li hem de passar l'id que l'agafarem de la bbdd
         workout = new Workout(1);
         numBlocs = 0;
 
         duracioErrorText.text = "";
         potenciaErrorText.text = "";
+
+        duracioInput.interactable = false;
+        potenciaInput.interactable = false;
+
+        tempsTotalText.text = 0.ToString() + " segons";
+        nameInput.characterLimit = 100;
+
+        nameErrorText.text = "";
     }
 
     // Update is called once per frame
@@ -45,8 +61,8 @@ public class CreateWokout : MonoBehaviour
         //Crear bloc i afegir-lo a la llista de blocs del workout
         Bloc bloc = new Bloc(workout.blocs.Count + 1);
 
-        bloc.temps = (int)UnityEngine.Random.Range(0.0f, 100.0f);
-        bloc.pot = (int)UnityEngine.Random.value * 100;
+        bloc.temps = 0;
+        bloc.pot = 0;
 
         workout.AddBloc(bloc);
     }
@@ -54,6 +70,7 @@ public class CreateWokout : MonoBehaviour
     public void RemoveLastBlock()
     {
         workout.RemoveLastBloc();
+        UpdateTempsTotal();
     }
 
     public void DurationChanged()
@@ -110,7 +127,9 @@ public class CreateWokout : MonoBehaviour
         }
 
 
+        //Calcular nou temps total
 
+        UpdateTempsTotal();
     }
 
     public void PotenciaChanged()
@@ -151,9 +170,6 @@ public class CreateWokout : MonoBehaviour
             //Text d'error
             potenciaErrorText.text = "La poténcia ha de ser un número entre 1 i 2000";
         }
-
-        //workout.blocs[numBloc].temps = duracioInput.text;
-
     }
 
 
@@ -170,4 +186,67 @@ public class CreateWokout : MonoBehaviour
         numBlocs = workout.blocs.Count;
     }
 
+
+    private void UpdateTempsTotal()
+    {
+        int totalTime = CalcTotalTime();
+
+        workout.tempsTotal = totalTime;
+
+        tempsTotalText.text = FromSecondsToMinutesString(totalTime) + " minuts";
+    }
+    private int CalcTotalTime()
+    {
+        int totalTime = 0;
+
+        foreach (var bloc in workout.blocs)    
+        {
+            totalTime += bloc.temps;
+        }
+
+        return totalTime;
+    }
+
+
+    private string FromSecondsToMinutesString(int totalSeconds)
+    {
+
+        if (totalSeconds == 0)
+        {
+            return "00:00";
+        }
+        float total = (float) totalSeconds / 60;
+
+        int minutes = (int)total;
+
+        Debug.Log(total);
+
+        var seconds  = (total - Math.Truncate(total)) * 30 / 0.5;
+
+        seconds = (float)Math.Round(seconds, 3);
+
+        Debug.Log(seconds);
+
+        return minutes.ToString() + ":" + seconds.ToString();
+    }
+
+
+    public void ComporvarNom() 
+    {
+        Regex regexNom = new Regex(@"[\w ]");
+
+        Match match = regexNom.Match(nameInput.text);
+        if (!match.Success)
+        {
+            nomCorrecte = false;
+            nameErrorText.text = "Error en el nom";
+            Debug.Log("Nom incorrecte " + nameInput.text);
+        }
+        else {
+            nomCorrecte = true;
+            nameErrorText.text = "";
+            nomWorkout = nameInput.text;
+            Debug.Log("Nom correcte " + nameInput.text);
+        }
+    }
 }

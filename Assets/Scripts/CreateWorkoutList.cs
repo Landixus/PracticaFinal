@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,7 +48,7 @@ public class CreateWorkoutList : MonoBehaviour
             g = Instantiate(buttPrefab, transform);
             g.transform.GetChild(1).GetComponent<Text>().text = bloc.numBloc.ToString();
             g.transform.GetChild(4).GetComponent<Text>().text = bloc.pot.ToString() + " W";
-            g.transform.GetChild(5).GetComponent<Text>().text = bloc.temps.ToString() + " seg";
+            g.transform.GetChild(5).GetComponent<Text>().text = FromSecondsToMinutesString(bloc.temps) + " min";
 
 
             g.GetComponent<Button>().AddEventListener(i, ItemClicked);
@@ -70,6 +71,10 @@ public class CreateWorkoutList : MonoBehaviour
         Bloc bloc = blocsPrivat[i];
         blocSelected = i;
 
+        //Activem els inputs per que l'usuari pugui interactuar
+        duracioInput.interactable = true;
+        potenciaInput.interactable = true;
+
         numBlocText.text = bloc.numBloc.ToString();
         duracioInput.text = bloc.temps.ToString();
         potenciaInput.text = bloc.pot.ToString();
@@ -77,5 +82,26 @@ public class CreateWorkoutList : MonoBehaviour
         CreateWokout.numBloc = i;
     }
 
-    
+    private string FromSecondsToMinutesString(int totalSeconds)
+    {
+
+        if (totalSeconds == 0)
+        {
+            return "00:00";
+        }
+
+        float total = (float)totalSeconds / 60;
+
+        int minutes = (int)total;
+
+        Debug.Log(total);
+
+        var seconds = (total - Math.Truncate(total)) * 30 / 0.5;
+
+        seconds = (float)Math.Round(seconds, 2);
+
+        Debug.Log(seconds);
+
+        return minutes.ToString() + ":" + seconds.ToString();
+    }
 }
