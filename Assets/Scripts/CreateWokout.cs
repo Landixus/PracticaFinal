@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CreateWokout : MonoBehaviour
@@ -27,6 +28,8 @@ public class CreateWokout : MonoBehaviour
     [SerializeField] Scrollbar scrollbar;
 
     [SerializeField] Text errorGeneralText;
+
+    [SerializeField] GameObject panel;
 
     private bool nomCorrecte;
     private string nomWorkout;
@@ -291,15 +294,27 @@ public class CreateWokout : MonoBehaviour
 
             if (correcte)
             {
-                //Guardar workout en l'usuari
-                //Ensneyar POP UP amb entrenament creat i crear nou Entrenament
-                //(Es podria fer fent enable d'un panel que est'a desactivat per defecte)
 
                 workout.nom = nomWorkout;
                 //Aquesta funció ja ens assigna en temps total a la variable tempsTotal del workout
                 UpdateTempsTotal();
 
-                //PaginaPrincipal.user.AfegirWorkout(workout)
+                //Guardar workout en l'usuari
+                //En principi si hem passat per el login sempre hi tindrem un usuari escollit, sino pot donar problemes
+                try
+                {
+                    PaginaPrincipal.user.AfegirWorkout(workout);
+                }
+                catch (Exception)
+                {
+
+                    Debug.LogError("No hi ha usuari escollit (només al passar per el login indiquem quin usuari tenim escollit)");
+                }
+                
+
+                //Ensneyar POP UP amb entrenament creat i crear nou Entrenament
+                //(Es podria fer fent enable d'un panel que est'a desactivat per defecte)
+                StartCoroutine("ActivarPanelCreat");
                 
             }
         }
@@ -316,5 +331,20 @@ public class CreateWokout : MonoBehaviour
             }
 
         }
+    }
+
+
+    IEnumerator ActivarPanelCreat()
+    {
+
+        panel.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+
+        panel.SetActive(false);
+
+        PaginaPrincipal.user.EnsenyarWorkoutsLog();
+        //reset
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

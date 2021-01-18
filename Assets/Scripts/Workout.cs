@@ -29,6 +29,11 @@ public class Workout
             blocs.RemoveAt(blocs.Count - 1);
         }
     }
+
+    public override string ToString()
+    {
+        return "id: " + id.ToString() + " name: " + nom;
+    }
 }
 
 
