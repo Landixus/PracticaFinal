@@ -29,7 +29,7 @@ public class ListGenerator : MonoBehaviour
         int listSize = RoutesManager.rutas.Count;
         if (listSize <= 4)
         {
-            myHeight = 400f;
+            myHeight = 430f;
         } else
         {
             myHeight = listSize * transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y + 10 * listSize;

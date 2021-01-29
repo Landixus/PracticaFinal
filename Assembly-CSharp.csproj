@@ -259,6 +259,7 @@
     <Compile Include="Assets\File Hopper\Example\Scripts\DragFilesOntoMe.cs" />
     <Compile Include="Assets\Scripts\BBDD.cs" />
     <Compile Include="Assets\Scripts\Bloc.cs" />
+    <Compile Include="Assets\Scripts\ButtonHover.cs" />
     <Compile Include="Assets\Scripts\ControladorDevices.cs" />
     <Compile Include="Assets\Scripts\CreateUser.cs" />
     <Compile Include="Assets\Scripts\CreateWokout.cs" />

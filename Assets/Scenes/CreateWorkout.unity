@@ -1778,8 +1778,10 @@ GameObject:
   m_Component:
   - component: {fileID: 929404974}
   - component: {fileID: 929404977}
+  - component: {fileID: 929404979}
   - component: {fileID: 929404976}
   - component: {fileID: 929404975}
+  - component: {fileID: 929404978}
   m_Layer: 5
   m_Name: EliminarImage
   m_TagString: Untagged
@@ -1803,7 +1805,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -199.04999, y: -57.299988}
+  m_AnchoredPosition: {x: -199.04999, y: -57.8}
   m_SizeDelta: {x: 40.617004, y: 40.518097}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &929404975
@@ -1871,6 +1873,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 929404973}
   m_CullTransparentMesh: 0
+--- !u!61 &929404978
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929404973}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.09383011, y: 0.18754768}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 40.59973, y: 40.41238}
+  m_EdgeRadius: 0
+--- !u!114 &929404979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929404973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7ddb6c9ed4a264891d047c606bd8d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tamanyFinal: 1.4
+  step: 0.07
 --- !u!1 &930701381
 GameObject:
   m_ObjectHideFlags: 0
@@ -3001,6 +3043,8 @@ GameObject:
   - component: {fileID: 1860379822}
   - component: {fileID: 1860379821}
   - component: {fileID: 1860379823}
+  - component: {fileID: 1860379824}
+  - component: {fileID: 1860379825}
   m_Layer: 5
   m_Name: AfegirImage
   m_TagString: Untagged
@@ -3024,8 +3068,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -491, y: -57.399994}
-  m_SizeDelta: {x: 72.72699, y: 45.3649}
+  m_AnchoredPosition: {x: -487.5, y: -57.399994}
+  m_SizeDelta: {x: 79.73279, y: 45.3649}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1860379821
 MonoBehaviour:
@@ -3092,6 +3136,46 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1860379824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860379819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7ddb6c9ed4a264891d047c606bd8d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tamanyFinal: 1.2
+  step: 0.08
+--- !u!61 &1860379825
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860379819}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.22518349, y: -0.26233292}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 79.719894, y: 45.270958}
+  m_EdgeRadius: 0
 --- !u!1 &1916435158
 GameObject:
   m_ObjectHideFlags: 0
@@ -3179,6 +3263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1957578789}
+  - component: {fileID: 1957578793}
   - component: {fileID: 1957578792}
   - component: {fileID: 1957578791}
   - component: {fileID: 1957578790}
@@ -3300,6 +3385,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1957578788}
   m_CullTransparentMesh: 0
+--- !u!114 &1957578793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957578788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7ddb6c9ed4a264891d047c606bd8d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tamanyFinal: 1.1
+  step: 0.1
 --- !u!1 &2011854619
 GameObject:
   m_ObjectHideFlags: 0

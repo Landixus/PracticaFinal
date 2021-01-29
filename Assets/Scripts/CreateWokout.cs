@@ -50,7 +50,7 @@ public class CreateWokout : MonoBehaviour
         duracioInput.interactable = false;
         potenciaInput.interactable = false;
 
-        tempsTotalText.text = 0.ToString() + " segons";
+        tempsTotalText.text = "00:00 minuts";
         nameInput.characterLimit = 100;
 
         nameErrorText.text = "";

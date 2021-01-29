@@ -286,6 +286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 103952202}
+  - component: {fileID: 103952206}
   - component: {fileID: 103952204}
   - component: {fileID: 103952203}
   - component: {fileID: 103952205}
@@ -380,6 +381,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &103952206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103952201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7ddb6c9ed4a264891d047c606bd8d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tamanyFinal: 1.1
+  step: 0.09
 --- !u!1 &116844196
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,6 +791,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 325336054}
+  - component: {fileID: 325336058}
   - component: {fileID: 325336057}
   - component: {fileID: 325336056}
   - component: {fileID: 325336055}
@@ -897,6 +913,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 325336053}
   m_CullTransparentMesh: 0
+--- !u!114 &325336058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325336053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7ddb6c9ed4a264891d047c606bd8d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tamanyFinal: 1.1
+  step: 0.09
 --- !u!1 &331358121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,6 +1342,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 629624708}
+  - component: {fileID: 629624712}
   - component: {fileID: 629624711}
   - component: {fileID: 629624710}
   - component: {fileID: 629624709}
@@ -1433,6 +1464,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 629624707}
   m_CullTransparentMesh: 0
+--- !u!114 &629624712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629624707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7ddb6c9ed4a264891d047c606bd8d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tamanyFinal: 1.1
+  step: 0.09
 --- !u!1 &654774509
 GameObject:
   m_ObjectHideFlags: 0
