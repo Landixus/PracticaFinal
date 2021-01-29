@@ -33,7 +33,7 @@ public class SelectedRoute : MonoBehaviour
             graph_windowObj = GameObject.Find("Window_Graph");
             graph_window = (Window_Graph)graph_windowObj.GetComponent(typeof(Window_Graph));
 
-            graph_window.ShowGraph(ruta.trackPoints, ruta.pendentPunts, ruta.totalDistance);
+            graph_window.ShowGraph(ruta.trackPoints, ruta.pendentPunts, ruta.totalDistance,150);
         }
 
         fileNameInput.characterLimit = 100;
@@ -92,6 +92,7 @@ public class SelectedRoute : MonoBehaviour
             Debug.Log("Fitxer copiat");
             RoutesManager.rutas.Add(ruta);
 
+
             SceneManager.LoadScene(6);
         }
         catch (Exception)
@@ -110,5 +111,10 @@ public class SelectedRoute : MonoBehaviour
     public void Cancel()
     {
         SceneManager.LoadScene(6);
+    }
+
+    public void SaveDescription() {
+        ruta.description = descriptionInput.text;
+        Debug.Log(ruta.description);
     }
 }

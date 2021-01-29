@@ -7,6 +7,8 @@ public class Workout
     public int id { get; set; }
     public float tempsTotal { get; set; }
 
+    public float description { get; set; }
+
     public List<Bloc> blocs { get; set; }
   
     public string nom { get; set; }

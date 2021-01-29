@@ -19,7 +19,7 @@ public class FollowRoute : MonoBehaviour
 
             if (ruta != null)
             {
-                graph_window.ShowGraph(ruta.trackPoints, ruta.pendentPunts, ruta.totalDistance);
+                graph_window.ShowGraph(ruta.trackPoints, ruta.pendentPunts, ruta.totalDistance, 160);
             }
             else {
                 Debug.LogWarning("ruta == null (FollowRoute)");

@@ -88,7 +88,7 @@ public class ListGenerator : MonoBehaviour
             graph_windowObj = GameObject.Find("Window_Graph");
             graph_window = (Window_Graph)graph_windowObj.GetComponent(typeof(Window_Graph));
             graph_window.DestroyGraph();
-            graph_window.ShowGraph(ruta.trackPoints, ruta.pendentPunts, ruta.totalDistance);     
+            graph_window.ShowGraph(ruta.trackPoints, ruta.pendentPunts, ruta.totalDistance, 150);     
         }
 
         FollowRoute.ruta = ruta;

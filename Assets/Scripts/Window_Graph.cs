@@ -44,9 +44,9 @@ public class Window_Graph : MonoBehaviour
     }
 
     //Funció modificada de https://www.youtube.com/watch?v=CmU5-v-v1Qo
-    public void ShowGraph(List<TrackPoint> valueList, float[] slopes, float distance)
+    public void ShowGraph(List<TrackPoint> valueList, float[] slopes, float distance, int expectedpoints)
     {
-        List<TrackPoint> simpleList = SimplifyList(valueList);
+        List<TrackPoint> simpleList = SimplifyList(valueList, expectedpoints);
         List<float> simpleSlopes = SimplifySlope(slopes);
 
         //Debug.Log(simpleList.Count);
@@ -161,7 +161,7 @@ public class Window_Graph : MonoBehaviour
     }
 
     //Funció que serveix per simplificar la llista de punts d'altura per que el gràfic càpiga en el contenidor
-    private List<TrackPoint> SimplifyList(List<TrackPoint> list)
+    private List<TrackPoint> SimplifyList(List<TrackPoint> list, int expectedPoints)
     {
         float graphWidth = graphContainer.sizeDelta.x;
 
@@ -169,7 +169,7 @@ public class Window_Graph : MonoBehaviour
         Debug.Log("Num total points:" + list.Count);
 
         //int numPoints = (int)Math.Ceiling(list.Count / (graphWidth - 20));
-        numPoints = list.Count / 150;
+        numPoints = list.Count / expectedPoints;
         Debug.Log("Num points:" + numPoints);
 
         //Si hi han menys punts que l'amplada del contenidor del gràfic retornem la llista sense modificar-la
