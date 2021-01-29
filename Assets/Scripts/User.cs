@@ -11,7 +11,7 @@ public class User
     private int weight { get; set; }
     private int maxFC { get; set; }
     private int maxW { get; set; }
-    private List<Workout> workouts;
+    public List<Workout> workouts;
 
     public User(int id, string mail, string password, int height, int weight, int maxFC, int maxW)
     {

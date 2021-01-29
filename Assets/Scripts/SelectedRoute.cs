@@ -110,7 +110,7 @@ public class SelectedRoute : MonoBehaviour
 
     public void Cancel()
     {
-        SceneManager.LoadScene(6);
+        SceneManager.LoadScene(2);
     }
 
     public void SaveDescription() {

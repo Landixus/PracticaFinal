@@ -282,6 +282,7 @@
     <Compile Include="Assets\Scripts\User.cs" />
     <Compile Include="Assets\Scripts\Window_Graph.cs" />
     <Compile Include="Assets\Scripts\Workout.cs" />
+    <Compile Include="Assets\Scripts\WorkoutListGenerator.cs" />
     <Compile Include="Assets\Scripts\eyeManager.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />

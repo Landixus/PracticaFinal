@@ -17,6 +17,7 @@ public class CreateWorkoutList : MonoBehaviour
     [SerializeField] Text numBlocText;
     [SerializeField] InputField duracioInput;
     [SerializeField] InputField potenciaInput;
+   
 
     private List<Bloc> blocsPrivat;
     private int blocSelected;
@@ -100,8 +101,16 @@ public class CreateWorkoutList : MonoBehaviour
 
         seconds = (float)Math.Round(seconds, 2);
 
-        Debug.Log(seconds);
+        string secondsString;
+        if (seconds < 10)
+        {
+            secondsString = "0" + seconds.ToString();
+        }
+        else
+        {
+            secondsString = seconds.ToString();
+        }
 
-        return minutes.ToString() + ":" + seconds.ToString();
+        return minutes.ToString() + ":" + secondsString;
     }
 }

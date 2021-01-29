@@ -2299,7 +2299,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 241674788}
-        m_MethodName: goToFollowRoute
+        m_MethodName: goToSelectWorkout
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -5,13 +5,13 @@ using UnityEngine;
 public class Workout 
 {
     public int id { get; set; }
-    public float tempsTotal { get; set; }
+    public int tempsTotal { get; set; }
 
-    public float description { get; set; }
+    public string description { get; set; }
 
     public List<Bloc> blocs { get; set; }
   
-    public string nom { get; set; }
+    public string name { get; set; }
 
     public Workout(int id)
     {
@@ -34,7 +34,7 @@ public class Workout
 
     public override string ToString()
     {
-        return "id: " + id.ToString() + " name: " + nom;
+        return "id: " + id.ToString() + " name: " + name;
     }
 }
 

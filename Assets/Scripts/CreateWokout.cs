@@ -31,6 +31,8 @@ public class CreateWokout : MonoBehaviour
 
     [SerializeField] GameObject panel;
 
+    [SerializeField] InputField descriptionInput;
+
     private bool nomCorrecte;
     private string nomWorkout;
 
@@ -60,10 +62,10 @@ public class CreateWokout : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Num blocs" + workout.blocs.Count);
         //Tornar a actualitzar la vista de la llista quan s'ha afegit un bloc
-        if (workout.blocs.Count != numBlocs)
+        if (workout.blocs.Count != numBlocs && workout != null)
         {
+            Debug.Log("Num blocs" + workout.blocs.Count);
             imprimirLLista();
         }
     }
@@ -78,12 +80,13 @@ public class CreateWokout : MonoBehaviour
 
         workout.AddBloc(bloc);
 
-        scrollbar.value = 1;
+        scrollbar.value = 0.99f;
     }
 
     public void RemoveLastBlock()
     {
         workout.RemoveLastBloc();
+        scrollbar.value = 0.8f;
         UpdateTempsTotal();
     }
 
@@ -247,7 +250,17 @@ public class CreateWokout : MonoBehaviour
 
         Debug.Log(seconds);
 
-        return minutes.ToString() + ":" + seconds.ToString();
+        string secondsString;
+        if (seconds < 10)
+        {
+            secondsString = "0" + seconds.ToString();
+        }
+        else
+        {
+            secondsString = seconds.ToString();
+        }
+
+        return minutes.ToString() + ":" + secondsString;
     }
 
 
@@ -272,6 +285,8 @@ public class CreateWokout : MonoBehaviour
 
     public void Confirm()
     {
+
+        errorGeneralText.text = "";
         if (nomCorrecte && workout.blocs.Count > 0)
         {
             bool correcte = true;
@@ -287,7 +302,7 @@ public class CreateWokout : MonoBehaviour
 
                 if (bloc.pot == 0)
                 {
-                    errorGeneralText.text += "Error en la poténcia del bloc" + bloc.numBloc + " ";
+                    errorGeneralText.text += "Error en la poténcia del bloc " + bloc.numBloc + " ";
                     correcte = false;
                 }
             }
@@ -295,7 +310,7 @@ public class CreateWokout : MonoBehaviour
             if (correcte)
             {
 
-                workout.nom = nomWorkout;
+                workout.name = nomWorkout;
                 //Aquesta funció ja ens assigna en temps total a la variable tempsTotal del workout
                 UpdateTempsTotal();
 
@@ -333,18 +348,28 @@ public class CreateWokout : MonoBehaviour
         }
     }
 
+    public void SaveDescription()
+    {
+        workout.description = descriptionInput.text;
+        Debug.Log(workout.description);
+    }
 
     IEnumerator ActivarPanelCreat()
     {
 
         panel.SetActive(true);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         panel.SetActive(false);
 
         PaginaPrincipal.user.EnsenyarWorkoutsLog();
         //reset
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void GoToMainPage()
+    {
+        SceneManager.LoadScene(6);
     }
 }

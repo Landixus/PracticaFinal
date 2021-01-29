@@ -329,4 +329,9 @@ public class PairDevices : MonoBehaviour
     {
         SceneManager.LoadScene(5);
     }
+
+    public void GoToMainPage()
+    {
+        SceneManager.LoadScene(2);
+    }
 }

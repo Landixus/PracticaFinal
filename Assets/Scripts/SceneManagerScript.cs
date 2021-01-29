@@ -15,4 +15,14 @@ public class SceneManagerScript : MonoBehaviour
     {
         SceneManager.LoadScene(sceneBuildIndex: 9);
     }
+
+    public void goToSelectRoute()
+    {
+        SceneManager.LoadScene(sceneBuildIndex: 8);
+    }
+
+    public void goToSelectWorkout()
+    {
+        SceneManager.LoadScene(sceneBuildIndex: 11);
+    }
 }
