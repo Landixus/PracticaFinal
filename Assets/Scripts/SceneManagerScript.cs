@@ -25,4 +25,10 @@ public class SceneManagerScript : MonoBehaviour
     {
         SceneManager.LoadScene(sceneBuildIndex: 11);
     }
+
+    public void goToFollowROuteWithoutWorkout()
+    {
+        FollowRoute.workout = null;
+        SceneManager.LoadScene(sceneBuildIndex: 9);
+    }
 }

@@ -370,6 +370,6 @@ public class CreateWokout : MonoBehaviour
 
     public void GoToMainPage()
     {
-        SceneManager.LoadScene(6);
+        SceneManager.LoadScene(2);
     }
 }

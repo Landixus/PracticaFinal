@@ -19,6 +19,7 @@ public class ListGenerator : MonoBehaviour
     public Text afegitText;
     public GameObject contentPanel;
 
+    [SerializeField] Text listHelperText;
 
     private GameObject graph_windowObj;
     private Window_Graph graph_window;
@@ -27,6 +28,16 @@ public class ListGenerator : MonoBehaviour
     {
         float myHeight = 0;
         int listSize = RoutesManager.rutas.Count;
+
+
+        if (listSize == 0)
+        {
+            listHelperText.text = "No hi han rutes afegides";
+        }
+        else {
+            listHelperText.text = "";
+        }
+
         if (listSize <= 4)
         {
             myHeight = 430f;

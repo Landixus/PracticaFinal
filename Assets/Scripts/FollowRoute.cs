@@ -9,9 +9,20 @@ public class FollowRoute : MonoBehaviour
     private Window_Graph graph_window;
 
     static public Ruta ruta;
+    static public Workout workout;
+
+    private bool workoutSet;
     // Start is called before the first frame update
     void Start()
     {
+        if (workout != null)
+        {
+            workoutSet = true;
+        }
+        else {
+            workoutSet = false;
+        }
+
         if (GameObject.Find("Window_Graph"))
         {
             graph_windowObj = GameObject.Find("Window_Graph");
