@@ -303,7 +303,7 @@ public class PairDevices : MonoBehaviour
         if (FitnessEquipmentDisplay.scanResult.Count == 1 && trainerDisplay.connected == false)
         {
             dropdownTrainer.value = 1;
-            CadenceSelected(dropdownTrainer);
+            TrainerSelected(dropdownTrainer);
         }
     }
 

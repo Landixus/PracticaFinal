@@ -169,7 +169,7 @@ public class AntManager : MonoBehaviour {
 
     public byte GetFreeChannelID(int USBNum = 0) {
 
-        for (int id = 1; id <= 8; id++) {
+        for (int id = 1; id < 8; id++) {
             if (channelIDUsed[USBNum, id] == false)
                 return (byte)id;
         }

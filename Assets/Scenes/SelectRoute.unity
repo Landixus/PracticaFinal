@@ -665,7 +665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   afegitText: {fileID: 0}
   contentPanel: {fileID: 417487083}
-  listHelperText: {fileID: 0}
+  listHelperText: {fileID: 683687601}
 --- !u!114 &417487086
 MonoBehaviour:
   m_ObjectHideFlags: 0
