@@ -63,7 +63,7 @@ public class RoutesManager : MonoBehaviour
             if (scrollContainer != null && !populated)
             {
                 Debug.Log("Scroll find");
-                PopulateList();
+                //PopulateList();
                 populated = true;
             }
         }

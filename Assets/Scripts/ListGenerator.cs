@@ -7,8 +7,10 @@ using UnityEngine.UI;
 
 public static class ButtonExtension {
     public static void AddEventListener<T>(this Button button, T param, Action<T> OnClick) {
+
+        Debug.Log("item " + param + " Added Listener");
         button.onClick.AddListener(delegate ()
-        {
+        { 
             OnClick(param);
         });
     }
@@ -59,33 +61,31 @@ public class ListGenerator : MonoBehaviour
             g.transform.GetChild(7).GetComponent<Text>().text = ruta.negativeElevation.ToString() + "m";
 
             g.GetComponent<Button>().AddEventListener(i, ItemClickedSelectRoute);
-            
         }
-
-        if (afegit)
-        {
-            afegitText.text = "S'ha afegit la ruta a la llista";
-        }
-
         Destroy(buttonTemplate);
+
     }
 
     private void ItemClicked(int i)
     {
+
+        Debug.Log("Ruta id:" + i +" selected");
+
         GameObject buttonTemplate ;
         Button button;
 
         buttonTemplate = transform.GetChild(i).gameObject;
         button = buttonTemplate.GetComponent<Button>();
         button.Select();
-       
-        Debug.Log("item " +i+ " clicked");
     }
 
     private void ItemClickedSelectRoute(int i)
     {
         GameObject buttonTemplate;
         Button button;
+
+        Debug.Log("Ruta id:" + i);
+
 
         buttonTemplate = transform.GetChild(i).gameObject;
         button = buttonTemplate.GetComponent<Button>();
