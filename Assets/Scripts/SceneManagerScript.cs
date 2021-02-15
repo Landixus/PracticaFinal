@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerScript : MonoBehaviour
 {
-    
+    [SerializeField] GameObject advertPanel;
 
     public void goToMainMenu()
     {
@@ -49,7 +49,7 @@ public class SceneManagerScript : MonoBehaviour
 
             if (segons < workout.tempsTotal)
             {
-                panel.SetActive(true);
+                advertPanel.SetActive(true);
                 //Ensenyar avis
             }
             else {
@@ -66,7 +66,7 @@ public class SceneManagerScript : MonoBehaviour
 
     public void goToFollowRouteAfterWorkout()
     {
-        SceneManager.LoadScene(sceneBuildIndex: 11);
+        SceneManager.LoadScene(sceneBuildIndex: 9);
     }
 
     public void goToFollowRouteWithoutWorkout()

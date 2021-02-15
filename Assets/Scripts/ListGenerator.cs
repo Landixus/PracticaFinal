@@ -61,9 +61,10 @@ public class ListGenerator : MonoBehaviour
             g.transform.GetChild(7).GetComponent<Text>().text = ruta.negativeElevation.ToString() + "m";
 
             g.GetComponent<Button>().AddEventListener(i, ItemClickedSelectRoute);
+      
         }
+        
         Destroy(buttonTemplate);
-
     }
 
     private void ItemClicked(int i)
@@ -85,8 +86,7 @@ public class ListGenerator : MonoBehaviour
         Button button;
 
         Debug.Log("Ruta id:" + i);
-
-
+       
         buttonTemplate = transform.GetChild(i).gameObject;
         button = buttonTemplate.GetComponent<Button>();
         button.Select();

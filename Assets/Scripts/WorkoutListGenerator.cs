@@ -54,6 +54,7 @@ public class WorkoutListGenerator : MonoBehaviour
 
         for (int i = 0; i < listSize; i++)
         {
+
             Workout workout = workouts[i];
             g = Instantiate(buttonTemplate, transform);
             g.transform.GetChild(1).GetComponent<Text>().text = workout.name;
@@ -64,7 +65,7 @@ public class WorkoutListGenerator : MonoBehaviour
             g.GetComponent<Button>().AddEventListener(i, RouteClicked);
 
         }
-
+        buttonTemplate.transform.parent = null;
         Destroy(buttonTemplate);
     }
 
@@ -156,11 +157,11 @@ public class WorkoutListGenerator : MonoBehaviour
             Bloc bloc = workout.blocs[i];
             g = Instantiate(buttonTemplate, blocPanel.transform);
             g.transform.GetChild(1).GetComponent<Text>().text = bloc.numBloc.ToString();
-            g.transform.GetChild(3).GetComponent<Text>().text = FromSecondsToMinutesString(bloc.temps) + " minuts";
+            g.transform.GetChild(3).GetComponent<Text>().text = FromSecondsToMinutesString(bloc.temps);
             g.transform.GetChild(5).GetComponent<Text>().text = bloc.pot + " W";
             g.SetActive(true);
         }
-
+        buttonTemplate.transform.parent = null;
         Destroy(buttonTemplate);
     }
 
