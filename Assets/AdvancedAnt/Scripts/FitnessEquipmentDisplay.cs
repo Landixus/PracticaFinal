@@ -332,7 +332,7 @@ public class FitnessEquipmentDisplay : MonoBehaviour
     public void Data(Byte[] data)
     {
 
-        Debug.Log(Time.time - pTime);
+        //Debug.Log(Time.time - pTime);
         pTime = Time.time;
         // General FE Data
         if (data[0] == 16)
