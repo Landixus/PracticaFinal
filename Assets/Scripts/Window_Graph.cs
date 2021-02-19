@@ -67,7 +67,7 @@ public class Window_Graph : MonoBehaviour
 
         if (minEle > 400)
         {
-            //Posem -30 per que no estigui enganxat a baix de tot;
+            //Posem -100 per que no estigui enganxat a baix de tot;
             minCorrection = minEle - 100;
             minEleText.text = Math.Round(minEle, 0).ToString() + "m";
         }

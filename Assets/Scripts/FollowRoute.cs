@@ -129,23 +129,38 @@ public class FollowRoute : MonoBehaviour
                 spd.text = rodillo.speed.ToString();
             }
 
-            if (!heartRate.connected)
+            //Pot ser una opció pero no es vaible ja que la majoría de rodillos crec que no te connexio directa
+            //Amb el sensor de frec card i per tant ens ensenya el número 255 (com a mínim en el bkool)
+            //(255 númeor màxim que es pot aconseguir amb un byte)
+            /*if (!heartRate.connected)
             {
                 hr.text = rodillo.heartRate.ToString();
-            }
+            }*/
 
             if (!cadence.connected && !speedCadence.connected)
             {
                 cad.text = rodillo.cadence.ToString();
             }
 
+            //rodillo.elapsedTime en segons
             elapsedTime.text = rodillo.elapsedTime.ToString();
 
+            // rodillo.distanceTraveled en metres
             dist.text = rodillo.distanceTraveled.ToString();
 
             //ruta.totalDistance * 1000 ja que totalDistance està en Km
-            x100completed = rodillo.distanceTraveled / (ruta.totalDistance * 1000);
-            Debug.Log("DistanecTravel:"+ rodillo.distanceTraveled + "TotalDist(m):"+ ruta.totalDistance * 1000 + " % "+ x100completed + "%");
+            try
+            {
+                //es pot afegir * constant en  rodillo.distanceTraveled per si volem que la distancia passi més ràpid
+                x100completed = rodillo.distanceTraveled / (ruta.totalDistance * 1000);
+                Debug.Log("DistanecTravel:" + rodillo.distanceTraveled + "TotalDist(m):" + ruta.totalDistance * 1000 + " % " + x100completed + "%");
+            }
+            catch (System.Exception)
+            {
+                //
+                Debug.LogWarning("Rodillo s'ha desconnectat");
+                ConnectarSensors();
+            }
             //uiText.text += "distanceTraveled= " + GameObject.Find("FitnessEquipmentDisplay").GetComponent<FitnessEquipmentDisplay>().distanceTraveled + "\n";
 
         }
@@ -155,8 +170,11 @@ public class FollowRoute : MonoBehaviour
         }
 
         //Anem movent la barra segons l'usuari va avançant en la ruta
-        Vector2 puntA = new Vector2(graphWidth * x100completed, 0);
-        Vector2 puntB = new Vector2(graphWidth * x100completed, graphHeight);
+        //+3 i +34 per compensar el desviament de la barra en la posició original. 
+        //(Crec que es problema de com es dibuixa la barra ja que agafa el punt intermitg entre els dos punts que passem en comptes de
+        //dibuixar directament) 
+        Vector2 puntA = new Vector2(graphWidth * x100completed + 3, 34);
+        Vector2 puntB = new Vector2(graphWidth * x100completed + 3, graphHeight+34);
 
         DrawVerticalLine(puntA, puntB);
     }
@@ -194,9 +212,13 @@ public class FollowRoute : MonoBehaviour
 
     private void DrawVerticalLine(Vector2 dotPositionA, Vector2 dotPositionB)
     {
+
+        GameObject line = GameObject.Find("verticalLine");
+        Destroy(line);
+
         //La x dels dos punts es la mateixa
         Debug.Log("x: " + dotPositionA.x);
-        GameObject gameObject = new GameObject("dotConnection", typeof(Image));
+        GameObject gameObject = new GameObject("verticalLine", typeof(Image));
         gameObject.transform.SetParent(graphContainer, false);
         gameObject.GetComponent<Image>().color = new Color(1, 1, 1);
 
@@ -206,8 +228,8 @@ public class FollowRoute : MonoBehaviour
 
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
-        rectTransform.sizeDelta = new Vector2(distance, 2f);
-        rectTransform.anchoredPosition = dotPositionA + dir * distance * .5f;
+        rectTransform.sizeDelta = new Vector2(distance, 1f);
+        rectTransform.anchoredPosition = dotPositionA + dir * distance * .3f;
 
         rectTransform.localEulerAngles = new Vector3(0, 0, 90);
 
