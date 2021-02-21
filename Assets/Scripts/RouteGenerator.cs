@@ -38,10 +38,31 @@ public class RouteGenerator : MonoBehaviour
         //Afegim la informació que ens em saltat al calcular la pendent
         AddSlopeInformation(slope);
 
+        float[] distAcomulada = CalcDistAcomuladaSector(distancePoints);
 
-        Ruta ruta = new Ruta(name, trackPoints, positiveElev, negativeElev, totalDistance, distancePoints,slope);
+        Ruta ruta = new Ruta(name, trackPoints, positiveElev, negativeElev, totalDistance, distancePoints,slope, distAcomulada);
 
         return ruta;
+    }
+
+
+    //funcio per calcular la distancia acomulada fons els sector en si (propi sector també)
+    //Ex si tenim 2 3 1 2
+    //result: 2 5 6 8
+    private float[] CalcDistAcomuladaSector(float[] distancePoints)
+    {
+        float[] distAcom = new float[distancePoints.Length];
+
+        for (int i = 0; i < distancePoints.Length; i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+                distAcom[i] += distancePoints[j];
+            }
+            distAcom[i] += distancePoints[i];
+        }
+
+        return distAcom;
     }
 
     private float CalcPositiveElevation(List<TrackPoint> trackPoints)
@@ -162,8 +183,10 @@ public class RouteGenerator : MonoBehaviour
         var num2 = targetLon * (Math.PI / 180.0) - num1;
         var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
 
+        //6376500.0 = radi terra en metres
         var d = Math.Round(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3))), 2);
         //Debug.Log(d);
+        //d en metres
         return (float)d;
     }
 

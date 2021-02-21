@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +33,14 @@ public class FollowRoute : MonoBehaviour
     private float graphHeight;
 
     private RectTransform graphContainer;
+
+    private int distanceTravel;
+    private int currentSectorNum;
+
+    [SerializeField] Text numText;
+    [SerializeField] Text slopeText;
+
+    private int distSession;
 
     private bool workoutSet;
     // Start is called before the first frame update
@@ -71,6 +80,36 @@ public class FollowRoute : MonoBehaviour
         elapsedTime.text = "--";
         hr.text = "--";
         dist.text = "--";
+
+        distanceTravel = 0;
+        currentSectorNum = 0;
+        
+        String debug = "";
+        foreach (var punt in ruta.distanciaPunts)
+        {
+            debug += punt.ToString() + " ";
+        }
+        Debug.Log(debug);
+
+        Debug.Log(ruta.distanciaPunts.Length);
+
+        debug = "";
+        foreach (var punt in ruta.pendentPunts)
+        {
+            debug += punt.ToString() + " ";
+        }
+        Debug.Log(debug);
+
+        debug = "";
+        foreach (var punt in ruta.distAcomuladaSector)
+        {
+            debug += punt.ToString() + " ";
+        }
+        Debug.Log(debug);
+
+
+        distSession = rodillo.distanceTraveled;
+
     }
 
     // Update is called once per frame
@@ -145,14 +184,36 @@ public class FollowRoute : MonoBehaviour
             //rodillo.elapsedTime en segons
             elapsedTime.text = rodillo.elapsedTime.ToString();
 
-            // rodillo.distanceTraveled en metres
-            dist.text = rodillo.distanceTraveled.ToString();
+            // rodillo.distanceTraveled en metres 
+            //dist session es la distancia que ha fet en total el rodillo en una mateixa connexio, per tant si l'usuari fa varies rutes sebse desconnectar
+            //tindriem un error per tant li hem de restar la distancia inicial que agafem en el start
+            distanceTravel = rodillo.distanceTraveled - distSession;
 
-            //ruta.totalDistance * 1000 ja que totalDistance està en Km
+            //Passem de metres a km;
+            float kmTraveled = distanceTravel / 1000;
+
+            //Mirar de fer truncate;
+            dist.text = Math.Round(kmTraveled, 3).ToString();
+           
+
+
+            //dist.text = kmTraveled.ToString("0.00");
+
+            if (distanceTravel > ruta.distAcomuladaSector[currentSectorNum])
+            {
+                currentSectorNum = FindClosest(distanceTravel);
+            }
+
+            Debug.Log("Current sector num:" + currentSectorNum);
+            numText.text = currentSectorNum.ToString();
+            Debug.Log("Current % of sector" + ruta.pendentPunts[currentSectorNum]);
+            slopeText.text = ruta.pendentPunts[currentSectorNum].ToString() + " %";
+            
             try
             {
+                //ruta.totalDistance * 1000 ja que totalDistance està en Km
                 //es pot afegir * constant en  rodillo.distanceTraveled per si volem que la distancia passi més ràpid
-                x100completed = rodillo.distanceTraveled / (ruta.totalDistance * 1000);
+                x100completed = distanceTravel / (ruta.totalDistance * 1000);
                 Debug.Log("DistanecTravel:" + rodillo.distanceTraveled + "TotalDist(m):" + ruta.totalDistance * 1000 + " % " + x100completed + "%");
             }
             catch (System.Exception)
@@ -217,7 +278,7 @@ public class FollowRoute : MonoBehaviour
         Destroy(line);
 
         //La x dels dos punts es la mateixa
-        Debug.Log("x: " + dotPositionA.x);
+        //Debug.Log("x: " + dotPositionA.x);
         GameObject gameObject = new GameObject("verticalLine", typeof(Image));
         gameObject.transform.SetParent(graphContainer, false);
         gameObject.GetComponent<Image>().color = new Color(1, 1, 1);
@@ -233,5 +294,15 @@ public class FollowRoute : MonoBehaviour
 
         rectTransform.localEulerAngles = new Vector3(0, 0, 90);
 
+    }
+
+    //Funció que retorna la posició de l'array amb el nombre igual o més proper al que l' hem passat
+    //https://stackoverflow.com/questions/57921661/finding-sorted-array-index-of-closest-int-value
+    private static int FindClosest( float value)
+    {
+        var result = Array.BinarySearch(ruta.distAcomuladaSector, value);
+        if (result >= 0)
+            return result;
+        else return ~result;
     }
 }

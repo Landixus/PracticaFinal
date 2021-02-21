@@ -14,7 +14,9 @@ public class Ruta
     public float[] distanciaPunts { get; set; }
     public float[] pendentPunts { get; set; }
 
-    public Ruta(string name, List<TrackPoint> trackPoints, float positiveElevation, float negativeElevation, float totalDistance, float[] distanciaPunts, float[] pendentPunts)
+    public float[] distAcomuladaSector { get; set; }
+
+    public Ruta(string name, List<TrackPoint> trackPoints, float positiveElevation, float negativeElevation, float totalDistance, float[] distanciaPunts, float[] pendentPunts, float[] distAcomuladaSector)
     {
         this.name = name;
         this.trackPoints = trackPoints;
@@ -23,6 +25,7 @@ public class Ruta
         this.totalDistance = totalDistance;
         this.distanciaPunts = distanciaPunts;
         this.pendentPunts = pendentPunts;
+        this.distAcomuladaSector = distAcomuladaSector;
     }
 
     public string toString()
