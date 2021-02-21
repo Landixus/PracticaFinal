@@ -110,6 +110,13 @@ public class FollowRoute : MonoBehaviour
 
         distSession = rodillo.distanceTraveled;
 
+
+        /*rodillo.RequestTrainerCapabilities();
+        Debug.Log("------> simulation" + rodillo.trainerCapabilities.simulationModeSupport);
+        Debug.Log("------> targetPower " + rodillo.trainerCapabilities.targetPowerModeSupport);
+        Debug.Log("------> masx " + rodillo.trainerCapabilities.maximumResistance.ToString());
+        Debug.Log("------> basic" + rodillo.trainerCapabilities.basicResistanceNodeSupport);*/
+
     }
 
     // Update is called once per frame
@@ -190,10 +197,11 @@ public class FollowRoute : MonoBehaviour
             distanceTravel = rodillo.distanceTraveled - distSession;
 
             //Passem de metres a km;
-            float kmTraveled = distanceTravel / 1000;
+            float kmTraveled = (float)distanceTravel / (float)1000;
 
             //Mirar de fer truncate;
             dist.text = Math.Round(kmTraveled, 3).ToString();
+            dist.text = kmTraveled.ToString() + "km";
            
 
 
@@ -202,6 +210,9 @@ public class FollowRoute : MonoBehaviour
             if (distanceTravel > ruta.distAcomuladaSector[currentSectorNum])
             {
                 currentSectorNum = FindClosest(distanceTravel);
+                //canviar pendent segons currentSectNum
+                rodillo.SetTrainerResistance((int)(ruta.pendentPunts[currentSectorNum]*100));
+                rodillo.RequestTrainerCapabilities();
             }
 
             Debug.Log("Current sector num:" + currentSectorNum);
