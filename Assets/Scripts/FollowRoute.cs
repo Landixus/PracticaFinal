@@ -111,8 +111,12 @@ public class FollowRoute : MonoBehaviour
         distSession = rodillo.distanceTraveled;
 
 
-        /*rodillo.RequestTrainerCapabilities();
-        Debug.Log("------> simulation" + rodillo.trainerCapabilities.simulationModeSupport);
+        rodillo.RequestTrainerCapabilities();
+        rodillo.SetTrainerUserConfiguration(8.5f, 55.5f);
+        rodillo.RequestUserConfig();
+        rodillo.RequestCommandStatus();
+        rodillo.RequestCommandStatus();
+        /*Debug.Log("------> simulation" + rodillo.trainerCapabilities.simulationModeSupport);
         Debug.Log("------> targetPower " + rodillo.trainerCapabilities.targetPowerModeSupport);
         Debug.Log("------> masx " + rodillo.trainerCapabilities.maximumResistance.ToString());
         Debug.Log("------> basic" + rodillo.trainerCapabilities.basicResistanceNodeSupport);*/

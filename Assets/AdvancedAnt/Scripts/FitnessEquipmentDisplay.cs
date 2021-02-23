@@ -332,6 +332,13 @@ public class FitnessEquipmentDisplay : MonoBehaviour
     public void Data(Byte[] data)
     {
 
+        String de = "";
+        foreach (var info in data)
+        {
+            de += info.ToString() + " ";
+        }
+        Debug.Log("Data info: " + de);
+
         //Debug.Log(Time.time - pTime);
         pTime = Time.time;
         // General FE Data
@@ -377,8 +384,6 @@ public class FitnessEquipmentDisplay : MonoBehaviour
             cadence = data[2];
             int nibble2 = (byte)(data[6] & 0xf);
             instantaneousPower = (data[5]) | nibble2 << 8;
-
-
         }
         else if (data[0] == 54 && request_page_54 == true)
         { //response to trainer capabilities request from PC & MAC

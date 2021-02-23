@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
+using UnityEngine;
 
 namespace ANT_Managed_Library
 {
@@ -588,6 +589,7 @@ namespace ANT_Managed_Library
             if (padNum < 0)
                 throw new ANT_Exception("Send data must not be greater than 8 bytes");
             data = data.Concat(new byte[padNum]).ToArray();
+            Debug.Log((ANT_ReferenceLibrary.MessagingReturnCode)ANT_SendAcknowledgedData(unmanagedANTFramerPointer, channelNumber, data, ackWaitTime));
             return (ANT_ReferenceLibrary.MessagingReturnCode)ANT_SendAcknowledgedData(unmanagedANTFramerPointer, channelNumber, data, ackWaitTime);
         }
         /// <summary>
