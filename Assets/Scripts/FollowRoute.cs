@@ -42,7 +42,18 @@ public class FollowRoute : MonoBehaviour
 
     private int distSession;
 
+    private bool simular;
+    [SerializeField] Button addVel;
+    private float simulatedDist;
+    private float simulatedVel;
+    private float simulatedTime;
+    private float simulatedTotalTime;
+    
     private bool workoutSet;
+
+    private bool finished;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,7 +71,7 @@ public class FollowRoute : MonoBehaviour
         {
             graph_windowObj = GameObject.Find("Window_Graph");
             graph_window = (Window_Graph)graph_windowObj.GetComponent(typeof(Window_Graph));
-            graphWidth = graph_windowObj.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta.x;
+            graphWidth = graph_windowObj.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta.x - 8;
             graphHeight = graph_windowObj.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta.y;
            
             if (ruta != null)
@@ -121,138 +132,210 @@ public class FollowRoute : MonoBehaviour
         Debug.Log("------> masx " + rodillo.trainerCapabilities.maximumResistance.ToString());
         Debug.Log("------> basic" + rodillo.trainerCapabilities.basicResistanceNodeSupport);*/
 
+        //Inicialitzar dades simualdor
+        simulatedDist = 0;
+        simulatedVel = 0;
+        simulatedTime = 0;
+        simulatedTotalTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (cadence != null)
+        if (!finished)
         {
-            if (cadence.connected)
+            if (cadence != null)
             {
-                cad.text = cadence.cadence.ToString();
+                if (cadence.connected)
+                {
+                    cad.text = cadence.cadence.ToString();
+                }
             }
-        }
 
-        if (speedCadence != null) {
-            if (speedCadence.connected)
+            if (speedCadence != null)
             {
-                cad.text = speedCadence.cadence.ToString();
-                spd.text = speedCadence.speed.ToString();
+                if (speedCadence.connected)
+                {
+                    cad.text = speedCadence.cadence.ToString();
+                    spd.text = speedCadence.speed.ToString();
+                }
             }
-        }
 
-        if (heartRate != null) {
-            if (heartRate.connected)
+            if (heartRate != null)
             {
-                hr.text = heartRate.heartRate.ToString();
+                if (heartRate.connected)
+                {
+                    hr.text = heartRate.heartRate.ToString();
+                }
             }
-        }
 
-        if (speed != null) {
-            if (speed.connected)
+            if (speed != null)
             {
-                spd.text = speed.speed.ToString();
-                //uiText.text += "distance = " + GameObject.Find("SpeedDisplay").GetComponent<SpeedDisplay>().distance + "\n";
+                if (speed.connected)
+                {
+                    spd.text = speed.speed.ToString();
+                    //uiText.text += "distance = " + GameObject.Find("SpeedDisplay").GetComponent<SpeedDisplay>().distance + "\n";
+                }
             }
-        }
 
-        if (power != null)
+            if (power != null)
+            {
+                if (power.connected)
+                {
+                    pow.text = power.instantaneousPower.ToString();
+                    //uiText.text += "cadence = " + GameObject.Find("PowerMeterDisplay").GetComponent<PowerMeterDisplay>().instantaneousCadence + "\n";    
+                }
+            }
+
+            if (rodillo.connected)
+            {
+                if (!power.connected)
+                {
+                    pow.text = rodillo.instantaneousPower.ToString();
+                }
+
+                if (!speed.connected && !speedCadence.connected)
+                {
+                    spd.text = rodillo.speed.ToString();
+                }
+
+                //Pot ser una opció pero no es vaible ja que la majoría de rodillos crec que no te connexio directa
+                //Amb el sensor de frec card i per tant ens ensenya el número 255 (com a mínim en el bkool)
+                //(255 númeor màxim que es pot aconseguir amb un byte)
+                /*if (!heartRate.connected)
+                {
+                    hr.text = rodillo.heartRate.ToString();
+                }*/
+
+                if (!cadence.connected && !speedCadence.connected)
+                {
+                    cad.text = rodillo.cadence.ToString();
+                }
+
+                //rodillo.elapsedTime en segons
+                elapsedTime.text = rodillo.elapsedTime.ToString();
+
+                // rodillo.distanceTraveled en metres 
+                //dist session es la distancia que ha fet en total el rodillo en una mateixa connexio, per tant si l'usuari fa varies rutes sebse desconnectar
+                //tindriem un error per tant li hem de restar la distancia inicial que agafem en el start
+                distanceTravel = rodillo.distanceTraveled - distSession;
+
+
+
+                //Passem de metres a km;
+                float kmTraveled = (float)distanceTravel / (float)1000;
+
+                //Mirar de fer truncate;
+                dist.text = Math.Round(kmTraveled, 3).ToString();
+                dist.text = kmTraveled.ToString() + "km";
+
+
+
+                //dist.text = kmTraveled.ToString("0.00");
+
+                if (distanceTravel > ruta.distAcomuladaSector[currentSectorNum])
+                {
+                    currentSectorNum = FindClosest(distanceTravel);
+
+                    if (currentSectorNum >= ruta.pendentPunts.Length)
+                    {
+                        finished = true;
+                    }
+                    else
+                    {
+                        //canviar pendent segons currentSectNum
+                        rodillo.SetTrainerResistance((int)(ruta.pendentPunts[currentSectorNum] * 100));
+                        rodillo.RequestTrainerCapabilities();
+                    }
+                }
+
+                if (!finished)
+                {
+                    Debug.Log("Current sector num:" + currentSectorNum);
+                    numText.text = currentSectorNum.ToString();
+                    Debug.Log("Current % of sector" + ruta.pendentPunts[currentSectorNum]);
+                    slopeText.text = "% " + ruta.pendentPunts[currentSectorNum].ToString();
+                }
+
+                try
+                {
+                    //ruta.totalDistance * 1000 ja que totalDistance està en Km
+                    //es pot afegir * constant en  rodillo.distanceTraveled per si volem que la distancia passi més ràpid
+                    x100completed = distanceTravel / (ruta.totalDistance * 1000);
+                    Debug.Log("DistanecTravel:" + rodillo.distanceTraveled + "TotalDist(m):" + ruta.totalDistance * 1000 + " % " + x100completed + "%");
+                }
+                catch (System.Exception)
+                {
+                    //
+                    Debug.LogWarning("Rodillo s'ha desconnectat");
+                    ConnectarSensors();
+                }
+                //uiText.text += "distanceTraveled= " + GameObject.Find("FitnessEquipmentDisplay").GetComponent<FitnessEquipmentDisplay>().distanceTraveled + "\n";
+
+            }
+            else
+            {
+
+                //mirem si volem entrar mode simulacio
+                if (simular)
+                {
+                    simulatedDist = (simulatedDist + simulatedVel * (simulatedTime * 0.06f));
+                    simulatedTotalTime += simulatedTime * 0.06f;
+
+                    elapsedTime.text = simulatedTotalTime.ToString();
+                    spd.text = simulatedVel.ToString();
+
+
+                    //Passem de metres a km;
+                    float kmTraveled = (float)simulatedDist / (float)1000;
+
+                    //Mirar de fer truncate;
+                    dist.text = Math.Round(kmTraveled, 3).ToString();
+                    dist.text = kmTraveled.ToString() + "km";
+
+
+
+                    //dist.text = kmTraveled.ToString("0.00");
+
+                    if (simulatedDist > ruta.distAcomuladaSector[currentSectorNum])
+                    {
+                        currentSectorNum = FindClosest(simulatedDist);
+
+                        if (currentSectorNum >= ruta.pendentPunts.Length)
+                        {
+                            finished = true;
+                        }
+                    }
+
+                    if (!finished)
+                    {
+                        Debug.Log("Current sector num:" + currentSectorNum);
+                        numText.text = currentSectorNum.ToString();
+                        Debug.Log("Current % of sector" + ruta.pendentPunts[currentSectorNum]);
+                        slopeText.text = "% " + ruta.pendentPunts[currentSectorNum].ToString();
+                    }
+                   
+
+                    x100completed = simulatedDist / (ruta.totalDistance * 1000);
+                }
+            }
+
+
+
+
+            //Anem movent la barra segons l'usuari va avançant en la ruta
+            //+3 i +34 per compensar el desviament de la barra en la posició original. 
+            //(Crec que es problema de com es dibuixa la barra ja que agafa el punt intermitg entre els dos punts que passem en comptes de
+            //dibuixar directament) 
+            Vector2 puntA = new Vector2(graphWidth * x100completed + 4, 35);
+            Vector2 puntB = new Vector2(graphWidth * x100completed + 4, graphHeight + 35);
+
+            DrawVerticalLine(puntA, puntB);
+        } else
         {
-            if (power.connected)
-            {
-                pow.text = power.instantaneousPower.ToString();
-                //uiText.text += "cadence = " + GameObject.Find("PowerMeterDisplay").GetComponent<PowerMeterDisplay>().instantaneousCadence + "\n";    
-            }
+            Debug.Log("S0ha acabat la ruta");
         }
-        
-        if (rodillo.connected)
-        {
-            if (!power.connected)
-            {
-                pow.text = rodillo.instantaneousPower.ToString();
-            }
-
-            if (!speed.connected && !speedCadence.connected)
-            {
-                spd.text = rodillo.speed.ToString();
-            }
-
-            //Pot ser una opció pero no es vaible ja que la majoría de rodillos crec que no te connexio directa
-            //Amb el sensor de frec card i per tant ens ensenya el número 255 (com a mínim en el bkool)
-            //(255 númeor màxim que es pot aconseguir amb un byte)
-            /*if (!heartRate.connected)
-            {
-                hr.text = rodillo.heartRate.ToString();
-            }*/
-
-            if (!cadence.connected && !speedCadence.connected)
-            {
-                cad.text = rodillo.cadence.ToString();
-            }
-
-            //rodillo.elapsedTime en segons
-            elapsedTime.text = rodillo.elapsedTime.ToString();
-
-            // rodillo.distanceTraveled en metres 
-            //dist session es la distancia que ha fet en total el rodillo en una mateixa connexio, per tant si l'usuari fa varies rutes sebse desconnectar
-            //tindriem un error per tant li hem de restar la distancia inicial que agafem en el start
-            distanceTravel = rodillo.distanceTraveled - distSession;
-
-            //Passem de metres a km;
-            float kmTraveled = (float)distanceTravel / (float)1000;
-
-            //Mirar de fer truncate;
-            dist.text = Math.Round(kmTraveled, 3).ToString();
-            dist.text = kmTraveled.ToString() + "km";
-           
-
-
-            //dist.text = kmTraveled.ToString("0.00");
-
-            if (distanceTravel > ruta.distAcomuladaSector[currentSectorNum])
-            {
-                currentSectorNum = FindClosest(distanceTravel);
-                //canviar pendent segons currentSectNum
-                rodillo.SetTrainerResistance((int)(ruta.pendentPunts[currentSectorNum]*100));
-                rodillo.RequestTrainerCapabilities();
-            }
-
-            Debug.Log("Current sector num:" + currentSectorNum);
-            numText.text = currentSectorNum.ToString();
-            Debug.Log("Current % of sector" + ruta.pendentPunts[currentSectorNum]);
-            slopeText.text = ruta.pendentPunts[currentSectorNum].ToString() + " %";
-            
-            try
-            {
-                //ruta.totalDistance * 1000 ja que totalDistance està en Km
-                //es pot afegir * constant en  rodillo.distanceTraveled per si volem que la distancia passi més ràpid
-                x100completed = distanceTravel / (ruta.totalDistance * 1000);
-                Debug.Log("DistanecTravel:" + rodillo.distanceTraveled + "TotalDist(m):" + ruta.totalDistance * 1000 + " % " + x100completed + "%");
-            }
-            catch (System.Exception)
-            {
-                //
-                Debug.LogWarning("Rodillo s'ha desconnectat");
-                ConnectarSensors();
-            }
-            //uiText.text += "distanceTraveled= " + GameObject.Find("FitnessEquipmentDisplay").GetComponent<FitnessEquipmentDisplay>().distanceTraveled + "\n";
-
-        }
-        else {
-            //Si no està connectat pausem o algo
-            Debug.LogWarning("Rodillo no connectat");
-        }
-
-        //Anem movent la barra segons l'usuari va avançant en la ruta
-        //+3 i +34 per compensar el desviament de la barra en la posició original. 
-        //(Crec que es problema de com es dibuixa la barra ja que agafa el punt intermitg entre els dos punts que passem en comptes de
-        //dibuixar directament) 
-        Vector2 puntA = new Vector2(graphWidth * x100completed + 3, 34);
-        Vector2 puntB = new Vector2(graphWidth * x100completed + 3, graphHeight+34);
-
-        DrawVerticalLine(puntA, puntB);
+       
     }
 
     //Funció que serveix per buscar els diferents objectes en Unity i guardarlos en una variable
@@ -282,6 +365,19 @@ public class FollowRoute : MonoBehaviour
         if (GameObject.Find("FitnessEquipmentDisplay"))
         {
             rodillo = GameObject.Find("FitnessEquipmentDisplay").GetComponent<FitnessEquipmentDisplay>();
+
+            if (rodillo != null)
+            {
+                if (rodillo.connected == false)
+                {
+                    simular = true;
+                    addVel.enabled = true;
+                }
+            }
+            else {
+                simular = true;
+                addVel.enabled = true;
+            }
         }
     }
 
@@ -319,5 +415,10 @@ public class FollowRoute : MonoBehaviour
         if (result >= 0)
             return result;
         else return ~result;
+    }
+
+    public void addVelocity() {
+        simulatedVel += 30;
+        simulatedTime = 1;
     }
 }
