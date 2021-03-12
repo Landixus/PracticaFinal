@@ -7,20 +7,39 @@ public class PaginaPrincipal : MonoBehaviour
 {
 
     public static User user;
+    public static bool haveUSB;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Carguem la scena on hi han els prefabs de manera aditiva
-        SceneManager.LoadScene(3, LoadSceneMode.Additive);
+        
+        LoadANTPrefabs();
 
         DontDestroyOnLoad(GameObject.Find("RoutesManager"));
+    }
+
+    private static void LoadANTPrefabs()
+    {
+        //Carguem la scena on hi han els prefabs de manera aditiva
+        try
+        {
+            SceneManager.LoadScene(3, LoadSceneMode.Additive);
+            haveUSB = true;
+        }
+        catch (System.Exception e)
+        {
+            haveUSB = false;
+            Debug.LogWarning(e.StackTrace);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!haveUSB)
+        {
+
+        }
     }
 
     public void goToSelectDevices()

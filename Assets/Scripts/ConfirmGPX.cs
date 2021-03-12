@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -22,8 +23,12 @@ public class SelectedRoute : MonoBehaviour
 
     private string oldName;
 
-    
-        
+
+    [SerializeField] GameObject panel;
+    [SerializeField] Text textPanel;
+    private bool correcte = false;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -92,15 +97,18 @@ public class SelectedRoute : MonoBehaviour
 
             Debug.Log("Fitxer copiat");
             RoutesManager.rutas.Add(ruta);
+            correcte = true;
+          
 
-
-            SceneManager.LoadScene(6);
         }
         catch (Exception)
         {
             errorNameText.text = "Ja existeix un fitxer amb aquest nom";
             //throw;
+            correcte = false;
         }
+
+        StartCoroutine("ActivarPanelCreat");
     }
 
     public string UseRegex(string strIn)
@@ -117,5 +125,35 @@ public class SelectedRoute : MonoBehaviour
     public void SaveDescription() {
         ruta.description = descriptionInput.text;
         Debug.Log(ruta.description);
+    }
+
+    IEnumerator ActivarPanelCreat()
+    {
+        if (correcte)
+        {
+            textPanel.text = "EL GPX s'ha guardat correctament";
+        }
+        else
+        {
+            textPanel.text = "Error al pujar el GPX \n Ja existeix un fitxer amb aquest nom";
+        }
+        panel.SetActive(true);
+
+        yield return new WaitForSeconds(1f);
+
+        panel.SetActive(false);
+
+
+        //reset
+
+        if (correcte)
+        {
+            SceneManager.LoadScene(sceneBuildIndex: 6);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        
     }
 }
