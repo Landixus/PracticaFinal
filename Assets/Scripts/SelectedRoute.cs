@@ -71,6 +71,7 @@ public class SelectedRoute : MonoBehaviour
         if (oldName == newName)
         {
             validName = newName;
+            ruta.name = validName;
         }
         else
         {

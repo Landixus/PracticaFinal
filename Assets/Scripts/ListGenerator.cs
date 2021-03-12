@@ -32,15 +32,19 @@ public class ListGenerator : MonoBehaviour
         int listSize = RoutesManager.rutas.Count;
 
 
-        if (listSize == 0)
-        {
-            listHelperText.text = "No hi han rutes afegides";
+        if (listHelperText != null) {
+            if (listSize == 0)
+            {
+                listHelperText.text = "No hi han rutes afegides";
+            }
+            else
+            {
+                listHelperText.text = "";
+            }
         }
-        else {
-            listHelperText.text = "";
-        }
+       
 
-        if (listSize <= 4)
+        if (listSize <= 7)
         {
             myHeight = 430f;
         } else
