@@ -279,6 +279,7 @@
     <Compile Include="Assets\Scripts\SceneManagerScript.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\TrackPoint.cs" />
+    <Compile Include="Assets\Scripts\UsbImageManager.cs" />
     <Compile Include="Assets\Scripts\User.cs" />
     <Compile Include="Assets\Scripts\Window_Graph.cs" />
     <Compile Include="Assets\Scripts\Workout.cs" />

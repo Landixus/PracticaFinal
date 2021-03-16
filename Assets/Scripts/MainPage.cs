@@ -1,13 +1,17 @@
-﻿using System.Collections;
+﻿using ANT_Managed_Library;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PaginaPrincipal : MonoBehaviour
 {
 
     public static User user;
     public static bool haveUSB;
+
+    [SerializeField] Image usbManager;
 
     // Start is called before the first frame update
     void Start()
@@ -25,11 +29,28 @@ public class PaginaPrincipal : MonoBehaviour
         {
             SceneManager.LoadScene(3, LoadSceneMode.Additive);
             haveUSB = true;
+
+            //Mostrar icona USB bo
+            if (UsbImageManager.usbImage != null && haveUSB)
+            {
+                if (haveUSB)
+                {
+                    UsbImageManager.usbImage.sprite = (Sprite)Resources.Load("Img/usb");
+                } else {
+                    UsbImageManager.usbImage.sprite = (Sprite)Resources.Load("Img/noUSB");
+                }   
+            } 
+        }
+        catch (ANT_Exception exc) {
+            haveUSB = false;
+            Debug.LogWarning(exc.StackTrace);
+            
+            //Mostrar icona USB Dolent
         }
         catch (System.Exception e)
         {
             haveUSB = false;
-            Debug.LogWarning(e.StackTrace);
+            Debug.LogError(e.StackTrace);
         }
     }
 
@@ -38,7 +59,7 @@ public class PaginaPrincipal : MonoBehaviour
     {
         if (!haveUSB)
         {
-
+            LoadANTPrefabs();
         }
     }
 
