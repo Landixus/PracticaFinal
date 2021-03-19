@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FollowRoute : MonoBehaviour
@@ -50,18 +51,27 @@ public class FollowRoute : MonoBehaviour
     private float simulatedTotalTime;
     
     private bool workoutSet;
+    [SerializeField] Text workoutTxt;
+    private List<float> tempsBlocs;
 
     private bool finished;
+
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+
+        Scene scene = SceneManager.GetActiveScene();
+        Debug.Log("Active Scene name is: " + scene.name + "\nActive Scene index: " + scene.buildIndex);
+
         graphContainer = GameObject.Find("graphContainer").GetComponent<RectTransform>();
 
         if (workout != null)
         {
             workoutSet = true;
+            tempsBlocs = CrearTempsBlocs();
         }
         else {
             workoutSet = false;
@@ -91,6 +101,9 @@ public class FollowRoute : MonoBehaviour
         elapsedTime.text = "--";
         hr.text = "--";
         dist.text = "--";
+
+
+        workoutTxt.text = "";
 
         distanceTravel = 0;
         currentSectorNum = 0;
@@ -318,6 +331,26 @@ public class FollowRoute : MonoBehaviour
 
                     x100completed = simulatedDist / (ruta.totalDistance * 1000);
                 }
+
+
+                if (workoutSet)
+                {
+                    if (workout.tempsTotal < rodillo.elapsedTime)
+                    {
+                        workoutTxt.text = "Felicitats!! Has acbat l'entrenament";
+                    }
+                    else {
+                        for (int i = 0; i < tempsBlocs.Count; i++)
+                        {
+                            if (workout.tempsTotal > tempsBlocs[i])
+                            {
+                                var numBloc = i--;
+                                var bloc = workout.blocs[numBloc];
+                                workoutTxt.text = "Num bloc: " + numBloc + " Poténcia objectiu: " + bloc.pot + "W Temps bloc: " + bloc.temps;
+                            }
+                        }
+                    }
+                }
             }
 
 
@@ -333,7 +366,7 @@ public class FollowRoute : MonoBehaviour
             DrawVerticalLine(puntA, puntB);
         } else
         {
-            Debug.Log("S0ha acabat la ruta");
+            Debug.Log("S'ha acabat la ruta");
         }
        
     }
@@ -420,5 +453,26 @@ public class FollowRoute : MonoBehaviour
     public void addVelocity() {
         simulatedVel += 30;
         simulatedTime = 1;
+    }
+
+    private List<float> CrearTempsBlocs()
+    {
+        List<float> temp = new List<float>();
+
+        temp.Add(0f);
+
+        float tempsTotal;
+
+        for (int i = 0; i < workout.blocs.Count; i++)
+        {
+            tempsTotal = 0;
+            for (int j = 0; j <= i; j++)
+            {
+                tempsTotal += workout.blocs[j].temps;
+            }
+            temp.Add(tempsTotal);
+        }
+
+        return temp;
     }
 }

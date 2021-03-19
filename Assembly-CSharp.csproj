@@ -270,7 +270,7 @@
     <Compile Include="Assets\Scripts\ListGenerator.cs" />
     <Compile Include="Assets\Scripts\LoadingCircle.cs" />
     <Compile Include="Assets\Scripts\LogIn.cs" />
-    <Compile Include="Assets\Scripts\MainPage.cs" />
+    <Compile Include="Assets\Scripts\PaginaPrincipal.cs" />
     <Compile Include="Assets\Scripts\PairDevices.cs" />
     <Compile Include="Assets\Scripts\PasswordInfo.cs" />
     <Compile Include="Assets\Scripts\RouteGenerator.cs" />

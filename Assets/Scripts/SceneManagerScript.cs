@@ -18,12 +18,12 @@ public class SceneManagerScript : MonoBehaviour
 
     public void goToSelectRoute()
     {
-        SceneManager.LoadScene(sceneBuildIndex: 8);
+        SceneManager.LoadScene(sceneName: "SelectRoute");
     }
 
     public void goToSelectWorkout()
     {
-        SceneManager.LoadScene(sceneBuildIndex: 11);
+        SceneManager.LoadScene(sceneName: "SelectWorkout");
 
     }
 
@@ -53,7 +53,7 @@ public class SceneManagerScript : MonoBehaviour
                 //Ensenyar avis
             }
             else {
-                SceneManager.LoadScene(sceneBuildIndex: 11);
+                SceneManager.LoadScene(sceneName: "FollowRoute");
             }
         }
     }
@@ -66,12 +66,12 @@ public class SceneManagerScript : MonoBehaviour
 
     public void goToFollowRouteAfterWorkout()
     {
-        SceneManager.LoadScene(sceneBuildIndex: 9);
+        SceneManager.LoadScene(sceneName: "FollowRoute");
     }
 
     public void goToFollowRouteWithoutWorkout()
     {
         FollowRoute.workout = null;
-        SceneManager.LoadScene(sceneBuildIndex: 9);
+        SceneManager.LoadScene(sceneName: "FollowRoute");
     }
 }

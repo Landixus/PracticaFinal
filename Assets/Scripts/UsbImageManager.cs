@@ -6,23 +6,37 @@ using UnityEngine.UI;
 public class UsbImageManager : MonoBehaviour
 {
 
-    public static Image usbImage;
-    private GameObject imgObject;
+    public Image usbImage;
+    public static bool haveUsb;
+    private bool checkUsb;
 
     // Start is called before the first frame update
     void Start()
     {
-        imgObject = GameObject.Find("usbImg");
-        if (imgObject != null)
+        checkImgUsb();
+    }
+
+    private void checkImgUsb()
+    {
+        //TODO
+       /*Debug.Log("Check Image:" + haveUsb);
+        if (haveUsb)
         {
-            usbImage = (Image)imgObject.GetComponent(typeof(Image));
             usbImage.sprite = (Sprite)Resources.Load("Img/usb");
         }
+        else
+        {
+            usbImage.sprite = (Sprite)Resources.Load("Img/noUSB");
+        }*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (checkUsb != haveUsb)
+        {
+            checkImgUsb();
+            checkUsb = haveUsb;
+        }
     }
 }
