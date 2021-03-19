@@ -45,7 +45,7 @@ public class SceneManagerScript : MonoBehaviour
         if (workout != null)
         {
             var temps = ruta.totalDistance / 20;
-            var segons = temps * 60;
+            var segons = temps * 60 * 60;
 
             if (segons < workout.tempsTotal)
             {
