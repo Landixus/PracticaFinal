@@ -270,6 +270,7 @@ public class FollowRoute : MonoBehaviour
                     slopeText.text = "% " + ruta.pendentPunts[currentSectorNum].ToString();
                 }
 
+                Debug.Log("Faig log abans de x100 completed");
                 try
                 {
                     //ruta.totalDistance * 1000 ja que totalDistance està en Km
@@ -327,7 +328,6 @@ public class FollowRoute : MonoBehaviour
                         Debug.Log("Current % of sector" + ruta.pendentPunts[currentSectorNum]);
                         slopeText.text = "% " + ruta.pendentPunts[currentSectorNum].ToString();
                     }
-                   
 
                     x100completed = simulatedDist / (ruta.totalDistance * 1000);
                 }
@@ -335,26 +335,49 @@ public class FollowRoute : MonoBehaviour
 
                 if (workoutSet)
                 {
-                    if (workout.tempsTotal < rodillo.elapsedTime)
+                    Debug.Log("Faig log abans de calcular temps");
+
+
+                    float temps;
+                    if (simular)
                     {
-                        workoutTxt.text = "Felicitats!! Has acbat l'entrenament";
+                        temps = simulatedTotalTime;
+                    } else {
+                        temps = rodillo.elapsedTime;
+                    }
+
+                    Debug.Log("Temps rodillo: " + temps);
+                    Debug.Log("Temps workout: " + workout.tempsTotal);
+
+                    if ((float)workout.tempsTotal < temps)
+                    {
+                        workoutTxt.text = "Felicitats!! Has acabat l'entrenament";
+                        Debug.Log("S'ha acabat l'entrenament");
                     }
                     else {
+                        Debug.Log("No s'ha acabat l'entrenament");
+                        var numBloc = 0;
+                        Bloc bloc = null;
                         for (int i = 0; i < tempsBlocs.Count; i++)
                         {
-                            if (workout.tempsTotal > tempsBlocs[i])
+                            Debug.Log("Temps bloc " + i + " = " + tempsBlocs[i]);
+                            if (temps > tempsBlocs[i])
                             {
-                                var numBloc = i--;
-                                var bloc = workout.blocs[numBloc];
-                                workoutTxt.text = "Num bloc: " + numBloc + " Poténcia objectiu: " + bloc.pot + "W Temps bloc: " + bloc.temps;
+                                numBloc = i;
+                                if (numBloc != workout.blocs.Count)
+                                {
+                                    bloc = workout.blocs[numBloc];
+                                }
                             }
+                        }
+                        if (bloc != null)
+                        {
+                            numBloc++;
+                            workoutTxt.text = "Num bloc: " + numBloc + " Poténcia objectiu: " + bloc.pot + "W Temps bloc: " + bloc.temps;
                         }
                     }
                 }
             }
-
-
-
 
             //Anem movent la barra segons l'usuari va avançant en la ruta
             //+3 i +34 per compensar el desviament de la barra en la posició original. 

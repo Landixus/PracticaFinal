@@ -30,6 +30,7 @@ public class SceneManagerScript : MonoBehaviour
 
     public void goToFollowRoute()
     {
+        SceneManager.LoadScene(sceneName: "FollowRoute");
 
         /*
             Mirar si duracio ruta és inferior a duració entrenament
@@ -39,11 +40,14 @@ public class SceneManagerScript : MonoBehaviour
         //Resources.FindObjectsOfTypeAll<Panel>();
         //Agafar panell inactiu
 
+        Debug.Log("Estic a goToFollowRoute");
+
         Ruta ruta = FollowRoute.ruta;
         Workout workout = FollowRoute.workout;
 
         if (workout != null)
         {
+            Debug.Log("Vaig a calcular temps");
             var temps = ruta.totalDistance / 20;
             var segons = temps * 60 * 60;
 
@@ -53,6 +57,7 @@ public class SceneManagerScript : MonoBehaviour
                 //Ensenyar avis
             }
             else {
+                Debug.Log("Anem a carregar l'escena FollowRoute");
                 SceneManager.LoadScene(sceneName: "FollowRoute");
             }
         }
