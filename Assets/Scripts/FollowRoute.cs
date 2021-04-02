@@ -56,7 +56,12 @@ public class FollowRoute : MonoBehaviour
 
     private bool finished;
 
+    private List<float> fcList;
+    private List<int> rpmList;
+    private List<int> powerList;
+    private List<float> speedList;
 
+    private float time;
 
 
     // Start is called before the first frame update
@@ -150,7 +155,14 @@ public class FollowRoute : MonoBehaviour
         simulatedVel = 0;
         simulatedTime = 0;
         simulatedTotalTime = 0;
-    }
+
+
+        //Inicialitzem variables per crear historial
+        fcList = new List<float>();
+        rpmList = new List<int>();
+        powerList = new List<int>();
+        speedList = new List<float>();
+}
 
     // Update is called once per frame
     void Update()
@@ -162,6 +174,8 @@ public class FollowRoute : MonoBehaviour
                 if (cadence.connected)
                 {
                     cad.text = cadence.cadence.ToString();
+
+                    rpmList.Add(cadence.cadence);
                 }
             }
 
@@ -171,6 +185,10 @@ public class FollowRoute : MonoBehaviour
                 {
                     cad.text = speedCadence.cadence.ToString();
                     spd.text = speedCadence.speed.ToString();
+
+
+                    rpmList.Add(speedCadence.cadence);
+                    speedList.Add(speedCadence.speed);
                 }
             }
 
@@ -179,6 +197,8 @@ public class FollowRoute : MonoBehaviour
                 if (heartRate.connected)
                 {
                     hr.text = heartRate.heartRate.ToString();
+
+                    fcList.Add(heartRate.heartRate);
                 }
             }
 
@@ -188,6 +208,8 @@ public class FollowRoute : MonoBehaviour
                 {
                     spd.text = speed.speed.ToString();
                     //uiText.text += "distance = " + GameObject.Find("SpeedDisplay").GetComponent<SpeedDisplay>().distance + "\n";
+
+                    speedList.Add(speed.speed);
                 }
             }
 
@@ -196,7 +218,9 @@ public class FollowRoute : MonoBehaviour
                 if (power.connected)
                 {
                     pow.text = power.instantaneousPower.ToString();
-                    //uiText.text += "cadence = " + GameObject.Find("PowerMeterDisplay").GetComponent<PowerMeterDisplay>().instantaneousCadence + "\n";    
+                    //uiText.text += "cadence = " + GameObject.Find("PowerMeterDisplay").GetComponent<PowerMeterDisplay>().instantaneousCadence + "\n"; 
+
+                    powerList.Add(power.instantaneousPower);
                 }
             }
 
@@ -226,6 +250,7 @@ public class FollowRoute : MonoBehaviour
                 }
 
                 //rodillo.elapsedTime en segons
+                time = rodillo.elapsedTime;
                 elapsedTime.text = rodillo.elapsedTime.ToString();
 
                 // rodillo.distanceTraveled en metres 
@@ -256,6 +281,8 @@ public class FollowRoute : MonoBehaviour
                     }
                     else
                     {
+
+                        //No funciona ja que no podem enviar informació al rodillo
                         //canviar pendent segons currentSectNum
                         rodillo.SetTrainerResistance((int)(ruta.pendentPunts[currentSectorNum] * 100));
                         rodillo.RequestTrainerCapabilities();
@@ -390,6 +417,18 @@ public class FollowRoute : MonoBehaviour
         } else
         {
             Debug.Log("S'ha acabat la ruta");
+
+
+            //Només volem guardar a l'historial les sessions no simulades
+            if (!simular)
+            {
+                //Creem la sessio acabada i la guardem a la llista de l'usuari
+                Session session = new Session(ruta, workout, time, fcList, rpmList, powerList, speedList);
+                PaginaPrincipal.user.historial.Add(session);
+
+                Debug.Log("Num sessions: " + PaginaPrincipal.user.historial.Count);
+            }
+          
         }
        
     }

@@ -11,7 +11,12 @@ public class User
     private int weight { get; set; }
     private int maxFC { get; set; }
     private int maxW { get; set; }
+
+    //Per guardar els workouts creats
     public List<Workout> workouts;
+
+    //Historial de rutas
+    public List<Session> historial;
 
     public User(int id, string mail, string password, int height, int weight, int maxFC, int maxW)
     {
