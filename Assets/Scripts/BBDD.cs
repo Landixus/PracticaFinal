@@ -45,7 +45,7 @@ public class BBDD
         dbconn.Open(); //Open connection to the database.
 
         IDbCommand dbcmd = dbconn.CreateCommand();
-        string insertUserQuery = "INSERT INTO User(ID_User,mail, password, height, weight, maxFC, maxW) VALUES(null, '"+ mail +"','"+ password+"'," + height+","+weight+","+100+","+250+");";
+        string insertUserQuery = "INSERT INTO User(ID_User,mail, password, height, weight, maxFC, maxW) VALUES(null, '"+ mail +"','"+ password+"'," + height+","+weight+","+0+","+0+");";
 
         dbcmd = dbconn.CreateCommand();
         dbcmd.CommandText = insertUserQuery;
@@ -78,6 +78,36 @@ public class BBDD
         return error;
     }
 
+    internal int editUser(int id, string password, int height, int weight)
+    {
+        int error = 0;
+        IDbConnection dbconn;
+        dbconn = (IDbConnection)new SqliteConnection(conn);
+        dbconn.Open(); //Open connection to the database.
+       
+        IDbCommand dbcmd = dbconn.CreateCommand();
+        string updateQuery = "UPDATE user SET password = '" + password + "', height = " + height + ", weight = " + weight + " WHERE id = " + id + ";";
+        dbcmd.CommandText = updateQuery;
+
+        try {
+            IDataReader reader = dbcmd.ExecuteReader();
+            Console.WriteLine("row updated");
+            reader.Close();
+            reader = null;
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("ERROR en el update " + ex.Message);
+            error = 1;
+        }
+
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
+
+        return error;
+    }
 
     public int comprovarCredencials(String mail, String password)
     {

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class User
 {
-    private int id { get;}
-    private string mail { get; set; }
-    private string password { get; set; }
-    private int height { get; set; }
-    private int weight { get; set; }
-    private int maxFC { get; set; }
-    private int maxW { get; set; }
+    public int id { get;}
+    public string mail { get; set; }
+    public string password { get; set; }
+    public int height { get; set; }
+    public int weight { get; set; }
+    public int maxFC { get; set; }
+    public int maxW { get; set; }
 
     //Per guardar els workouts creats
     public List<Workout> workouts;

@@ -72,4 +72,14 @@ public class PaginaPrincipal : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName: "CreateWorkout");
     }
+
+    public void goToUserDetail() {
+        SceneManager.LoadScene(sceneName: "UserDetail");
+    }
+
+    public void goToUserHist()
+    {
+        //SceneManager.LoadScene(sceneName: "UserHist");
+        Debug.LogWarning("No implementat (goToUserHist)");
+    }
 }

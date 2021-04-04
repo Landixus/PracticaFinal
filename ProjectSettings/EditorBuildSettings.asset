@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/UploadGPX.unity
     guid: a355c98060c204b4f89f6265359396a1
   - enabled: 1
-    path: Assets/Scenes/NewRouteGraph.unity
+    path: Assets/Scenes/ConfirmGPX.unity
     guid: 8588730cb84099f4b83d736de34dd634
   - enabled: 1
     path: Assets/Scenes/SelectRoute.unity
@@ -41,4 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SelectWorkout.unity
     guid: 7feeb1fd5038fc6429a6fc717050b8bd
+  - enabled: 1
+    path: Assets/Scenes/UserDetail.unity
+    guid: 147ac16c87e24144baa376d15e9201f5
   m_configObjects: {}
