@@ -112,6 +112,7 @@
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Types\SportBits1.cs" />
     <Compile Include="Assets\AdvancedAnt\Scripts\AntDevice.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
+    <Compile Include="Assets\Scripts\Session.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\ANT_Managed_Library\ANT_ReferenceLibrary.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileTextMultiple.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\AntPlusDeviceType.cs" />
@@ -323,7 +324,7 @@
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Types\File.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\VideoFrameMesg.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\WeightScaleMesg.cs" />
-    <Compile Include="Assets\Scripts\Session.cs" />
+    <Compile Include="Assets\Scripts\UserDetail.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

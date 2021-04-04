@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 
 public class PaginaPrincipal : MonoBehaviour
 {
@@ -11,12 +11,16 @@ public class PaginaPrincipal : MonoBehaviour
     public static User user;
     public static bool haveUSB;
 
+    [SerializeField] Text userNameTxt;
+
     // Start is called before the first frame update
     void Start()
     {
         LoadANTPrefabs();
 
         DontDestroyOnLoad(GameObject.Find("RoutesManager"));
+
+        userNameTxt.text = "Benvingut: " + user.getMail();
     }
 
     private static void LoadANTPrefabs()

@@ -47,4 +47,8 @@ public class User
             Debug.Log(workout.ToString());
         }
     }
+
+    public string getMail() {
+        return mail;
+    }
 }
