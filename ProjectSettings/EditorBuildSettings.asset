@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UserDetail.unity
     guid: 147ac16c87e24144baa376d15e9201f5
+  - enabled: 1
+    path: Assets/Scenes/UserHistorial.unity
+    guid: 44a8b687db2dd9142ae487228e372927
   m_configObjects: {}
