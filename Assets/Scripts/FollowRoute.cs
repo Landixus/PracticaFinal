@@ -63,6 +63,9 @@ public class FollowRoute : MonoBehaviour
 
     private float time;
 
+    [SerializeField] Text diffText;
+    private int instantPower;
+
 
     // Start is called before the first frame update
     void Start()
@@ -162,6 +165,8 @@ public class FollowRoute : MonoBehaviour
         rpmList = new List<int>();
         powerList = new List<int>();
         speedList = new List<float>();
+
+        diffText.text = "";
 }
 
     // Update is called once per frame
@@ -219,7 +224,7 @@ public class FollowRoute : MonoBehaviour
                 {
                     pow.text = power.instantaneousPower.ToString();
                     //uiText.text += "cadence = " + GameObject.Find("PowerMeterDisplay").GetComponent<PowerMeterDisplay>().instantaneousCadence + "\n"; 
-
+                    instantPower = power.instantaneousPower;
                     powerList.Add(power.instantaneousPower);
                 }
             }
@@ -229,6 +234,7 @@ public class FollowRoute : MonoBehaviour
                 if (!power.connected)
                 {
                     pow.text = rodillo.instantaneousPower.ToString();
+                    instantPower = rodillo.instantaneousPower;
                 }
 
                 if (!speed.connected && !speedCadence.connected)
@@ -401,6 +407,18 @@ public class FollowRoute : MonoBehaviour
                         {
                             numBloc++;
                             workoutTxt.text = "Num bloc: " + numBloc + " Poténcia objectiu: " + bloc.pot + "W Temps bloc: " + bloc.temps;
+
+                            if (instantPower > bloc.pot * 1.10)
+                            {
+                                diffText.text = "Massa poténcia. Afluixa";
+                            }
+                            else if (instantPower < bloc.pot * 0.9)
+                            {
+                                diffText.text = "Falta poténcia. Apreta";
+                            }
+                            else {
+                                diffText.text = "";
+                            }
                         }
                     }
                 }
