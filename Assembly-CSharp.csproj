@@ -246,6 +246,7 @@
     <Compile Include="Assets\AdvancedAnt\Scripts\PowerMeterDisplay.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Types\GoalRecurrence.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\VideoMesg.cs" />
+    <Compile Include="Assets\Scripts\UserDetail.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\ANT_Managed_Library\ANT_Common.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\SdmProfileMesg.cs" />
@@ -324,7 +325,7 @@
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Types\File.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\VideoFrameMesg.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\WeightScaleMesg.cs" />
-    <Compile Include="Assets\Scripts\UserDetail.cs" />
+    <Compile Include="Assets\Scripts\UserHistorial.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

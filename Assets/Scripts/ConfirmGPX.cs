@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SelectedRoute : MonoBehaviour
+public class ConfirmGPX : MonoBehaviour
 {
     public InputField fileNameInput;
     public Text errorNameText;

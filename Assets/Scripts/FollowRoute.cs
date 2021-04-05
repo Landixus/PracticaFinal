@@ -364,61 +364,65 @@ public class FollowRoute : MonoBehaviour
 
                     x100completed = simulatedDist / (ruta.totalDistance * 1000);
                 }
+            }
+
+            Debug.Log("Workout set:" + workoutSet);
+            if (workoutSet)
+            {
+                Debug.Log("Faig log abans de calcular temps");
 
 
-                if (workoutSet)
+                float temps;
+                if (simular)
                 {
-                    Debug.Log("Faig log abans de calcular temps");
+                    temps = simulatedTotalTime;
+                }
+                else
+                {
+                    temps = rodillo.elapsedTime;
+                }
 
+                Debug.Log("Temps rodillo: " + temps);
+                Debug.Log("Temps workout: " + workout.tempsTotal);
 
-                    float temps;
-                    if (simular)
+                if ((float)workout.tempsTotal < temps)
+                {
+                    workoutTxt.text = "Felicitats!! Has acabat l'entrenament";
+                    Debug.Log("S'ha acabat l'entrenament");
+                }
+                else
+                {
+                    Debug.Log("No s'ha acabat l'entrenament");
+                    var numBloc = 0;
+                    Bloc bloc = null;
+                    for (int i = 0; i < tempsBlocs.Count; i++)
                     {
-                        temps = simulatedTotalTime;
-                    } else {
-                        temps = rodillo.elapsedTime;
-                    }
-
-                    Debug.Log("Temps rodillo: " + temps);
-                    Debug.Log("Temps workout: " + workout.tempsTotal);
-
-                    if ((float)workout.tempsTotal < temps)
-                    {
-                        workoutTxt.text = "Felicitats!! Has acabat l'entrenament";
-                        Debug.Log("S'ha acabat l'entrenament");
-                    }
-                    else {
-                        Debug.Log("No s'ha acabat l'entrenament");
-                        var numBloc = 0;
-                        Bloc bloc = null;
-                        for (int i = 0; i < tempsBlocs.Count; i++)
+                        Debug.Log("Temps bloc " + i + " = " + tempsBlocs[i]);
+                        if (temps > tempsBlocs[i])
                         {
-                            Debug.Log("Temps bloc " + i + " = " + tempsBlocs[i]);
-                            if (temps > tempsBlocs[i])
+                            numBloc = i;
+                            if (numBloc != workout.blocs.Count)
                             {
-                                numBloc = i;
-                                if (numBloc != workout.blocs.Count)
-                                {
-                                    bloc = workout.blocs[numBloc];
-                                }
+                                bloc = workout.blocs[numBloc];
                             }
                         }
-                        if (bloc != null)
-                        {
-                            numBloc++;
-                            workoutTxt.text = "Num bloc: " + numBloc + " Poténcia objectiu: " + bloc.pot + "W Temps bloc: " + bloc.temps;
+                    }
+                    if (bloc != null)
+                    {
+                        numBloc++;
+                        workoutTxt.text = "Num bloc: " + numBloc + " Poténcia objectiu: " + bloc.pot + "W Temps bloc: " + bloc.temps;
 
-                            if (instantPower > bloc.pot * 1.10)
-                            {
-                                diffText.text = "Massa poténcia. Afluixa";
-                            }
-                            else if (instantPower < bloc.pot * 0.9)
-                            {
-                                diffText.text = "Falta poténcia. Apreta";
-                            }
-                            else {
-                                diffText.text = "";
-                            }
+                        if (instantPower > bloc.pot * 1.10)
+                        {
+                            diffText.text = "Massa poténcia. Afluixa";
+                        }
+                        else if (instantPower < bloc.pot * 0.9)
+                        {
+                            diffText.text = "Falta poténcia. Apreta";
+                        }
+                        else
+                        {
+                            diffText.text = "";
                         }
                     }
                 }
@@ -481,10 +485,15 @@ public class FollowRoute : MonoBehaviour
 
             if (rodillo != null)
             {
+                Debug.Log("Rodillo connected:" + rodillo.connected);
                 if (rodillo.connected == false)
                 {
                     simular = true;
                     addVel.enabled = true;
+                }
+                else {
+                    simular = false;
+                    addVel.enabled = false;
                 }
             }
             else {
@@ -554,5 +563,11 @@ public class FollowRoute : MonoBehaviour
         }
 
         return temp;
+    }
+
+
+    public void goToMainPage()
+    {
+        SceneManager.LoadScene(sceneName: "MainPage");
     }
 }

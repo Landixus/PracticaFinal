@@ -74,8 +74,8 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler {
                    
                     Ruta objecteRuta = ruta.GetTrack(paths[0]);
 
-                    SelectedRoute.ruta = objecteRuta;
-                    SelectedRoute.originalPath = paths[0];
+                    ConfirmGPX.ruta = objecteRuta;
+                    ConfirmGPX.originalPath = paths[0];
                     //Set path de fitxer al script d'obrir fitxer i dibuixar perfil
                 }
             }
