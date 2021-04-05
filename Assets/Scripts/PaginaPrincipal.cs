@@ -79,7 +79,7 @@ public class PaginaPrincipal : MonoBehaviour
 
     public void goToUserHist()
     {
-        //SceneManager.LoadScene(sceneName: "UserHist");
-        Debug.LogWarning("No implementat (goToUserHist)");
+        SceneManager.LoadScene(sceneName: "UserHistorial");
+        //Debug.LogWarning("No implementat (goToUserHist)");
     }
 }

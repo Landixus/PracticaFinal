@@ -28,6 +28,7 @@ public class User
         this.maxFC = maxFC;
         this.maxW = maxW;
         workouts = new List<Workout>();
+        historial = new List<Session>();
     }
     
     public string toString() 

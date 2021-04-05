@@ -85,6 +85,7 @@
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Types\Schedule.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Types\BatteryStatus.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
+    <Compile Include="Assets\Scripts\UserHistorial.cs" />
     <Compile Include="Assets\AdvancedAnt\DEMO PC&amp;MAC\CodeExample\ContinousScanExample.cs" />
     <Compile Include="Assets\Scripts\RoutesManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
@@ -325,7 +326,6 @@
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Types\File.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\VideoFrameMesg.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\WeightScaleMesg.cs" />
-    <Compile Include="Assets\Scripts\UserHistorial.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

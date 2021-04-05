@@ -66,6 +66,8 @@ public class FollowRoute : MonoBehaviour
     [SerializeField] Text diffText;
     private int instantPower;
 
+    private bool sessioGuardada;
+
 
     // Start is called before the first frame update
     void Start()
@@ -167,6 +169,8 @@ public class FollowRoute : MonoBehaviour
         speedList = new List<float>();
 
         diffText.text = "";
+
+        sessioGuardada = false;
 }
 
     // Update is called once per frame
@@ -441,13 +445,14 @@ public class FollowRoute : MonoBehaviour
             Debug.Log("S'ha acabat la ruta");
 
 
-            //Només volem guardar a l'historial les sessions no simulades
-            if (!simular)
+            //Només volem guardar a l'historial les sessions no simulades i que no hem guardat previament
+            //Ja que el update segueix guardant la sessio cada cop que es crida si no li diem que ja està guardada
+            if (!simular && !sessioGuardada)
             {
                 //Creem la sessio acabada i la guardem a la llista de l'usuari
                 Session session = new Session(ruta, workout, time, fcList, rpmList, powerList, speedList);
                 PaginaPrincipal.user.historial.Add(session);
-
+                sessioGuardada = true;
                 Debug.Log("Num sessions: " + PaginaPrincipal.user.historial.Count);
             }
           

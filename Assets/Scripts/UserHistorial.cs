@@ -10,7 +10,6 @@ public class UserHistorial : MonoBehaviour
         List<Session> hist = PaginaPrincipal.user.historial;
 
         Debug.Log(hist.Count);
-
     }
 
     // Update is called once per frame
