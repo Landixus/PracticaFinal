@@ -1,10 +1,12 @@
 ﻿
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneManagerScript : MonoBehaviour
 {
     [SerializeField] GameObject advertPanel;
+    [SerializeField] GameObject nullWorkout;
 
     public void goToMainMenu()
     {
@@ -30,7 +32,7 @@ public class SceneManagerScript : MonoBehaviour
 
     public void goToFollowRoute()
     {
-        SceneManager.LoadScene(sceneName: "FollowRoute");
+ 
 
         /*
             Mirar si duracio ruta és inferior a duració entrenament
@@ -45,6 +47,8 @@ public class SceneManagerScript : MonoBehaviour
         Ruta ruta = FollowRoute.ruta;
         Workout workout = FollowRoute.workout;
 
+        Debug.Log(workout);
+
         if (workout != null)
         {
             Debug.Log("Vaig a calcular temps");
@@ -56,17 +60,37 @@ public class SceneManagerScript : MonoBehaviour
                 advertPanel.SetActive(true);
                 //Ensenyar avis
             }
-            else {
+            else
+            {
                 Debug.Log("Anem a carregar l'escena FollowRoute");
                 SceneManager.LoadScene(sceneName: "FollowRoute");
             }
         }
+        else {
+            Debug.Log("No s'ha escollit cap workout");
+            StartCoroutine("ActivarPanelNull");
+        }
     }
 
-    public void cancelPanel()
+    public void cancelAdvertPanel()
     {
         GameObject panel = GameObject.Find("AdvertPanel");
         panel.SetActive(false);
+    }
+
+    public void cancelNullPanel()
+    {
+        nullWorkout.SetActive(false);
+    }
+
+    IEnumerator ActivarPanelNull()
+    {
+
+        nullWorkout.SetActive(true);
+
+        yield return new WaitForSeconds(4f);
+
+        nullWorkout.SetActive(false);
     }
 
     public void goToFollowRouteAfterWorkout()

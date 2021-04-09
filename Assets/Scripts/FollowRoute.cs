@@ -68,6 +68,10 @@ public class FollowRoute : MonoBehaviour
 
     private bool sessioGuardada;
 
+    [SerializeField] GameObject routeFinishedPanel;
+    [SerializeField] GameObject confirmexitPanel;
+    [SerializeField] GameObject savedPanel;
+
 
     // Start is called before the first frame update
     void Start()
@@ -444,20 +448,23 @@ public class FollowRoute : MonoBehaviour
         {
             Debug.Log("S'ha acabat la ruta");
 
-
-            //Només volem guardar a l'historial les sessions no simulades i que no hem guardat previament
-            //Ja que el update segueix guardant la sessio cada cop que es crida si no li diem que ja està guardada
-            if (!simular && !sessioGuardada)
-            {
-                //Creem la sessio acabada i la guardem a la llista de l'usuari
-                Session session = new Session(ruta, workout, time, fcList, rpmList, powerList, speedList);
-                PaginaPrincipal.user.historial.Add(session);
-                sessioGuardada = true;
-                Debug.Log("Num sessions: " + PaginaPrincipal.user.historial.Count);
-            }
-          
+            routeFinishedPanel.SetActive(true);  
         }
-       
+    }
+
+    public void guardarEntrenament()
+    {
+        StartCoroutine("ActivarPanelGuardat");
+        //Només volem guardar a l'historial les sessions no simulades i que no hem guardat previament
+        //Ja que el update segueix guardant la sessio cada cop que es crida si no li diem que ja està guardada
+        if (!simular && !sessioGuardada)
+        {
+            //Creem la sessio acabada i la guardem a la llista de l'usuari
+            Session session = new Session(ruta, workout, time, fcList, rpmList, powerList, speedList);
+            PaginaPrincipal.user.historial.Add(session);
+            sessioGuardada = true;
+            Debug.Log("Num sessions: " + PaginaPrincipal.user.historial.Count);
+        }
     }
 
     //Funció que serveix per buscar els diferents objectes en Unity i guardarlos en una variable
@@ -574,5 +581,26 @@ public class FollowRoute : MonoBehaviour
     public void goToMainPage()
     {
         SceneManager.LoadScene(sceneName: "MainPage");
+    }
+
+    public void showConfirmPanel()
+    {
+        confirmexitPanel.SetActive(true);
+    }
+
+    public void noSortir() 
+    {
+        confirmexitPanel.SetActive(false);
+    }
+    IEnumerator ActivarPanelGuardat()
+    {
+
+        savedPanel.SetActive(true);
+
+        yield return new WaitForSeconds(1f);
+
+        savedPanel.SetActive(false);
+
+        goToMainPage();
     }
 }
