@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class UserHistList : MonoBehaviour
 {
     static public bool afegit;
-    public Text afegitText;
+
     public GameObject contentPanel;
 
     private List<Session> sessions;
@@ -29,6 +29,18 @@ public class UserHistList : MonoBehaviour
 
     [SerializeField] Text RpmMax;
     [SerializeField] Text RpmAvg;
+
+    [SerializeField] Button FCButton;
+    [SerializeField] Button WButton;
+    [SerializeField] Button RPMButton;
+
+    [SerializeField] RectTransform graphContainer;
+
+    private int numPoints;
+    private int totalPoints;
+
+    private Session sessionSelected;
+    [SerializeField] Text durText;
 
     // Start is called before the first frame update
     void Start()
@@ -83,6 +95,10 @@ public class UserHistList : MonoBehaviour
         }
         buttonTemplate.transform.parent = null;
         Destroy(buttonTemplate);
+
+        FCButton.gameObject.SetActive(false);
+        WButton.gameObject.SetActive(false);
+        RPMButton.gameObject.SetActive(false);
     }
 
     private string FromSecondsToMinutesString(int totalSeconds)
@@ -120,6 +136,12 @@ public class UserHistList : MonoBehaviour
 
     private void RouteClicked(int i)
     {
+        FCButton.gameObject.SetActive(false);
+        WButton.gameObject.SetActive(false);
+        RPMButton.gameObject.SetActive(false);
+
+       
+
         GameObject buttonTemplate;
         Button button;
 
@@ -128,6 +150,8 @@ public class UserHistList : MonoBehaviour
         button.Select();
 
         Session session = sessions[i];
+
+        sessionSelected = session;
 
         if (session.workout != null)
         {
@@ -143,7 +167,7 @@ public class UserHistList : MonoBehaviour
         //https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring?view=net-5.0
 
         dataSession.text = session.data.ToString("G", culture);
-
+        
         if (session.fcMax != -1)
         {
             FCMax.text = "--";
@@ -152,6 +176,7 @@ public class UserHistList : MonoBehaviour
         else {
             FCMax.text = session.fcMax.ToString("0.0");
             FCAvg.text = session.fcAvg.ToString("0.0");
+            FCButton.gameObject.SetActive(true);
         }
 
         if (session.powerMax != -1)
@@ -163,6 +188,7 @@ public class UserHistList : MonoBehaviour
         {
             WMax.text = session.powerMax.ToString("0.0");
             WAvg.text = session.powerAvg.ToString("0.0");
+            WButton.gameObject.SetActive(true);
         }
 
         if (session.rpmMax != -1)
@@ -174,6 +200,7 @@ public class UserHistList : MonoBehaviour
         {
             RpmMax.text = session.rpmMax.ToString("0.0");
             RpmAvg.text = session.rpmAvg.ToString("0.0");
+            RPMButton.gameObject.SetActive(true);
         }
 
         Debug.Log("item " + i + " clicked");
@@ -194,4 +221,166 @@ public class UserHistList : MonoBehaviour
     {
         SceneManager.LoadScene(2);
     }
+
+
+
+    private GameObject CreateCircle(Vector2 anchoredPosition)
+    {
+        GameObject gameObject = new GameObject("circle", typeof(Image));
+        gameObject.transform.SetParent(graphContainer, false);
+        //gameObject.GetComponent<Image>().sprite = circleSprite;
+        gameObject.GetComponent<Image>().sprite = null;
+        gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 0f);
+        RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = anchoredPosition;
+        rectTransform.sizeDelta = new Vector2(11, 11);
+        rectTransform.anchorMin = new Vector2(0, 0);
+        rectTransform.anchorMax = new Vector2(0, 0);
+
+        return gameObject;
+    }
+
+
+    public void ShowGraph(List<int> valueList, int option)
+    {
+        List<int> simpleList = SimplifyList(valueList, 200);
+
+        //Debug.Log(simpleList.Count);
+
+        durText.text = FromSecondsToMinutesString((int)sessionSelected.tempsTotal);
+
+        float graphHight = graphContainer.sizeDelta.y;
+        //float xSize = 1f;
+
+        float maxEle = 0;
+        float minEle = 0;
+
+        switch (option)
+        {
+            case 1:
+                maxEle = sessionSelected.fcMax;
+                minEle = 0;
+                break;
+            case 2:
+                maxEle = sessionSelected.powerMax;
+                minEle = 0;
+                break;
+            case 3:
+                maxEle = sessionSelected.rpmMax;
+                minEle = 0;
+                break;
+        }
+
+       
+        //El + 100 es per tenir un marge per adalt
+        float yMaximum = 100;
+
+        //maxEleText.text = Math.Round(maxEle, 0).ToString() + "m";
+
+        float minCorrection = 0;
+
+        if (minEle > 400)
+        {
+            //Posem -100 per que no estigui enganxat a baix de tot;
+            minCorrection = - 100;
+            //minEleText.text = Math.Round(minEle, 0).ToString() + "m";
+        }
+        else
+        {
+            //minEleText.text = "0m";
+        }
+
+        float xSize = CalcXDiff(simpleList);
+
+        GameObject lastCircleGameObject = null;
+
+        //Valor differencia per si tenim més punts en una llista que en una altre;
+        //Pot passar ja que al fer el módul i tenir llistes originals de diferents mides
+        //podem acabar amb subllistes de diferents mides
+        for (int i = 0; i < simpleList.Count; i++)
+        {
+            float xPosition = xSize + i * xSize;
+            float yPosition = (simpleList[i] - minCorrection) / yMaximum * graphHight;
+            GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition));
+            if (lastCircleGameObject != null)
+            {
+                Debug.Log("simpleList Count:" + simpleList.Count);
+
+                CreateDotConnection(lastCircleGameObject.GetComponent<RectTransform>().anchoredPosition, circleGameObject.GetComponent<RectTransform>().anchoredPosition, Color.red);
+            }
+            lastCircleGameObject = circleGameObject;
+        }
+    }
+
+    private void CreateDotConnection(Vector2 dotPositionA, Vector2 dotPositionB, Color color)
+    {
+        GameObject gameObject = new GameObject("dotConnection", typeof(Image));
+        gameObject.transform.SetParent(graphContainer, false);
+        //gameObject.GetComponent<Image>().color = new Color(1, 1, 1);
+
+        RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+        Vector2 dir = (dotPositionB - dotPositionA).normalized;
+        float distance = Vector2.Distance(dotPositionA, dotPositionB);
+
+        rectTransform.anchorMin = new Vector2(0, 0);
+        rectTransform.anchorMax = new Vector2(0, 0);
+        rectTransform.sizeDelta = new Vector2(distance, 2f);
+        rectTransform.anchoredPosition = dotPositionA + dir * distance * .5f;
+
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        //Debug.Log(angle);
+
+        gameObject.GetComponent<Image>().color = color;
+        rectTransform.localEulerAngles = new Vector3(0, 0, angle);
+
+    }
+
+    //Funció que serveix per simplificar la llista de punts d'altura per que el gràfic càpiga en el contenidor
+    private List<int> SimplifyList(List<int> list, int expectedPoints)
+    {
+        float graphWidth = graphContainer.sizeDelta.x;
+
+        Debug.Log("Width:" + graphWidth);
+        Debug.Log("Num total points:" + list.Count);
+
+        //int numPoints = (int)Math.Ceiling(list.Count / (graphWidth - 20));
+        numPoints = list.Count / expectedPoints;
+        Debug.Log("Num points:" + numPoints);
+
+        //Si hi han menys punts que l'amplada del contenidor del gràfic retornem la llista sense modificar-la
+        if (numPoints == 0)
+        {
+            totalPoints = list.Count;
+            return list;
+        }
+
+        List<int> simpleList = new List<int>();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (i % numPoints == 0)
+            {
+                simpleList.Add(list[i]);
+            }
+        }
+
+        totalPoints = simpleList.Count;
+
+        return simpleList;
+    }
+
+    private float CalcXDiff(List<int> simpleList)
+    {
+        float graphWidth = graphContainer.sizeDelta.x;
+
+        if (simpleList.Count < graphWidth - 20)
+        {
+            return graphWidth / simpleList.Count;
+        }
+        else
+        {
+            return 1f;
+        }
+    }
+
 }

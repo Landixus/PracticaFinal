@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ruta
 {
     public string name { get; set; }
-    public List<TrackPoint> trackPoints { get; set; }
+    public List<@int> trackPoints { get; set; }
     public float positiveElevation { get; set; }
     public float negativeElevation { get; set; }
     
@@ -16,7 +16,7 @@ public class Ruta
 
     public float[] distAcomuladaSector { get; set; }
 
-    public Ruta(string name, List<TrackPoint> trackPoints, float positiveElevation, float negativeElevation, float totalDistance, float[] distanciaPunts, float[] pendentPunts, float[] distAcomuladaSector)
+    public Ruta(string name, List<@int> trackPoints, float positiveElevation, float negativeElevation, float totalDistance, float[] distanciaPunts, float[] pendentPunts, float[] distAcomuladaSector)
     {
         this.name = name;
         this.trackPoints = trackPoints;

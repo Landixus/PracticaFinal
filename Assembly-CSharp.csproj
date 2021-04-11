@@ -183,7 +183,7 @@
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\AntRxMesg.cs" />
     <Compile Include="Assets\AdvancedAnt\DEMO PC&amp;MAC\AntDemo.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Types\LengthType.cs" />
-    <Compile Include="Assets\Scripts\TrackPoint.cs" />
+    <Compile Include="Assets\Scripts\int.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Types\AntNetwork.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\HrMesg.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Types\PwrZoneCalc.cs" />

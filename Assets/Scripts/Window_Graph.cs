@@ -44,9 +44,9 @@ public class Window_Graph : MonoBehaviour
     }
 
     //Funció modificada de https://www.youtube.com/watch?v=CmU5-v-v1Qo
-    public void ShowGraph(List<TrackPoint> valueList, float[] slopes, float distance, int expectedpoints)
+    public void ShowGraph(List<@int> valueList, float[] slopes, float distance, int expectedpoints)
     {
-        List<TrackPoint> simpleList = SimplifyList(valueList, expectedpoints);
+        List<@int> simpleList = SimplifyList(valueList, expectedpoints);
         List<float> simpleSlopes = SimplifySlope(slopes);
 
         //Debug.Log(simpleList.Count);
@@ -126,14 +126,14 @@ public class Window_Graph : MonoBehaviour
 
     }
 
-    public float FindMaxElevation(List<TrackPoint> list)
+    public float FindMaxElevation(List<@int> list)
     {
         if (list.Count == 0)
         {
             throw new InvalidOperationException("Empty list");
         }
         float maxEle = int.MinValue;
-        foreach (TrackPoint type in list)
+        foreach (@int type in list)
         {
             if (type.ele > maxEle)
             {
@@ -143,14 +143,14 @@ public class Window_Graph : MonoBehaviour
         return maxEle;
     }
 
-    public float FindMinElevation(List<TrackPoint> list)
+    public float FindMinElevation(List<@int> list)
     {
         if (list.Count == 0)
         {
             throw new InvalidOperationException("Empty list");
         }
         float minEle = int.MaxValue;
-        foreach (TrackPoint type in list)
+        foreach (@int type in list)
         {
             if (type.ele < minEle)
             {
@@ -161,7 +161,7 @@ public class Window_Graph : MonoBehaviour
     }
 
     //Funció que serveix per simplificar la llista de punts d'altura per que el gràfic càpiga en el contenidor
-    private List<TrackPoint> SimplifyList(List<TrackPoint> list, int expectedPoints)
+    private List<@int> SimplifyList(List<@int> list, int expectedPoints)
     {
         float graphWidth = graphContainer.sizeDelta.x;
 
@@ -179,7 +179,7 @@ public class Window_Graph : MonoBehaviour
             return list;
         }
 
-        List<TrackPoint> simpleList = new List<TrackPoint>();
+        List<@int> simpleList = new List<@int>();
 
         for (int i = 0; i < list.Count; i++)
         {
@@ -217,7 +217,7 @@ public class Window_Graph : MonoBehaviour
     }
 
 
-    private float CalcXDiff(List<TrackPoint> simpleList)
+    private float CalcXDiff(List<@int> simpleList)
     {
         float graphWidth = graphContainer.sizeDelta.x;
 

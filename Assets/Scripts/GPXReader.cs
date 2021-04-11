@@ -78,7 +78,7 @@ namespace LinqXMLTester
         /// <param name="sFile">Fully qualified file name (local)</param>
         /// <returns>string containing line delimited waypoints from the
         /// file (for test)</returns>
-        public List<TrackPoint> LoadGPXTracks(string sFile)
+        public List<@int> LoadGPXTracks(string sFile)
         {
             XDocument gpxDoc = GetGpxDoc(sFile);
             XNamespace gpx = GetGpxNameSpace();
@@ -102,7 +102,7 @@ namespace LinqXMLTester
                          };
 
             //StringBuilder sb = new StringBuilder();
-            List<TrackPoint> trackPoints = new List<TrackPoint>();
+            List<@int> trackPoints = new List<@int>();
             foreach (var trk in tracks)
             {
                 // Populate track data objects.
@@ -119,7 +119,7 @@ namespace LinqXMLTester
 
                     float ele = Convert.ToSingle(trkSeg.Elevation, CultureInfo.InvariantCulture);
 
-                    trackPoints.Add(new TrackPoint(lat, lon, ele));
+                    trackPoints.Add(new @int(lat, lon, ele));
                 }
             }
             //return sb.ToString();

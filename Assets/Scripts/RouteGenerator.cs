@@ -17,7 +17,7 @@ public class RouteGenerator : MonoBehaviour
 
     public Ruta GetTrack(string routePath)
     {
-        List<TrackPoint> trackPoints = gpx.LoadGPXTracks(routePath);
+        List<@int> trackPoints = gpx.LoadGPXTracks(routePath);
         string name = gpx.GetName(routePath);
         //Debug.Log(name);
 
@@ -65,7 +65,7 @@ public class RouteGenerator : MonoBehaviour
         return distAcom;
     }
 
-    private float CalcPositiveElevation(List<TrackPoint> trackPoints)
+    private float CalcPositiveElevation(List<@int> trackPoints)
     {
         float actualElev = trackPoints[0].ele;
         float priorElev = trackPoints[1].ele;
@@ -94,7 +94,7 @@ public class RouteGenerator : MonoBehaviour
         return (float)Math.Round(positiveElev,1);
     }
 
-    private float CalcNegativeElevation(List<TrackPoint> trackPoints)
+    private float CalcNegativeElevation(List<@int> trackPoints)
     {
         float actualElev = trackPoints[0].ele;
         float priorElev = trackPoints[1].ele;
@@ -122,7 +122,7 @@ public class RouteGenerator : MonoBehaviour
         return (float)Math.Round(negativeElev,1) * -1;
     }
 
-    private float[] CalcDistance(List<TrackPoint> trackPoints)
+    private float[] CalcDistance(List<@int> trackPoints)
     {
         float baseLat = trackPoints[1].lat;
         float baseLon = trackPoints[1].lon;
@@ -202,7 +202,7 @@ public class RouteGenerator : MonoBehaviour
     }
 
     //Funció per calcular el pendent entre dos punts, es calcula la pendent entre amb 5 punts de diferencia per ajustar els càlculs i que sigui més uniforme
-    private float[] CalcSlope(List<TrackPoint> trackPoints, float[] distancePoints)
+    private float[] CalcSlope(List<@int> trackPoints, float[] distancePoints)
     {
         float actualElev = trackPoints[0].ele;
         float priorElev = trackPoints[5].ele;
