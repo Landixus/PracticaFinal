@@ -41,6 +41,7 @@ public class UserHistList : MonoBehaviour
 
     private Session sessionSelected;
     [SerializeField] Text durText;
+    [SerializeField] GameObject graphPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -255,19 +256,26 @@ public class UserHistList : MonoBehaviour
         float maxEle = 0;
         float minEle = 0;
 
+        Color color;
         switch (option)
         {
             case 1:
                 maxEle = sessionSelected.fcMax;
                 minEle = 0;
+                color = Color.red;
                 break;
             case 2:
                 maxEle = sessionSelected.powerMax;
                 minEle = 0;
+                color = Color.yellow;
                 break;
             case 3:
                 maxEle = sessionSelected.rpmMax;
                 minEle = 0;
+                color = Color.green;
+                break;
+            default:
+                color = Color.red;
                 break;
         }
 
@@ -306,7 +314,7 @@ public class UserHistList : MonoBehaviour
             {
                 Debug.Log("simpleList Count:" + simpleList.Count);
 
-                CreateDotConnection(lastCircleGameObject.GetComponent<RectTransform>().anchoredPosition, circleGameObject.GetComponent<RectTransform>().anchoredPosition, Color.red);
+                CreateDotConnection(lastCircleGameObject.GetComponent<RectTransform>().anchoredPosition, circleGameObject.GetComponent<RectTransform>().anchoredPosition, color);
             }
             lastCircleGameObject = circleGameObject;
         }
@@ -383,4 +391,28 @@ public class UserHistList : MonoBehaviour
         }
     }
 
+
+    public void showFCGraph()
+    {
+        List<int> intFCList = sessionSelected.fcList.ConvertAll(x => (int)x);
+        ShowGraph(intFCList,1);
+        contentPanel.SetActive(true);
+    }
+
+    public void showPowerGraph()
+    {
+        ShowGraph(sessionSelected.powerList, 2);
+        contentPanel.SetActive(true);
+    }
+
+    public void showRPMGraph()
+    { 
+        ShowGraph(sessionSelected.rpmList, 3);
+        contentPanel.SetActive(true);
+    }
+
+    public void closeGraphPanel()
+    {
+        contentPanel.SetActive(false);
+    }
 }
