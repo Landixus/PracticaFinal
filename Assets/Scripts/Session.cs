@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,23 +6,26 @@ using UnityEngine;
 
 public class Session
 {
-    private Ruta ruta { get; set; }
-    private Workout workout { get; set; }
-    private float tempsTotal { get; set; }
-    private List<float> fcList { get; set; }
-    private List<int> rpmList { get; set; }
-    private List<int> powerList { get; set; }
-    private List<float> speedList { get; set; }
+    public Ruta ruta { get; set; }
+    public Workout workout { get; set; }
+    public float tempsTotal { get; set; }
+    public List<float> fcList { get; set; }
+    public List<int> rpmList { get; set; }
+    public List<int> powerList { get; set; }
+    public List<float> speedList { get; set; }
 
-    private float fcMax { get; set; }
-    private int rpmMax { get; set; }
-    private int powerMax { get; set; }
-    private float speedMax { get; set; }
+    public float fcMax { get; set; }
+    public int rpmMax { get; set; }
+    public int powerMax { get; set; }
+    public float speedMax { get; set; }
 
-    private float fcAvg { get; set; }
-    private double rpmAvg { get; set; }
-    private double powerAvg { get; set; }
-    private float speedAvg { get; set; }
+    public float fcAvg { get; set; }
+    public double rpmAvg { get; set; }
+    public double powerAvg { get; set; }
+    public float speedAvg { get; set; }
+
+    public DateTime data;
+
 
     public Session(Ruta ruta, Workout workout, float tempsTotal, List<float> fcList, List<int> rpmList, List<int> powerList, List<float> speedList)
     {
@@ -80,5 +84,7 @@ public class Session
             speedMax = -1;
             speedAvg = -1;
         }
+
+        data = DateTime.Now;
     }
 }

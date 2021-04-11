@@ -326,6 +326,7 @@
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Types\File.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\VideoFrameMesg.cs" />
     <Compile Include="Assets\AdvancedAnt\Plugins\Ant\Fit\Profile\Mesgs\WeightScaleMesg.cs" />
+    <Compile Include="Assets\Scripts\UserHistList.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
