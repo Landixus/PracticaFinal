@@ -34,14 +34,17 @@ public class UserHistList : MonoBehaviour
     [SerializeField] Button WButton;
     [SerializeField] Button RPMButton;
 
-    [SerializeField] RectTransform graphContainer;
+    //[SerializeField] RectTransform graphContainer;
 
     private int numPoints;
     private int totalPoints;
+    private RectTransform graphContainer;
 
     private Session sessionSelected;
     [SerializeField] Text durText;
-    //[SerializeField] GameObject graphPanel;
+    [SerializeField] GameObject graphPanel;
+
+    [SerializeField] Text maxText;
 
     // Start is called before the first frame update
     void Start()
@@ -107,6 +110,10 @@ public class UserHistList : MonoBehaviour
         FCButton.gameObject.SetActive(false);
         WButton.gameObject.SetActive(false);
         RPMButton.gameObject.SetActive(false);
+
+
+        graphContainer = graphPanel.GetComponent<RectTransform>();
+        maxText.text = "";
     }
 
     private string FromSecondsToMinutesString(int totalSeconds)
@@ -260,41 +267,48 @@ public class UserHistList : MonoBehaviour
         float graphHight = graphContainer.sizeDelta.y;
         //float xSize = 1f;
 
-        float maxEle = 0;
-        float minEle = 0;
+        float maxNum = 0;
+        float minNum = 0;
 
         Color color;
+
+        //El + 100 es per tenir un marge per adalt
+        float yMaximum;
+
         switch (option)
         {
             case 1:
-                maxEle = sessionSelected.fcMax;
-                minEle = 0;
+                maxNum = sessionSelected.fcMax;
+                yMaximum = maxNum + 100;
+                maxText.text = maxNum.ToString();
                 color = Color.red;
                 break;
             case 2:
-                maxEle = sessionSelected.powerMax;
-                minEle = 0;
+                maxNum = sessionSelected.powerMax;
+                yMaximum = maxNum + 100;
+                maxText.text = maxNum.ToString();
                 color = Color.yellow;
                 break;
             case 3:
-                maxEle = sessionSelected.rpmMax;
-                minEle = 0;
+                maxNum = sessionSelected.rpmMax;
+                maxText.text = maxNum.ToString();
+                yMaximum = maxNum + 100;
                 color = Color.green;
                 break;
             default:
                 color = Color.red;
+                yMaximum = 100;
                 break;
         }
 
        
-        //El + 100 es per tenir un marge per adalt
-        float yMaximum = 100;
+        
 
         //maxEleText.text = Math.Round(maxEle, 0).ToString() + "m";
 
         float minCorrection = 0;
 
-        if (minEle > 400)
+        if (minNum > 400)
         {
             //Posem -100 per que no estigui enganxat a baix de tot;
             minCorrection = - 100;
@@ -309,9 +323,6 @@ public class UserHistList : MonoBehaviour
 
         GameObject lastCircleGameObject = null;
 
-        //Valor differencia per si tenim més punts en una llista que en una altre;
-        //Pot passar ja que al fer el módul i tenir llistes originals de diferents mides
-        //podem acabar amb subllistes de diferents mides
         for (int i = 0; i < simpleList.Count; i++)
         {
             float xPosition = xSize + i * xSize;
@@ -403,23 +414,27 @@ public class UserHistList : MonoBehaviour
     {
         List<int> intFCList = sessionSelected.fcList.ConvertAll(x => (int)x);
         ShowGraph(intFCList,1);
-        contentPanel.SetActive(true);
+        graphPanel.SetActive(true);
+        Debug.Log("Apreto showFCGraph");
     }
 
     public void showPowerGraph()
     {
         ShowGraph(sessionSelected.powerList, 2);
-        contentPanel.SetActive(true);
+        graphPanel.SetActive(true);
+        Debug.Log("Apreto showPowerGraph");
     }
 
     public void showRPMGraph()
     { 
         ShowGraph(sessionSelected.rpmList, 3);
-        contentPanel.SetActive(true);
+        graphPanel.SetActive(true);
+        Debug.Log("Apreto showRPMGraph");
     }
 
     public void closeGraphPanel()
     {
-        contentPanel.SetActive(false);
+        //Netejar gràfic
+        graphPanel.SetActive(false);
     }
 }
