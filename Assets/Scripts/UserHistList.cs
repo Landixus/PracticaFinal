@@ -41,7 +41,7 @@ public class UserHistList : MonoBehaviour
 
     private Session sessionSelected;
     [SerializeField] Text durText;
-    [SerializeField] GameObject graphPanel;
+    //[SerializeField] GameObject graphPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +54,7 @@ public class UserHistList : MonoBehaviour
 
         if (listSize == 0)
         {
-            listHelper.text = "No hi han seguit cap Ruta";
+            listHelper.text = "No s'ha guardat cap Entrenament";
         }
         else
         {
@@ -79,14 +79,21 @@ public class UserHistList : MonoBehaviour
             Session session = sessions[i];
             g = Instantiate(buttonTemplate, transform);
             g.transform.GetChild(1).GetComponent<Text>().text = session.ruta.name;
-            g.transform.GetChild(3).GetComponent<Text>().text = FromSecondsToMinutesString((int)session.tempsTotal);
+
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("es-ES");
+            //dateToDisplay.ToString(formatSpecifier, culture));
+            //https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring?view=net-5.0
+
+            g.transform.GetChild(3).GetComponent<Text>().text = session.data.ToString("G", culture);
+
+            g.transform.GetChild(5).GetComponent<Text>().text = FromSecondsToMinutesString((int)session.tempsTotal);
 
             if (session.workout != null)
             {
-                g.transform.GetChild(5).GetComponent<Text>().text = "Sí";
+                g.transform.GetChild(7).GetComponent<Text>().text = "Sí";
             }
             else {
-                g.transform.GetChild(5).GetComponent<Text>().text = "No";
+                g.transform.GetChild(7).GetComponent<Text>().text = "No";
             }
             
 
@@ -169,7 +176,7 @@ public class UserHistList : MonoBehaviour
 
         dataSession.text = session.data.ToString("G", culture);
         
-        if (session.fcMax != -1)
+        if (session.fcMax == -1)
         {
             FCMax.text = "--";
             FCAvg.text = "--";
@@ -180,7 +187,7 @@ public class UserHistList : MonoBehaviour
             FCButton.gameObject.SetActive(true);
         }
 
-        if (session.powerMax != -1)
+        if (session.powerMax == -1)
         {
             WMax.text = "--";
             WAvg.text = "--";
@@ -192,7 +199,7 @@ public class UserHistList : MonoBehaviour
             WButton.gameObject.SetActive(true);
         }
 
-        if (session.rpmMax != -1)
+        if (session.rpmMax == -1)
         {
             RpmMax.text = "--";
             RpmAvg.text = "--";
