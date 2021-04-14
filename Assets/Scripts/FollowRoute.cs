@@ -73,6 +73,11 @@ public class FollowRoute : MonoBehaviour
     [SerializeField] GameObject savedPanel;
 
 
+    private List<float> simulatedSpeedList;
+    private List<float> simulatedFCList;
+    public List<int> simulatedRPMList;
+    public List<int> simulatedPOWERList;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -171,6 +176,17 @@ public class FollowRoute : MonoBehaviour
         rpmList = new List<int>();
         powerList = new List<int>();
         speedList = new List<float>();
+
+        simulatedSpeedList = new List<float>();
+        simulatedFCList = new List<float>();
+        simulatedRPMList = new List<int>();
+        simulatedPOWERList = new List<int>();
+
+        simulatedSpeedList.Add(0);
+        simulatedFCList.Add(0);
+        simulatedRPMList.Add(0);
+        simulatedPOWERList.Add(0);
+
 
         diffText.text = "";
 
@@ -334,6 +350,24 @@ public class FollowRoute : MonoBehaviour
                 //mirem si volem entrar mode simulacio
                 if (simular)
                 {
+                    float speedAnterior = simulatedSpeedList[simulatedSpeedList.Count -1];
+                    float fcAnterior = simulatedFCList[simulatedFCList.Count - 1];
+                    int rpmAnterior = simulatedRPMList[simulatedRPMList.Count - 1];
+                    int powerAnterior = simulatedPOWERList[simulatedPOWERList.Count - 1];
+
+
+                    System.Random r = new System.Random();
+                   
+                    float newSpeed = (float) (r.NextDouble() * ( (speedAnterior + 1) - (speedAnterior - 1)) + (speedAnterior - 1));
+                    float newFC = (float)(r.NextDouble() * ((fcAnterior + 1) - (fcAnterior - 1)) + (fcAnterior - 1));
+                    int newRPM = r.Next(rpmAnterior - 1, rpmAnterior + 1); //for ints
+                    int newPower = r.Next(rpmAnterior - 10, rpmAnterior + 10); //for ints
+
+                    simulatedSpeedList.Add(newSpeed);
+                    simulatedFCList.Add(newFC);
+                    simulatedRPMList.Add(newRPM);
+                    simulatedPOWERList.Add(newPower);
+
                     simulatedDist = (simulatedDist + simulatedVel * (simulatedTime * 0.06f));
                     simulatedTotalTime += simulatedTime * 0.06f;
 
@@ -459,6 +493,18 @@ public class FollowRoute : MonoBehaviour
         //Ja que el update segueix guardant la sessio cada cop que es crida si no li diem que ja està guardada
         if (!simular && !sessioGuardada)
         {
+            //Creem la sessio acabada i la guardem a la llista de l'usuari
+            Session session = new Session(ruta, workout, time, fcList, rpmList, powerList, speedList);
+            PaginaPrincipal.user.historial.Add(session);
+            sessioGuardada = true;
+            Debug.Log("Num sessions: " + PaginaPrincipal.user.historial.Count);
+        } else if (simular)
+        {
+            fcList = simulatedFCList;
+            rpmList = simulatedRPMList;
+            powerList = simulatedPOWERList;
+            speedList = simulatedSpeedList;
+
             //Creem la sessio acabada i la guardem a la llista de l'usuari
             Session session = new Session(ruta, workout, time, fcList, rpmList, powerList, speedList);
             PaginaPrincipal.user.historial.Add(session);

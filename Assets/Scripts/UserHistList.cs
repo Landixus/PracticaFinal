@@ -21,6 +21,9 @@ public class UserHistList : MonoBehaviour
 
     [SerializeField] Text listHelper;
 
+    [SerializeField] Text SpeedMax;
+    [SerializeField] Text SpeedAvg;
+
     [SerializeField] Text FCMax;
     [SerializeField] Text FCAvg;
 
@@ -33,6 +36,7 @@ public class UserHistList : MonoBehaviour
     [SerializeField] Button FCButton;
     [SerializeField] Button WButton;
     [SerializeField] Button RPMButton;
+    [SerializeField] Button SpeedButton;
 
     //[SerializeField] RectTransform graphContainer;
 
@@ -110,6 +114,7 @@ public class UserHistList : MonoBehaviour
         FCButton.gameObject.SetActive(false);
         WButton.gameObject.SetActive(false);
         RPMButton.gameObject.SetActive(false);
+        SpeedButton.gameObject.SetActive(false);
 
 
         graphContainer = graphPanel.GetComponent<RectTransform>();
@@ -154,6 +159,7 @@ public class UserHistList : MonoBehaviour
         FCButton.gameObject.SetActive(false);
         WButton.gameObject.SetActive(false);
         RPMButton.gameObject.SetActive(false);
+        SpeedButton.gameObject.SetActive(false);
 
        
 
@@ -182,7 +188,18 @@ public class UserHistList : MonoBehaviour
         //https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring?view=net-5.0
 
         dataSession.text = session.data.ToString("G", culture);
-        
+
+        if (session.speedMax == -1)
+        {
+            SpeedMax.text = "--";
+            SpeedAvg.text = "--";
+        }
+        else {
+            SpeedMax.text = session.speedMax.ToString("0.00");
+            SpeedAvg.text = session.speedAvg.ToString("0.00");
+            SpeedButton.gameObject.SetActive(true);
+        }
+
         if (session.fcMax == -1)
         {
             FCMax.text = "--";
@@ -409,6 +426,13 @@ public class UserHistList : MonoBehaviour
         }
     }
 
+    public void showSpeedGraph()
+    {
+        List<int> intSpeedList = sessionSelected.fcList.ConvertAll(x => (int)x);
+        ShowGraph(intSpeedList, 0);
+        graphPanel.SetActive(true);
+        Debug.Log("Apreto ShowSpeeGraph");
+    }
 
     public void showFCGraph()
     {
