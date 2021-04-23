@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Workout 
+[Serializable()]
+public class Workout
 {
     public int id { get; set; }
     public int tempsTotal { get; set; }

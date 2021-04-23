@@ -294,6 +294,12 @@ public class UserHistList : MonoBehaviour
 
         switch (option)
         {
+            case 0:
+                maxNum = sessionSelected.speedMax;
+                yMaximum = maxNum + 100;
+                maxText.text = maxNum.ToString();
+                color = Color.blue;
+                break;
             case 1:
                 maxNum = sessionSelected.fcMax;
                 yMaximum = maxNum + 100;
@@ -457,8 +463,18 @@ public class UserHistList : MonoBehaviour
     }
 
     public void closeGraphPanel()
-    {
-        //Netejar gràfic
+    { 
         graphPanel.SetActive(false);
+
+        //Netejar gràfic
+        DestroyGraph();
+    }
+
+    public void DestroyGraph()
+    {
+        for (int i = 7; i < graphContainer.childCount; i++)
+        {
+            GameObject.Destroy(graphContainer.GetChild(i).gameObject);
+        }
     }
 }

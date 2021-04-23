@@ -244,8 +244,10 @@ MonoBehaviour:
   workoutTxt: {fileID: 1685114914}
   diffText: {fileID: 1591655400}
   routeFinishedPanel: {fileID: 1100498937}
-  confirmexitPanel: {fileID: 1926582142}
+  confirmExitPanel: {fileID: 1926582142}
   savedPanel: {fileID: 1639052974}
+  simulatedRPMList: 
+  simulatedPOWERList: 
 --- !u!4 &95653436
 Transform:
   m_ObjectHideFlags: 0
@@ -1574,7 +1576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1059142605
 RectTransform:
   m_ObjectHideFlags: 0
