@@ -3,12 +3,19 @@ using UnityEngine;
 using System;
 using Mono.Data.Sqlite;
 using System.Data;
- 
+using UnityEngine.Networking;
+using System.Collections;
 
-public class BBDD
+public class BBDD: MonoBehaviour
 {
     //La connexio pot ser statica ja que sempre sera la mateixa per totes les connexions
-    public string conn = "URI=file:" + Application.dataPath + "/baseDadesSQLitle.db"; //Path to database.
+    public string conn;
+    int error;
+
+    private void Start()
+    {
+        conn = "URI=file:" + Application.dataPath + "/baseDadesSQLitle.db"; //Path to database.
+    }
     public void SelectTest() 
     {
         IDbConnection dbconn;
@@ -153,6 +160,18 @@ public class BBDD
 
     public User selectUser(String mail)
     {
+        User user = null;
+
+        Debug.Log("SelectUser Postgree");
+        StartCoroutine(selectUserCorroutine(mail, user));
+
+        Debug.Log("SelectUser Postgree");
+
+        return user;
+    }
+
+    IEnumerator selectUserCorroutine(String mail, User user)
+    {
         //Variables per crear l'usuari
         int id;
         string email;
@@ -162,40 +181,71 @@ public class BBDD
         int maxFC;
         int maxW;
 
-        User user = null;
+        WWWForm form = new WWWForm();
+        form.AddField("email", mail);
+        UnityWebRequest www = UnityWebRequest.Post("http://localhost/PracticaFinal/selectUser.php", form);
 
+        yield return www.SendWebRequest();
 
-        IDbConnection dbconn;
-        dbconn = (IDbConnection)new SqliteConnection(conn);
-        dbconn.Open(); //Open connection to the database.
-        IDbCommand dbcmd = dbconn.CreateCommand();
-
-        //Només noecessitem el correu ja que al ser unic no hi hauran més d'un usuari amb el mateix correu
-        //A part el selectUser només s'ha de fer un cop sabem que les credencials son correctes
-        string sqlQuery = "SELECT * FROM  user WHERE mail='" + mail + "';";
-        dbcmd.CommandText = sqlQuery;
-        IDataReader reader = dbcmd.ExecuteReader();
-        while (reader.Read())
+        if (www.downloadHandler.text == "0")
         {
-            id = reader.GetInt32(0);
-            email = reader.GetString(1);
-            password = reader.GetString(2);
-            height = reader.GetInt32(3);
-            weight = reader.GetInt32(4);
-            maxFC = reader.GetInt32(5);
-            maxW = reader.GetInt32(6);
+            Debug.Log("User Exists");
+            error = 1; //ID return 1 == s'ha trobat una coincidencia
+            
+            string[] webResult = www.downloadHandler.text.Split('#');
+
+            id = int.Parse(webResult[0]);
+            email = webResult[1];
+            password = webResult[2];
+            height = int.Parse(webResult[3]);
+            weight = int.Parse(webResult[4]);
+            maxFC = int.Parse(webResult[5]);
+            maxW = int.Parse(webResult[6]);
 
             //Debug.Log("id= " + id + "  email=" + email + "  password=" + password + "  height=" + height + "  weight=" + weight + "  maxFC=" + maxFC + "  maxW=" + maxW);
-        
+
             user = new User(id, email, password, height, weight, maxFC, maxW);
         }
-        reader.Close();
-        reader = null;
-        dbcmd.Dispose();
-        dbcmd = null;
-        dbconn.Close();
-        dbconn = null;
-
-        return user;
+        else if (www.downloadHandler.text == "1")
+        {
+            Debug.Log("User no exists");
+            error = 0;
+            user = null;
+        }
+        else
+        {
+            Debug.Log("User creation failed ERROR #" + www.downloadHandler.text);
+            error = 2;
+        }
     }
+
+    public int CallRegister(string email, string password) 
+    {
+        StartCoroutine(LogInUser(email, password));
+
+        return error;
+    }
+
+    IEnumerator LogInUser(string email, string password) {
+        WWWForm form = new WWWForm();
+        form.AddField("email", email);
+        form.AddField("password", password);
+        UnityWebRequest www = UnityWebRequest.Post("http://localhost/PracticaFinal/checkCorrectUser.php", form);
+        
+        yield return www.SendWebRequest();
+
+        Debug.Log(www.downloadHandler.text);
+        if (www.downloadHandler.text == "0")
+        {
+            Debug.Log("User Exists");
+            error = 1; //ID return 1 == s'ha trobat una coincidencia
+        } else if (www.downloadHandler.text == "1") {
+            Debug.Log("User no exists");
+            error = 0;
+        }
+        else {
+            Debug.Log("User creation failed ERROR #" + www.downloadHandler.text);
+            error = 2;
+        }
+    } 
 }

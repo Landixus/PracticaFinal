@@ -20,6 +20,9 @@ public class User
     //Historial de rutas
     public List<Session> historial;
 
+    public User() { 
+    
+    }
     public User(int id, string mail, string password, int height, int weight, int maxFC, int maxW)
     {
         this.id = id;

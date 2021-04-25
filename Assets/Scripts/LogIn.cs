@@ -15,15 +15,24 @@ public class LogIn : MonoBehaviour
     public GameObject passwordInput;
     public GameObject passwordErrorDisplay;
 
+    void Start()
+    {
+        DontDestroyOnLoad(GameObject.Find("BBDD_Manager"));
+    }
 
     public void logIn()
     {
         mail = mailInput.GetComponent<InputField>().text;
         password = passwordInput.GetComponent<InputField>().text;
 
-        BBDD baseDades = new BBDD();
+        //BBDD baseDades = new BBDD();
 
-       int returnId = baseDades.comprovarCredencials(mail, password);
+        GameObject go = GameObject.Find("BBDD_Manager");
+        BBDD baseDades = (BBDD)go.GetComponent(typeof(BBDD));
+
+        int returnId = baseDades.CallRegister(mail, password);
+
+       //int returnId = baseDades.comprovarCredencials(mail, password);
 
         if (returnId == 1)
         {
