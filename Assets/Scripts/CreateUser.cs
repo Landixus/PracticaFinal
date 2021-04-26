@@ -39,47 +39,24 @@ public class CreateUser : MonoBehaviour
         bool alturaCorrecte = comprovarAltura();
         bool pesCorrecte = comprovarPes();
 
+        if (mailInput.GetComponent<InputField>().text == "")
+        {
+            mailErrorDisplay.GetComponent<Text>().text = "El correu no pot estar buit";
+            return;
+        }
 
         if (emailMatch.Success && passMatch.Success && passwordEquals && alturaCorrecte && pesCorrecte)
         {
             textDisplay.GetComponent<Text>().text = "Welcome " + mail + " to the Game";
             //Guardar usuari a la BBDD i passar-lo a la pàgina principal
-            BBDD baseDades = new BBDD();
 
+            GameObject go = GameObject.Find("BBDD_Manager");
+            BBDD baseDades = (BBDD)go.GetComponent(typeof(BBDD));
             //Insert tindra un return per saber el tipus d'error
             //Sobretot per que no es repeteixi el correu
+
+            baseDades.insertUser(mail, password, height, weight);
             
-            int insertErrorId = baseDades.insertUser(mail, password, height, weight);
-            //Posible modificacio: Canviar a switch si hi ha més d'un id d'error
-            Debug.Log(insertErrorId);
-
-            if (insertErrorId == 0) {
-
-                //Fem servir la pròpia base de dades per asegurar-nos que s'ha creat bé
-                User user = baseDades.selectUser(mail);
-
-                if (user != null)
-                {
-                    //passwordErrorDisplay.GetComponent<Text>().text = "Valid ";
-
-                    //Passem l'usuari al controlador principal
-                    PaginaPrincipal.user = user;
-                    //go to main page
-                    goToMainPage();
-                }
-                else {
-                    Debug.LogError("Hi ha hagut un error a l'hora de seleccionar l'usuari");
-                }
-
-            } else if (insertErrorId == 1) {
-                mailErrorDisplay.GetComponent<Text>().text = "Aquest correu ja esta fet servir per un altre usuari";
-            } else
-            {
-                //Temporal
-                mailErrorDisplay.GetComponent<Text>().text = "Error desconegut. Mirar Log";
-            }
-
-            //baseDades.SelectTest();
         }
         else
         {
@@ -89,16 +66,22 @@ public class CreateUser : MonoBehaviour
 
     public void comprovarMail()
     {
-        Match match = regexMail();
-        if (match.Success)
+        if (mailInput.GetComponent<InputField>().text == "")
         {
-            mailErrorDisplay.GetComponent<Text>().text = "";
-
+            mailErrorDisplay.GetComponent<Text>().text = "El correu no pot estar buit";
         }
-        else
-        {
-            mailErrorDisplay.GetComponent<Text>().text = "Invalid mail";
+        else {
+            Match match = regexMail();
+            if (match.Success)
+            {
+                mailErrorDisplay.GetComponent<Text>().text = "";
 
+            }
+            else
+            {
+                mailErrorDisplay.GetComponent<Text>().text = "Correu incorrecte";
+
+            }
         }
     }
     private Match regexMail()
@@ -107,6 +90,7 @@ public class CreateUser : MonoBehaviour
         mail = mailInput.GetComponent<InputField>().text;
 
         Match match = regexMail.Match(mail);
+
         return match;
     }
 
