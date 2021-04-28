@@ -29,6 +29,17 @@ public class ConfirmGPX : MonoBehaviour
     private bool correcte = false;
 
 
+    /*
+     CREATE TABLE route (
+	    id_route SERIAL,
+	    userID int NOT NULL,
+	    name VARCHAR(100) NOT NULL,
+	    file XML NOT NULL,
+	    PRIMARY KEY(id_route),
+	    FOREIGN KEY (userID) REFERENCES public.user(id_user)
+    )
+     */
+
 
     // Start is called before the first frame update
     void Start()
@@ -93,12 +104,18 @@ public class ConfirmGPX : MonoBehaviour
         //Copiar fitxer amb nou nom a la carpeta gpx
         try
         {
-            File.Copy(originalPath, newPath);
+            //File.Copy(originalPath, newPath);
 
             Debug.Log("Fitxer copiat");
             RoutesManager.rutas.Add(ruta);
             correcte = true;
-          
+
+            GameObject go = GameObject.Find("BBDD_Manager");
+            BBDD baseDades = (BBDD)go.GetComponent(typeof(BBDD));
+
+            string description = descriptionInput.text;
+
+            baseDades.InsertRoute(PaginaPrincipal.user.id, validName, originalPath, description);
 
         }
         catch (Exception)
@@ -106,6 +123,7 @@ public class ConfirmGPX : MonoBehaviour
             errorNameText.text = "Ja existeix un fitxer amb aquest nom";
             //throw;
             correcte = false;
+            throw;
         }
 
         StartCoroutine("ActivarPanelCreat");

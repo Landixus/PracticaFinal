@@ -163,6 +163,48 @@ public class BBDD: MonoBehaviour
         }
     }
 
+    public void InsertRoute(int userid, string validName, string originalPath, string description)
+    {
+
+        Debug.Log("Try to pass file to server");
+        System.Net.WebClient Client = new System.Net.WebClient();
+
+        Client.Headers.Add("Content-Type", "binary/octet-stream");
+
+        byte[] result = Client.UploadFile("http://localhost/PracticaFinal/uploadFile.php", "POST",
+                                          originalPath);
+
+        string s = System.Text.Encoding.UTF8.GetString(result, 0, result.Length);
+
+        Debug.Log("File passed");
+
+        StartCoroutine(insertRouteCorroutine(userid, validName, description));
+    }
+
+    IEnumerator insertRouteCorroutine(int userid, string validName, string description) 
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("userID", userid);
+        form.AddField("fileName", validName);
+        form.AddField("description", description);
+        UnityWebRequest www = UnityWebRequest.Post("http://localhost/PracticaFinal/insertRoute.php", form);
+
+        yield return www.SendWebRequest();
+
+        Debug.Log(www.downloadHandler.text);
+
+        if (www.downloadHandler.text == "0")
+        {
+            Debug.Log("Route inserted");
+        }
+        else if (www.downloadHandler.text == "1")
+        {
+            Debug.Log("Route insert failed " + www.downloadHandler.text);
+       
+        }
+    }
+        
+
     public void CallRegister(string email, string password) 
     {
         error = -1;
