@@ -3,6 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ Create table workout (
+	id_workout SERIAL,
+	id_user Int NOT NULL,
+	tempsTotal Int NOT NULL,
+	description TEXT,
+	name VARCHAR(200) NOT NULL,
+	PRIMARY KEY(id_workout),
+	FOREIGN KEY(id_user) REFERENCES public.user(id_user)
+)
+ 
+ */
+
 [Serializable()]
 public class Workout
 {

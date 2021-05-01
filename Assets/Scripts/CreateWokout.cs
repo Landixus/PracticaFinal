@@ -36,6 +36,8 @@ public class CreateWokout : MonoBehaviour
     private bool nomCorrecte;
     private string nomWorkout;
 
+    static int id;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +45,7 @@ public class CreateWokout : MonoBehaviour
         errorGeneralText.text= "";
         nomWorkout = "";
         //Li hem de passar l'id que l'agafarem de la bbdd
-        workout = new Workout(1);
+        workout = new Workout(id);
         numBlocs = 0;
 
         duracioErrorText.text = "";
@@ -266,6 +268,7 @@ public class CreateWokout : MonoBehaviour
 
     public void ComporvarNom() 
     {
+
         Regex regexNom = new Regex(@"^[A-Za-z0-9 _-]+$");
 
         Match match = regexNom.Match(nameInput.text);
@@ -319,6 +322,12 @@ public class CreateWokout : MonoBehaviour
                 try
                 {
                     PaginaPrincipal.user.AfegirWorkout(workout);
+
+                    //Afegim workout a la BBDD
+                    GameObject go = GameObject.Find("BBDD_Manager");
+                    BBDD baseDades = (BBDD)go.GetComponent(typeof(BBDD));
+
+                    baseDades.InsertWorkout(workout);
                 }
                 catch (Exception)
                 {

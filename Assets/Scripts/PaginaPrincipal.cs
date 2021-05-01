@@ -10,6 +10,7 @@ public class PaginaPrincipal : MonoBehaviour
 
     public static User user;
     public static bool haveUSB;
+    public static bool workoutPopulated;
 
     [SerializeField] Text userNameTxt;
 
@@ -21,6 +22,14 @@ public class PaginaPrincipal : MonoBehaviour
         DontDestroyOnLoad(GameObject.Find("RoutesManager"));
 
         userNameTxt.text = "Benvingut: " + user.getMail();
+
+        if (!workoutPopulated)
+        {
+            GameObject go = GameObject.Find("BBDD_Manager");
+            BBDD baseDades = (BBDD)go.GetComponent(typeof(BBDD));
+
+            baseDades.SelectWorkouts(PaginaPrincipal.user.id);
+        }
     }
 
     private static void LoadANTPrefabs()

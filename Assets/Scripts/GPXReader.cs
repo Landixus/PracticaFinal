@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Text;
 using System.Globalization;
+using UnityEngine;
 
 namespace LinqXMLTester
 {
@@ -17,8 +18,23 @@ namespace LinqXMLTester
         /// <returns>XDocument</returns>
         private XDocument GetGpxDoc(string sFile)
         {
-            XDocument gpxDoc = XDocument.Load(sFile);
-            return gpxDoc;
+            bool fail = true;
+            int tries = 0;
+            while (fail && tries < 20) {
+                try
+                {
+                    XDocument gpxDoc = XDocument.Load(sFile);
+                    return gpxDoc;
+                    fail = false;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning("Eror al obrir fitxer: " + e.StackTrace);
+                    fail = true;
+                    tries++;
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -80,50 +96,56 @@ namespace LinqXMLTester
         /// file (for test)</returns>
         public List<@int> LoadGPXTracks(string sFile)
         {
+
+            Debug.Log(sFile);
             XDocument gpxDoc = GetGpxDoc(sFile);
-            XNamespace gpx = GetGpxNameSpace();
-            var tracks = from track in gpxDoc.Descendants(gpx + "trk")
-                         select new
-                         {
-                            Name = track.Element(gpx + "name") != null ?
-                            track.Element(gpx + "name").Value : null,
-                             Segs = (
-                                from trackpoint in track.Descendants(gpx + "trkpt")
-                                select new
-                                {
-                                    Latitude = trackpoint.Attribute("lat").Value,
-                                    Longitude = trackpoint.Attribute("lon").Value,
-                                    Elevation = trackpoint.Element(gpx + "ele") != null ?
-                                    trackpoint.Element(gpx + "ele").Value : null,
-                                    Time = trackpoint.Element(gpx + "time") != null ?
-                                    trackpoint.Element(gpx + "time").Value : null
-                                }
-                              )
-                         };
-
-            //StringBuilder sb = new StringBuilder();
-            List<@int> trackPoints = new List<@int>();
-            foreach (var trk in tracks)
+            if (gpxDoc != null)
             {
-                // Populate track data objects.
-                foreach (var trkSeg in trk.Segs)
+                XNamespace gpx = GetGpxNameSpace();
+                var tracks = from track in gpxDoc.Descendants(gpx + "trk")
+                             select new
+                             {
+                                 Name = track.Element(gpx + "name") != null ?
+                                track.Element(gpx + "name").Value : null,
+                                 Segs = (
+                                    from trackpoint in track.Descendants(gpx + "trkpt")
+                                    select new
+                                    {
+                                        Latitude = trackpoint.Attribute("lat").Value,
+                                        Longitude = trackpoint.Attribute("lon").Value,
+                                        Elevation = trackpoint.Element(gpx + "ele") != null ?
+                                        trackpoint.Element(gpx + "ele").Value : null,
+                                        Time = trackpoint.Element(gpx + "time") != null ?
+                                        trackpoint.Element(gpx + "time").Value : null
+                                    }
+                                  )
+                             };
+
+                //StringBuilder sb = new StringBuilder();
+                List<@int> trackPoints = new List<@int>();
+                foreach (var trk in tracks)
                 {
+                    // Populate track data objects.
+                    foreach (var trkSeg in trk.Segs)
+                    {
 
-                    //Necessitem passar els punts a , dels valors dek GPX ja que sino no es fa la conversio correctament
-                    //Com no sabem si l'ususari utilitza , o . per separar els decimals utilitzem una cultutra invariant
-                    //per normalitzar tots els valors, així tots es convertiran de manera correcta ja tinguin , o .
+                        //Necessitem passar els punts a , dels valors dek GPX ja que sino no es fa la conversio correctament
+                        //Com no sabem si l'ususari utilitza , o . per separar els decimals utilitzem una cultutra invariant
+                        //per normalitzar tots els valors, així tots es convertiran de manera correcta ja tinguin , o .
 
 
-                    float lat = Convert.ToSingle(trkSeg.Latitude, CultureInfo.InvariantCulture);
-                    float lon = Convert.ToSingle(trkSeg.Longitude, CultureInfo.InvariantCulture);
+                        float lat = Convert.ToSingle(trkSeg.Latitude, CultureInfo.InvariantCulture);
+                        float lon = Convert.ToSingle(trkSeg.Longitude, CultureInfo.InvariantCulture);
 
-                    float ele = Convert.ToSingle(trkSeg.Elevation, CultureInfo.InvariantCulture);
+                        float ele = Convert.ToSingle(trkSeg.Elevation, CultureInfo.InvariantCulture);
 
-                    trackPoints.Add(new @int(lat, lon, ele));
+                        trackPoints.Add(new @int(lat, lon, ele));
+                    }
                 }
+                //return sb.ToString();
+                return trackPoints;
             }
-            //return sb.ToString();
-            return trackPoints;
+            return null;
         }
 
         public String GetName(string sFile)

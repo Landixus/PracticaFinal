@@ -1,20 +1,28 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Net;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RoutesManager : MonoBehaviour
 {
     static public List<Ruta> rutas = new List<Ruta>();
-    static bool updateList = true;
+    public static bool updateList = true;
 
     GameObject select;
     RouteGenerator routeGenerator;
 
     public GameObject routePrefab;
     private RectTransform scrollContainer;
+
+    public static int numRoutes;
+    public static int numRoutesFinished;
+    public static bool force;
+    public static bool routesBBDD;
 
     bool populated;
 
@@ -23,10 +31,21 @@ public class RoutesManager : MonoBehaviour
     {
         select = GameObject.Find("RouteGenerator");
         routeGenerator = select.GetComponent<RouteGenerator>();
+
+        //Demanem nom dels fitxers a la BBDD
+        if (!routesBBDD)
+        {
+            GameObject go = GameObject.Find("BBDD_Manager");
+            BBDD baseDades = (BBDD)go.GetComponent(typeof(BBDD));
+
+            baseDades.SelectFilesofUser(PaginaPrincipal.user.id);
+
+            force = false;
+        }
     }
 
     // Start is called before the first frame update
-    void Start()
+    IEnumerator UpdateList()
     {
         populated = false;
 
@@ -36,41 +55,50 @@ public class RoutesManager : MonoBehaviour
         //Anar omplint la llista de rutes amb la informacio de GetTrack
         if (updateList)
         {
+            
+            string path = Path.Combine(Application.dataPath, "GPX");
+            DirectoryInfo di = new DirectoryInfo(path);
+
+            string[] files = Directory.GetFiles(path);
+
+            foreach (string fileName in files)
+            {
+                ProcessFile(fileName);
+                yield return null;
+            }
+
+            //printList();
+            updateList = false;
+            force = false;
+
+            //Delete files from folder
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+
+            
+
+            Debug.Log("S'ha actualitzat llista");
+        }
+    }
+
+    private void Update()
+    {
+
+        Debug.Log("Num files: " + numRoutes + " Num finished: " + numRoutesFinished + " updateList: " + updateList);
+        if ((numRoutes < numRoutesFinished) || force)
+        {
             try
             {
-                string[] files = Directory.GetFiles(Path.Combine(Application.dataPath, "GPX"));
-
-                foreach (string fileName in files)
-                    ProcessFile(fileName);
-
-                //printList();
-                updateList = false;
+                StartCoroutine(UpdateList());
             }
             catch (System.Exception)
             {
                 Debug.LogWarning("Alguna cosa no ha anat bé al intentar llegir el directori (RoutesManager)");
                 throw;
             }
-        }
-    }
-
-    private void Update()
-    {
-        try
-        {
-            scrollContainer = GameObject.Find("Scroll").GetComponent<RectTransform>();
-
-            if (scrollContainer != null && !populated)
-            {
-                Debug.Log("Scroll find");
-                //PopulateList();
-                populated = true;
-            }
-        }
-        catch (Exception)
-        {
-            Debug.LogWarning("No s'ha trobat Scroll");
-            //throw;
         }
     }
 
@@ -82,17 +110,33 @@ public class RoutesManager : MonoBehaviour
         }
     }
 
-    private void ProcessFile(string fileName)
+    public void ProcessFile(string fileName)
     {
         if (IsGPX(fileName))
         {
             string path = Path.Combine(Application.dataPath, "GPX", fileName);
 
-            //Debug.Log(path);
+            Debug.Log(path);
             //creem l'objecte ruta utilitzant la ruta del gpx
             Ruta ruta = routeGenerator.GetTrack(path);
             //afegim a llista
-            rutas.Add(ruta);
+            if (ruta != null)
+            {
+                if (rutas.Count == 0)
+                {
+                    rutas.Add(ruta);
+                    return;
+                }
+                foreach (Ruta item in rutas.ToArray())
+                {
+                    if (ruta.name == item.name)
+                    {
+                        return;
+                    }
+                    rutas.Add(ruta);
+                }
+                
+            }
         }
     }
 
@@ -106,37 +150,5 @@ public class RoutesManager : MonoBehaviour
 
         //Com Unity crea fitxers .meta per defecte hem de mirar si l'extensio es gpx o no, ja que els .meta no els volem agafar
         return extension == "gpx";
-    }
-
-    void PopulateList()
-    {
-        //try
-        //{
-            foreach (var item in rutas)
-            {
-                // Reference prefab variable instead of class type
-                GameObject gameObject = Instantiate(routePrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                gameObject.transform.SetParent(scrollContainer.transform.GetChild(0), false);
-
-                for (int i = 0; i < gameObject.transform.childCount; ++i)
-                {
-                    Transform currentItem = gameObject.transform.GetChild(i);
-                    currentItem.gameObject.SetActive(true);
-                }
-
-                gameObject.transform.GetChild(1).GetComponent<Text>().text = item.name;
-                gameObject.transform.GetChild(3).GetComponent<Text>().text = item.totalDistance.ToString();
-                gameObject.transform.GetChild(5).GetComponent<Text>().text = item.positiveElevation.ToString();
-                gameObject.transform.GetChild(7).GetComponent<Text>().text = item.negativeElevation.ToString();
-
-            //RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
-            
-            Debug.Log("Item created");
-            }
-        //}
-        //catch (System.Exception ex)
-        //{
-
-        //}
     }
 }

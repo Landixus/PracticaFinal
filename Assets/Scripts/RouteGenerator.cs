@@ -18,31 +18,36 @@ public class RouteGenerator : MonoBehaviour
     public Ruta GetTrack(string routePath)
     {
         List<@int> trackPoints = gpx.LoadGPXTracks(routePath);
-        string name = gpx.GetName(routePath);
-        //Debug.Log(name);
 
-        //calc Elevation
-        float positiveElev = CalcPositiveElevation(trackPoints);
-        float negativeElev = CalcNegativeElevation(trackPoints);
+        if (trackPoints != null)
+        {
+            string name = gpx.GetName(routePath);
+            //Debug.Log(name);
 
-        //Calcul distancia entre cada punt, ens servirà després per poder calcular la pendent de forma més senzilla
-        float[] distancePoints = CalcDistance(trackPoints);
+            //calc Elevation
+            float positiveElev = CalcPositiveElevation(trackPoints);
+            float negativeElev = CalcNegativeElevation(trackPoints);
 
-        //Calc distance
-        //Dividiem entre 1000 ja que el resultat ens el dona en metres
-        float totalDistance = (float)Math.Round(CalcTotalDistance(distancePoints)/1000, 1);
+            //Calcul distancia entre cada punt, ens servirà després per poder calcular la pendent de forma més senzilla
+            float[] distancePoints = CalcDistance(trackPoints);
 
-        //Calc pendent
-        float[] slope = CalcSlope(trackPoints, distancePoints);
+            //Calc distance
+            //Dividiem entre 1000 ja que el resultat ens el dona en metres
+            float totalDistance = (float)Math.Round(CalcTotalDistance(distancePoints)/1000, 1);
 
-        //Afegim la informació que ens em saltat al calcular la pendent
-        AddSlopeInformation(slope);
+            //Calc pendent
+            float[] slope = CalcSlope(trackPoints, distancePoints);
 
-        float[] distAcomulada = CalcDistAcomuladaSector(distancePoints);
+            //Afegim la informació que ens em saltat al calcular la pendent
+            AddSlopeInformation(slope);
 
-        Ruta ruta = new Ruta(name, trackPoints, positiveElev, negativeElev, totalDistance, distancePoints,slope, distAcomulada);
+            float[] distAcomulada = CalcDistAcomuladaSector(distancePoints);
 
-        return ruta;
+            Ruta ruta = new Ruta(name, trackPoints, positiveElev, negativeElev, totalDistance, distancePoints,slope, distAcomulada);
+
+            return ruta;
+        }
+        return null;   
     }
 
 
