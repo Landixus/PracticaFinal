@@ -126,8 +126,6 @@ public class BBDD: MonoBehaviour
             {
                 string[] webResult = www.downloadHandler.text.Split('#');
 
-
-                Debug.Log(webResult);
                 id = int.Parse(webResult[0]);
                 email = webResult[1];
                 password = webResult[2];

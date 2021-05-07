@@ -25,7 +25,6 @@ namespace LinqXMLTester
                 {
                     XDocument gpxDoc = XDocument.Load(sFile);
                     return gpxDoc;
-                    fail = false;
                 }
                 catch (Exception e)
                 {

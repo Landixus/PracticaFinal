@@ -63,7 +63,9 @@ public class RoutesManager : MonoBehaviour
 
             foreach (string fileName in files)
             {
-                ProcessFile(fileName);
+                string[] name = fileName.Split('\\');
+               
+                ProcessFile(name[name.Length - 1]);
                 yield return null;
             }
 
@@ -111,17 +113,19 @@ public class RoutesManager : MonoBehaviour
     }
 
     public void ProcessFile(string fileName)
-    {
+    { 
         if (IsGPX(fileName))
         {
             string path = Path.Combine(Application.dataPath, "GPX", fileName);
 
-            Debug.Log(path);
             //creem l'objecte ruta utilitzant la ruta del gpx
             Ruta ruta = routeGenerator.GetTrack(path);
+        
             //afegim a llista
             if (ruta != null)
             {
+                ruta.name =  fileName.Split('.')[0];
+                Debug.Log(fileName);
                 if (rutas.Count == 0)
                 {
                     rutas.Add(ruta);
@@ -133,9 +137,8 @@ public class RoutesManager : MonoBehaviour
                     {
                         return;
                     }
-                    rutas.Add(ruta);
                 }
-                
+                rutas.Add(ruta);
             }
         }
     }

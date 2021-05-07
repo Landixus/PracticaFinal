@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneManagerScript : MonoBehaviour
 {
@@ -27,6 +28,17 @@ public class SceneManagerScript : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName: "SelectWorkout");
 
+    }
+
+    public void goToSelectWorkoutCheckingRouteSelected()
+    {
+        if (FollowRoute.ruta != null)
+        {
+            SceneManager.LoadScene(sceneName: "SelectWorkout");
+        }
+        else {
+            ListGenerator.errorText.text = "Error: No s'ha escollit ruta";
+        }
     }
 
 

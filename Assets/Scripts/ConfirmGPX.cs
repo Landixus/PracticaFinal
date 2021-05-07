@@ -88,6 +88,16 @@ public class ConfirmGPX : MonoBehaviour
         string newName = fileNameInput.text;
         string validName;
         //Comprovar si el nou nom es el mateix que l'antic ja que aixi no hem de comprovar res 
+
+        foreach (Ruta ruta in RoutesManager.rutas)
+        {
+            if (ruta.name.Equals(newName))
+            {
+                errorNameText.text = "Ja existeix una ruta aquest nom";
+                return;
+            }
+        }
+
         if (oldName == newName)
         {
             validName = newName;
@@ -104,7 +114,6 @@ public class ConfirmGPX : MonoBehaviour
         string newPath = Path.Combine(Application.dataPath , "GPX", validName + ".gpx");
 
         Debug.Log(newPath);
-
         //Copiar fitxer amb nou nom a la carpeta gpx
         try
         {
@@ -122,10 +131,13 @@ public class ConfirmGPX : MonoBehaviour
 
             GameObject go2 = GameObject.Find("RoutesManager");
             RoutesManager routeManager = (RoutesManager)go2.GetComponent(typeof(RoutesManager));
+            //Processem el fitxer
             routeManager.ProcessFile(validName);
 
+            //insertem a la base de dades el fitxer
             baseDades.InsertRoute(PaginaPrincipal.user.id, validName, originalPath, description);
 
+            //Borrem tots els fitxers del directori GPX
             string path = Path.Combine(Application.dataPath, "GPX");
             DirectoryInfo di = new DirectoryInfo(path);
             foreach (FileInfo file in di.GetFiles())

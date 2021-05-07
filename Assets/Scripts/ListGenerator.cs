@@ -21,6 +21,8 @@ public class ListGenerator : MonoBehaviour
     public Text afegitText;
     public GameObject contentPanel;
 
+    static public Text errorText;
+
     [SerializeField] Text listHelperText;
 
     private GameObject graph_windowObj;
@@ -31,6 +33,20 @@ public class ListGenerator : MonoBehaviour
         float myHeight = 0;
         int listSize = RoutesManager.rutas.Count;
 
+
+        try
+        {
+            GameObject go = GameObject.Find("ErrorText");
+            errorText = (Text)go.GetComponent(typeof(Text));
+
+
+            errorText.text = "";
+        }
+        catch (Exception)
+        {
+
+        }
+       
 
         if (listHelperText != null) {
             if (listSize == 0)
