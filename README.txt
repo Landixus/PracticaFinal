@@ -2,6 +2,12 @@
 
 Resum de la Guia de Deployment de la memòria final:
 
+- Tenir servei PostgreSQL disponible
+
+- Obrir gestor BBDD PostgreSQL, un exemple PgAdmin.
+
+- Importar fitxer BBDD.sql, ja que ens crearà la BBDD
+
 - Descarregar XAMPP, o respectiu programa segons sistema operatiu.
 
 - Anar a la carpeta on s'ha dit d'instal·lat xampp i buscar la carpeta htdocs
