@@ -20,15 +20,16 @@ namespace LinqXMLTester
         {
             bool fail = true;
             int tries = 0;
-            while (fail && tries < 20) {
+            while (fail && tries < 50) {
                 try
                 {
+                    Debug.LogWarning("GetGpxDoc: " + sFile);
                     XDocument gpxDoc = XDocument.Load(sFile);
                     return gpxDoc;
                 }
                 catch (Exception e)
                 {
-                    Debug.LogWarning("Eror al obrir fitxer: " + e.StackTrace);
+                    Debug.LogWarning("Eror al obrir fitxer: "+ sFile + e.StackTrace);
                     fail = true;
                     tries++;
                 }

@@ -89,7 +89,7 @@ public class RoutesManager : MonoBehaviour
     private void Update()
     {
 
-        Debug.Log("Num files: " + numRoutes + " Num finished: " + numRoutesFinished + " updateList: " + updateList);
+        //Debug.Log("Num files: " + numRoutes + " Num finished: " + numRoutesFinished + " updateList: " + updateList);
         if ((numRoutes < numRoutesFinished) || force)
         {
             try

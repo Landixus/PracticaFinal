@@ -103,7 +103,9 @@ public class FollowRoute : MonoBehaviour
         {
             graph_windowObj = GameObject.Find("Window_Graph");
             graph_window = (Window_Graph)graph_windowObj.GetComponent(typeof(Window_Graph));
-            graphWidth = graph_windowObj.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta.x - 8;
+            graphWidth = graph_windowObj.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta.x - 10;
+
+            Debug.LogWarning("Folow route width:" + graphWidth);
             graphHeight = graph_windowObj.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta.y;
            
             if (ruta != null)
@@ -270,7 +272,7 @@ public class FollowRoute : MonoBehaviour
 
                     if (!speed.connected && !speedCadence.connected)
                     {
-                        spd.text = rodillo.speed.ToString();
+                        spd.text = rodillo.speed.ToString("0.00");
                     }
 
                     //Pot ser una opció pero no es vaible ja que la majoría de rodillos crec que no te connexio directa
@@ -414,9 +416,9 @@ public class FollowRoute : MonoBehaviour
 
                         if (simulatedDist > ruta.distAcomuladaSector[currentSectorNum])
                         {
-                            currentSectorNum = FindClosest(simulatedDist);
+                            currentSectorNum = FindClosest(simulatedDist) + 7;
 
-                            if (currentSectorNum >= ruta.pendentPunts.Length)
+                            if (currentSectorNum - 7 >= ruta.pendentPunts.Length)
                             {
                                 finished = true;
                             }
@@ -431,6 +433,7 @@ public class FollowRoute : MonoBehaviour
                         }
 
                         x100completed = simulatedDist / (ruta.totalDistance * 1000);
+                        Debug.Log("% completed:" + x100completed);
                     }
                 }
 
@@ -499,10 +502,15 @@ public class FollowRoute : MonoBehaviour
                 //Anem movent la barra segons l'usuari va avançant en la ruta
                 //+4 i +38 per compensar el desviament de la barra en la posició original. 
                 //(Crec que es problema de com es dibuixa la barra ja que agafa el punt intermitg entre els dos punts que passem en comptes de
-                //dibuixar directament) 
+                //dibuixar directament)
+                if (x100completed > 1)
+                {
+                    x100completed = 1;
+                }
                 Vector2 puntA = new Vector2(graphWidth * x100completed + 4, 31);
                 Vector2 puntB = new Vector2(graphWidth * x100completed + 4, graphHeight + 31);
 
+             
                 DrawVerticalLine(puntA, puntB);
             }
             else
@@ -597,7 +605,7 @@ public class FollowRoute : MonoBehaviour
         Destroy(line);
 
         //La x dels dos punts es la mateixa
-        //Debug.Log("x: " + dotPositionA.x);
+        Debug.Log("x: " + dotPositionA.x);
         GameObject gameObject = new GameObject("verticalLine", typeof(Image));
         gameObject.transform.SetParent(graphContainer, false);
         gameObject.GetComponent<Image>().color = new Color(1, 1, 1);

@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/CreateWorkout.unity
+- path: Assets/Scenes/UploadGPX.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

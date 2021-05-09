@@ -55,8 +55,12 @@ public class CreateUser : MonoBehaviour
             //Insert tindra un return per saber el tipus d'error
             //Sobretot per que no es repeteixi el correu
 
+            User newUser = new User(-1, mail, password, height, weight, 0, 0);
+            PaginaPrincipal.user = newUser;
             baseDades.insertUser(mail, password, height, weight);
-            
+            goToMainPage();
+
+
         }
         else
         {
@@ -218,7 +222,8 @@ public class CreateUser : MonoBehaviour
         SceneManager.LoadScene(sceneName: "MainPage");
     }
 
-    void Start()
+    public void ExitGame()
     {
+        Application.Quit();
     }
 }

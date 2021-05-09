@@ -36,9 +36,16 @@ public class SpeedCadenceDisplay : MonoBehaviour {
     public int deviceID = 0; //set this to connect to a specific device ID
     void Start() {
 
-        if (autoStartScan)
-            StartScan();
+        try
+        {
+            if (autoStartScan)
+                StartScan();
+        }
+        catch (Exception)
+        {
 
+            //throw;
+        }
     }
 
     //Start a background Scan to find the device

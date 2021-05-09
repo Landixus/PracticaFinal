@@ -296,7 +296,7 @@ public class UserHistList : MonoBehaviour
         {
             case 0:
                 maxNum = sessionSelected.speedMax;
-                yMaximum = maxNum + 100;
+                yMaximum = maxNum + 20;
                 maxText.text = maxNum.ToString();
                 color = Color.blue;
                 break;

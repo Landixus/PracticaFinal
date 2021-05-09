@@ -37,10 +37,16 @@ public class HeartRateDisplay : MonoBehaviour {
     public int deviceID = 0; //set this to connect to a specific device ID
 
     void Start() {
+        try
+        {
+            if (autoStartScan)
+                StartScan();
+        }
+        catch (Exception)
+        {
 
-        if (autoStartScan)
-            StartScan();
-
+            //throw;
+        }
     }
 
     //Start a background Scan to find the device

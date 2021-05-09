@@ -85,7 +85,6 @@ public class PairDevices : MonoBehaviour
        
         dropdownHeartSensor.options.Clear();
         dropdownHeartSensor.onValueChanged.AddListener(delegate { HeartDisplaySelected(dropdownHeartSensor); });
-        //dropdownHeartSensor.options.Add(new Dropdown.OptionData() { text = "Hola" });
 
         dropdownSpeedCadence.options.Clear();
         dropdownSpeedCadence.onValueChanged.AddListener(delegate { SpeedCadenceSelected(dropdownSpeedCadence); });
@@ -116,7 +115,16 @@ public class PairDevices : MonoBehaviour
         //Agafem l'objecte HeartDisplay i utilitzem la funció ConnectToDevice per connectar el sensor de FC seleccionat per l'usuari
         if (heartSensorDisplayObject != null)
         {
-            heartRateDisplay.ConnectToDevice(HeartRateDisplay.scanResult[index]);
+            try
+            {
+                heartRateDisplay.ConnectToDevice(HeartRateDisplay.scanResult[index]);
+                PaginaPrincipal.heartRateDevice = HeartRateDisplay.scanResult[index];
+                TextBoxHeartSensor.text = PaginaPrincipal.heartRateDevice.ToString();
+            }
+            catch (System.Exception)
+            {
+                TextBoxHeartSensor.text = "No s'ha pogut connectar, torna a intentar";
+            }
         } else {
             Debug.LogError("ERROR: No s'ha trobat heartRateDisplay Objecte Prefab (SelectDevice) ");
         }
@@ -132,6 +140,8 @@ public class PairDevices : MonoBehaviour
         if (speedCadenceDisplayObject != null)
         {
             speedCadenceDisplay.ConnectToDevice(SpeedCadenceDisplay.scanResult[index]);
+            PaginaPrincipal.speedCadenceDevice = SpeedCadenceDisplay.scanResult[index];
+            TextBoxSpeedCadence.text = PaginaPrincipal.speedCadenceDevice.ToString();
         }
         else
         {
@@ -149,6 +159,8 @@ public class PairDevices : MonoBehaviour
         if (cadenceDisplayObject != null)
         {
             cadenceDisplay.ConnectToDevice(CadenceDisplay.scanResult[index]);
+            PaginaPrincipal.cadenceDevice = CadenceDisplay.scanResult[index];
+            TextBoxCadence.text = PaginaPrincipal.cadenceDevice.ToString();
         }
         else
         {
@@ -166,6 +178,8 @@ public class PairDevices : MonoBehaviour
         if (trainerDisplayObject != null)
         {
             trainerDisplay.ConnectToDevice(FitnessEquipmentDisplay.scanResult[index]);
+            PaginaPrincipal.rodilloDevice = FitnessEquipmentDisplay.scanResult[index];
+            TextBoxTrainer.text = PaginaPrincipal.rodilloDevice.ToString();
         }
         else
         {
@@ -182,6 +196,8 @@ public class PairDevices : MonoBehaviour
         if (powerDisplayObject != null)
         {
             powerDisplay.ConnectToDevice(PowerMeterDisplay.scanResult[index]);
+            PaginaPrincipal.powerDevice = PowerMeterDisplay.scanResult[index];
+            TextBoxPower.text = PaginaPrincipal.powerDevice.ToString();
         }
         else
         {
@@ -225,7 +241,13 @@ public class PairDevices : MonoBehaviour
                 updateListTrainer();
             }
         }
-        
+        if (PowerMeterDisplay.scanResult != null)
+        {
+            if (sizePowerList != PowerMeterDisplay.scanResult.Count)
+            {
+                updateListPower();
+            }
+        }
     }
 
     void updateListHr() {
@@ -245,6 +267,13 @@ public class PairDevices : MonoBehaviour
         {
             dropdownHeartSensor.value = 1;
             HeartDisplaySelected(dropdownHeartSensor);
+
+            TextBoxHeartSensor.text = heartRateDisplay.ToString();
+        }
+
+        if (PaginaPrincipal.heartRateDevice != null)
+        {
+            TextBoxHeartSensor.text = PaginaPrincipal.heartRateDevice.ToString();
         }
     }
 
@@ -267,6 +296,11 @@ public class PairDevices : MonoBehaviour
             dropdownSpeedCadence.value = 1;
             SpeedCadenceSelected(dropdownSpeedCadence);
         }
+
+        if (PaginaPrincipal.speedCadenceDevice != null)
+        {
+            TextBoxSpeedCadence.text = PaginaPrincipal.speedCadenceDevice.ToString();
+        }
     }
 
     public void updateListCadence()
@@ -285,6 +319,11 @@ public class PairDevices : MonoBehaviour
         {
             dropdownCadence.value = 1;
             CadenceSelected(dropdownCadence);
+        }
+
+        if (PaginaPrincipal.cadenceDevice != null)
+        {
+            TextBoxCadence.text = PaginaPrincipal.cadenceDevice.ToString();
         }
     }
 
@@ -305,6 +344,11 @@ public class PairDevices : MonoBehaviour
             dropdownTrainer.value = 1;
             TrainerSelected(dropdownTrainer);
         }
+
+        if (PaginaPrincipal.rodilloDevice != null)
+        {
+            TextBoxTrainer.text = PaginaPrincipal.rodilloDevice.ToString();
+        }
     }
 
     private void updateListPower()
@@ -323,6 +367,11 @@ public class PairDevices : MonoBehaviour
         {
             dropdownPower.value = 1;
             PowerSelected(dropdownTrainer);
+        }
+
+        if (PaginaPrincipal.powerDevice != null)
+        {
+            TextBoxPower.text = PaginaPrincipal.powerDevice.ToString();
         }
     }
     public void changeTest()

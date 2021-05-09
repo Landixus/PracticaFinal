@@ -34,10 +34,9 @@ public class BBDD: MonoBehaviour
 
         yield return www.SendWebRequest();
 
-        if (www.downloadHandler.text == "0")
+
+        if (www.downloadHandler.text == "notUnique")
         {
-            Debug.Log("Correct insert");
-        } else if (www.downloadHandler.text == "notUnique") {
             Debug.Log("Ja existeix el correu a la BBDD");
             GameObject errorText = GameObject.Find("Output");
             errorText.GetComponent<Text>().text = "Can't create User";
@@ -45,7 +44,12 @@ public class BBDD: MonoBehaviour
             GameObject emailText = GameObject.Find("EmailErrorText");
             emailText.GetComponent<Text>().text = "Ja existeix un usuari amb aquest correu";
 
-        }
+        } 
+        else if (www.downloadHandler.text != "-1")
+        {
+            Debug.Log("Correct insert");
+            PaginaPrincipal.user.id = int.Parse(www.downloadHandler.text);
+        } 
         else if (www.downloadHandler.text == "1")
         {
             Debug.Log("Incorrect insert");
@@ -165,6 +169,8 @@ public class BBDD: MonoBehaviour
 
         Debug.Log("Try to pass file to server");
         System.Net.WebClient Client = new System.Net.WebClient();
+
+        Debug.Log("Path:" + originalPath);
 
         Client.Headers.Add("Content-Type", "binary/octet-stream");
 
@@ -288,6 +294,16 @@ public class BBDD: MonoBehaviour
             client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
             client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
             client.DownloadFileAsync(new Uri(url), Path.Combine(Application.dataPath, "GPX", fileName + ".gpx"));
+            Debug.LogWarning(Path.Combine(Application.dataPath, "GPX", fileName + ".gpx"));
+
+            string path = Path.Combine(Application.dataPath, "GPX");
+
+          
+            // Determine whether the directory exists.
+            if (Directory.Exists(path))
+            {
+                Debug.Log("That path exists already.");
+            }
         }
     }
 

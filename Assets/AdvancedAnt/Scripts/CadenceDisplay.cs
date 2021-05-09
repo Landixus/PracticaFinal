@@ -32,9 +32,16 @@ public class CadenceDisplay : MonoBehaviour {
 
     void Start() {
 
-        if (autoStartScan)
-            StartScan();
+        try
+        {
+            if (autoStartScan)
+                StartScan();
+        }
+        catch (Exception)
+        {
 
+            //throw;
+        }
     }
 
     //Start a background Scan to find the device

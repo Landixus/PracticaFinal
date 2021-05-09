@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,6 +20,8 @@ public class LogIn : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(GameObject.Find("BBDD_Manager"));
+
+        CreateGPXFolder();
     }
 
     public void logIn()
@@ -50,5 +54,38 @@ public class LogIn : MonoBehaviour
         {
             logIn();
         }
+    }
+
+    private void CreateGPXFolder()
+    {
+        // Specify the directory you want to manipulate.
+        string path = Path.Combine(Application.dataPath, "GPX");
+
+        try
+        {
+            // Determine whether the directory exists.
+            if (Directory.Exists(path))
+            {
+                Debug.Log("That path exists already.");
+
+            }
+            else
+            {
+                // Try to create the directory.
+                DirectoryInfo di = Directory.CreateDirectory(path);
+                Debug.Log("Carpeta creada");
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
+        finally { }
+
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

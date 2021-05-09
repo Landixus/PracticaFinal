@@ -8,6 +8,9 @@ public class SceneManagerScript : MonoBehaviour
 {
     [SerializeField] GameObject advertPanel;
     [SerializeField] GameObject nullWorkout;
+    [SerializeField] GameObject devicePanel;
+
+    public bool simular = false;
 
     public void goToMainMenu()
     {
@@ -41,6 +44,35 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
+    private bool checkDevicesConnectes()
+    {
+        if (simular)
+        {
+            return true;
+        }
+
+        if (PaginaPrincipal.powerDevice == null || PaginaPrincipal.rodilloDevice == null)
+        {
+            StartCoroutine("ActivarPanelAdvert");
+            return false;
+        }
+
+        return true;
+    }
+
+    IEnumerator ActivarPanelAdvert()
+    {
+
+        devicePanel.SetActive(true);
+
+        yield return new WaitForSeconds(2.5f);
+
+        devicePanel.SetActive(false);
+
+        PaginaPrincipal.user.EnsenyarWorkoutsLog();
+        //reset
+        SceneManager.LoadScene(sceneName: "PairDevices");
+    }
 
     public void goToFollowRoute()
     {
@@ -60,27 +92,30 @@ public class SceneManagerScript : MonoBehaviour
         Workout workout = FollowRoute.workout;
 
         Debug.Log(workout);
-
-        if (workout != null)
+        if (checkDevicesConnectes())
         {
-            Debug.Log("Vaig a calcular temps");
-            var temps = ruta.totalDistance / 20;
-            var segons = temps * 60 * 60;
-
-            if (segons < workout.tempsTotal)
+            if (workout != null)
             {
-                advertPanel.SetActive(true);
-                //Ensenyar avis
+                Debug.Log("Vaig a calcular temps");
+                var temps = ruta.totalDistance / 20;
+                var segons = temps * 60 * 60;
+
+                if (segons < workout.tempsTotal)
+                {
+                    advertPanel.SetActive(true);
+                    //Ensenyar avis
+                }
+                else
+                {
+                    Debug.Log("Anem a carregar l'escena FollowRoute");
+                    SceneManager.LoadScene(sceneName: "FollowRoute");
+                }
             }
             else
             {
-                Debug.Log("Anem a carregar l'escena FollowRoute");
-                SceneManager.LoadScene(sceneName: "FollowRoute");
+                Debug.Log("No s'ha escollit cap workout");
+                StartCoroutine("ActivarPanelNull");
             }
-        }
-        else {
-            Debug.Log("No s'ha escollit cap workout");
-            StartCoroutine("ActivarPanelNull");
         }
     }
 
@@ -112,7 +147,10 @@ public class SceneManagerScript : MonoBehaviour
 
     public void goToFollowRouteWithoutWorkout()
     {
-        FollowRoute.workout = null;
-        SceneManager.LoadScene(sceneName: "FollowRoute");
+        if (checkDevicesConnectes())
+        {
+            FollowRoute.workout = null;
+            SceneManager.LoadScene(sceneName: "FollowRoute");
+        }
     }
 }

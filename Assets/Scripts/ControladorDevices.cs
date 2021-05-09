@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using ANT_Managed_Library;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,10 +22,21 @@ public class ControladorDevices : MonoBehaviour
     private GameObject powerDisplayObject;
     private PowerMeterDisplay powerDisplay;
 
+    private bool connectedUSB;
+
+    int frames = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        ConnectDevices();
+
+    }
+
+    private void ConnectDevices()
+    {
+        try
+        {
             //Busquem si hi han els objectes amb un nom concret en l'escena
             //Si estan diem que no desapareguin al canviar d'escena per poder tenir els controladors
             //Fem que començin a buscar 
@@ -74,11 +87,29 @@ public class ControladorDevices : MonoBehaviour
                 trainerDisplay.StartScan();
                 DontDestroyOnLoad(GameObject.Find("FitnessEquipmentDisplay"));
             }
+            PaginaPrincipal.haveUSB = true;
+            connectedUSB = true;
         }
+        catch (ANT_Exception e)
+        {
+            PaginaPrincipal.haveUSB = false;
+            connectedUSB = false;
+            //Debug.Log(e.StackTrace);
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!connectedUSB)
+        {
+            if (frames == 10)
+            {
+                frames = 0;
+                // call method 
+                ConnectDevices();
+            }
+            frames++;
+        }
     }
 }

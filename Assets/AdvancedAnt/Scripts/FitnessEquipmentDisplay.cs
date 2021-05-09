@@ -71,10 +71,16 @@ public class FitnessEquipmentDisplay : MonoBehaviour
     void Start()
     {
 
+        try
+        {
+            if (autoStartScan)
+                StartScan();
+        }
+        catch (Exception)
+        {
 
-        if (autoStartScan)
-            StartScan();
-
+            //throw;
+        }
     }
 
     //Start a background Scan to find the device
@@ -115,9 +121,8 @@ public class FitnessEquipmentDisplay : MonoBehaviour
     void OnSerialError(SerialError serialError)
     {
         Debug.Log("Error:" + serialError.error.ToString());
-
-      
-
+        PaginaPrincipal.haveUSB = false;
+     
     }
     //Android function
     void ANTPLUG_ConnectEvent(string resultCode)
