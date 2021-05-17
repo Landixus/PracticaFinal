@@ -222,7 +222,7 @@ public class FollowRoute : MonoBehaviour
                     if (speedCadence.connected)
                     {
                         cad.text = speedCadence.cadence.ToString();
-                        spd.text = speedCadence.speed.ToString();
+                        spd.text = speedCadence.speed.ToString("0.00");
 
 
                         rpmList.Add(speedCadence.cadence);
@@ -244,7 +244,7 @@ public class FollowRoute : MonoBehaviour
                 {
                     if (speed.connected)
                     {
-                        spd.text = speed.speed.ToString();
+                        spd.text = speed.speed.ToString("0.00");
                         //uiText.text += "distance = " + GameObject.Find("SpeedDisplay").GetComponent<SpeedDisplay>().distance + "\n";
 
                         speedList.Add(speed.speed);
@@ -273,6 +273,7 @@ public class FollowRoute : MonoBehaviour
                     if (!speed.connected && !speedCadence.connected)
                     {
                         spd.text = rodillo.speed.ToString("0.00");
+                        speedList.Add(rodillo.speed);
                     }
 
                     //Pot ser una opció pero no es vaible ja que la majoría de rodillos crec que no te connexio directa

@@ -108,6 +108,7 @@ public class ConfirmGPX : MonoBehaviour
             // Comprovar si el nou nom es valid
             validName = UseRegex(newName);
             fileNameInput.text = validName;
+            ruta.name = validName;
         }
 
         //Creem nova ruta

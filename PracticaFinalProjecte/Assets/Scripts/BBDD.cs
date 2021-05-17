@@ -331,7 +331,15 @@ public class BBDD: MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("userId", PaginaPrincipal.user.id);
         form.AddField("tempsTotal", workout.tempsTotal);
-        form.AddField("description", workout.description);
+        try
+        {
+            form.AddField("description", workout.description);
+        }
+        catch (Exception)
+        {
+            form.AddField("description", "");
+        }
+        
         form.AddField("name", workout.name);
         UnityWebRequest www = UnityWebRequest.Post("http://localhost/PracticaFinal/insertWorkout.php", form);
 

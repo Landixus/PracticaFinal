@@ -1888,4 +1888,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/SelectWorkout.unity
   - Assets/Scenes/UserDetail.unity
   - Assets/Scenes/UserHistorial.unity
-  playerPath: D:/Classe/Projecte Final/Builds/BuildFinal8/PracticaFinal.exe
+  playerPath: D:/Classe/Projecte Final/Builds/BuildFinalPresentacio/PracticaFinal.exe

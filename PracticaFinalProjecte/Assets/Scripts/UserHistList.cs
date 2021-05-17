@@ -296,7 +296,7 @@ public class UserHistList : MonoBehaviour
         {
             case 0:
                 maxNum = sessionSelected.speedMax;
-                yMaximum = maxNum + 20;
+                yMaximum = maxNum + 25;
                 maxText.text = maxNum.ToString();
                 color = Color.blue;
                 break;
@@ -434,7 +434,7 @@ public class UserHistList : MonoBehaviour
 
     public void showSpeedGraph()
     {
-        List<int> intSpeedList = sessionSelected.fcList.ConvertAll(x => (int)x);
+        List<int> intSpeedList = sessionSelected.speedList.ConvertAll(x => (int)x);
         ShowGraph(intSpeedList, 0);
         graphPanel.SetActive(true);
         Debug.Log("Apreto ShowSpeeGraph");
